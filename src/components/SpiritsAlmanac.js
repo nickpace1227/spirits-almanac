@@ -1,16 +1,26 @@
 import './App.css';
 import React from 'react';
-import {BrowserRouter as Router} from 'react-router-dom';
 import LoginPage from './LoginPage';
+import Header from './Header';
+import Inventory from './Inventory';
+import HomePage from './HomePage';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 function SpiritsAlmanac() {
+
   return (
-    <div class='background'>
+    <body>
       <Router>
-        <LoginPage />
+        <Header />
+        <main>
+        <Route exact path='/LoginPage'>
+            <LoginPage />
+        </Route>
+        </main>
       </Router>
-    </div>
-  );
+    </body>
+
+  )
 }
 
 export default SpiritsAlmanac;
