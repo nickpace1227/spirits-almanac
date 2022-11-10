@@ -1,18 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import SpiritsAlmanac from './components/SpiritsAlmanac';
+// Node modules
+import React from "react";
+import { Provider } from "react-redux";
+import ReactDOM from "react-dom/client";
+// Relative imports
+import "./globalStyles.css";
+import Router from "./components/Router";
+import store from "./store";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
-    <SpiritsAlmanac />
-  </React.StrictMode>,
-  document.getElementById("root")
-  );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-
+    <Provider store={store}>
+      <Router />
+    </Provider>
+  </React.StrictMode>
+);
