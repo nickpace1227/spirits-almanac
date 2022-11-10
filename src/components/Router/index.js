@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Wrapper } from "./styles";
 import Header from "../Header";
 import LoginPage from "../../pages/Login";
+import Landing from "../../pages/Landing";
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
           <div className="page">
             <Routes>
               <Route path="/" exact element={<LoginPage />} />
+              <Route path="/Landing" exact element={<Landing />} />
             </Routes>
           </div>
         </main>

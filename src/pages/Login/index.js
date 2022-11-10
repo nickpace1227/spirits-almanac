@@ -1,11 +1,16 @@
 import React from "react";
 import { Wrapper } from "./styles";
+import {useNavigate} from "react-router-dom";
 
 const ACCEPTABLE_LOGIN = { username: "changeMe", password: "changeMe" };
 
 export default function LoginPage() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
+  const refreshPage = () => {
+    window.location.reload(false)
+  }
 
   const handleLogin = () => {
     if (
@@ -13,7 +18,10 @@ export default function LoginPage() {
       password === ACCEPTABLE_LOGIN.password
     ) {
       //do login stuff here, like redirect to inventory page
-      alert("Login successful!");
+      navigate("/landing")
+    } else {
+      alert("Incorrect Username or Password");
+      refreshPage()
     }
   };
 
