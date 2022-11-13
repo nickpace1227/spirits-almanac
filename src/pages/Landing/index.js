@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../store/counterSlice";
 import { spiritCardSlice } from "../../store/spiritSlice";
 
 function LandingPage() {
-  // const count = useSelector((store) => store.counter.value);
-  // const dispatch = useDispatch();
-  const handleSubmit = (event) => {
-  //   const newCard = event.target.value;
-  //   dispatch(spiritCardSlice.addSpiritCard(newCard));
-  console.log(event.target.value);
+
+  const dispatch = useDispatch();
+  const [type, setType] = useState(null);
+  const [subType, setSubType] = useState(null);
+  const [name, setName] = useState(null);
+  const [proof, setProof] = useState(null);
+
+  const handleClick = (e) => {
+    const inputValue = e.target.value;
+    setType(inputValue);
+    console.log(type);
+  //dispatch(spiritCardSlice.addSpiritCard(newCard));
   }
 
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
       <p>Click below to begin adding bottles to your almanac!</p>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Spirit Type"/>
+      <form>
+        <input type="text" placeholder="Spirit Type" />
         <br/>
         <input type="text" placeholder="Spirit Subtype" />
         <br/>
@@ -25,7 +31,7 @@ function LandingPage() {
         <br/>
         <input type="text" placeholder="Spirit Proof" />
         <br/>
-        <button type="submit">Add Spirit</button>
+        <button onClick={handleClick}>Add Bottle<button/>
       </form>
     </div>
   );
@@ -40,3 +46,4 @@ export default LandingPage;
 <span>{count}</span>
 <button onClick={() => dispatch(decrement())}>Decrement</button>
 </div> */}
+// const count = useSelector((store) => store.counter.value);
