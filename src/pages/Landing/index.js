@@ -1,20 +1,23 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../store/counterSlice";
+import { spiritCardSlice } from "../../store/spiritSlice";
 
 function LandingPage() {
-  const count = useSelector((store) => store.counter.value);
-  const dispatch = useDispatch();
-  const handleSubmit = () => {
-
+  // const count = useSelector((store) => store.counter.value);
+  // const dispatch = useDispatch();
+  const handleSubmit = (event) => {
+  //   const newCard = event.target.value;
+  //   dispatch(spiritCardSlice.addSpiritCard(newCard));
+  console.log(event.target.value);
   }
 
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
       <p>Click below to begin adding bottles to your almanac!</p>
-      <form>
-        <input type="text" placeholder="Spirit Type" />
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Spirit Type"/>
         <br/>
         <input type="text" placeholder="Spirit Subtype" />
         <br/>
@@ -22,7 +25,7 @@ function LandingPage() {
         <br/>
         <input type="text" placeholder="Spirit Proof" />
         <br/>
-        <button onSubmit={handleSubmit}>Add Spirit</button>
+        <button type="submit">Add Spirit</button>
       </form>
     </div>
   );

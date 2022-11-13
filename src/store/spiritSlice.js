@@ -7,10 +7,13 @@ export const spiritCardSlice = createSlice({
     subtype: null,
     name: null,
     proof: null
-  }  
+  },  
   reducers: {
     addSpiritCard: (state) => {
-        state.type = e.type
+        state.type = state.type;
+        state.subtype = state.subtype;
+        state.name = state.name;
+        state.proof = state.proof;
     }
   }
 })
