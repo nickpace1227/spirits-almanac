@@ -1,43 +1,24 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../../store/counterSlice";
-import { spiritCardSlice } from "../../store/spiritSlice";
+import { addCard } from "../../store/cardSlice";
 
  export default function LandingPage() {
 
   const dispatch = useDispatch();
   const [type, setType] = useState(null);
   const [subType, setSubType] = useState(null);
-  const [name, setName] = useState(null);
+  const [brand, setBrand] = useState(null);
   const [proof, setProof] = useState(null);
-
-  const handleTypeChange = (e) => {
-    const inputValue = e.target.value;
-    setType(inputValue);
-    //console.log(type)
-  };
-
-  const handleSubTypeChange = (e) => {
-    const inputValue = e.target.value;
-    setSubType(inputValue);
-    console.log(subType);
-  };
-
-  const handleNameChange = (e) => {
-    const inputValue = e.target.value;
-    setName(inputValue);
-    console.log(name);
-  };
-
-  const handleProofChange = (e) => {
-    const inputValue = e.target.value;
-    setProof(inputValue);
-    console.log(proof);
-  };
   
   const handleClick = () => {
-    console.log(type);
-  //dispatch(spiritCardSlice.addSpiritCard(newCard));
+    const newCard = { 
+      type: type, 
+      subType: subType, 
+      brand: brand, 
+      proof: proof
+    }
+  dispatch(addCard(newCard));
   }
 
   return (
@@ -45,13 +26,13 @@ import { spiritCardSlice } from "../../store/spiritSlice";
       <p>Welcome to Spirits Almanac!</p>
       <p>Click below to begin adding bottles to your almanac!</p>
       <form>
-        <input type="text" placeholder="Spirit Type" onChange={handleTypeChange} />
+        <input type="text" placeholder="Spirit Type" onChange={(event) => setType(event.target.value)} />
         <br/>
-        <input type="text" placeholder="Spirit Subtype" onChange={handleSubTypeChange} />
+        <input type="text" placeholder="Spirit Subtype" onChange={(event) => setSubType(event.target.value)} />
         <br/>
-        <input type="text" placeholder="Spirit Name" onChange={handleNameChange} />
+        <input type="text" placeholder="Spirit Name" onChange={(event) => setBrand(event.target.value)} />
         <br/>
-        <input type="text" placeholder="Spirit Proof" onChange={handleProofChange} />
+        <input type="text" placeholder="Spirit Proof" onChange={(event) => setProof(event.target.value)} />
         <br/>
         <button onClick={handleClick}>Submit</button>
       </form>
