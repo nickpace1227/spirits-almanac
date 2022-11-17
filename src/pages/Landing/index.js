@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../../store/counterSlice";
+//import { decrement, increment } from "../../store/counterSlice";
 import { addCard } from "../../store/cardSlice";
 
  export default function LandingPage() {
@@ -10,6 +10,8 @@ import { addCard } from "../../store/cardSlice";
   const [subType, setSubType] = useState(null);
   const [brand, setBrand] = useState(null);
   const [proof, setProof] = useState(null);
+  const inventory = useSelector((store) => store.inventory.cards);
+  
   
   const handleClick = () => {
     const newCard = { 
@@ -19,7 +21,7 @@ import { addCard } from "../../store/cardSlice";
       proof: proof
     }
   dispatch(addCard(newCard));
-  }
+  };
 
   return (
     <div className="App">
@@ -36,6 +38,9 @@ import { addCard } from "../../store/cardSlice";
         <br/>
         <button onClick={handleClick}>Submit</button>
       </form>
+      <div>{inventory.map((card, index) => {
+        return <div key={index}> {card.toString()} </div>})}
+      </div>
     </div>
   );
 }
@@ -46,4 +51,4 @@ import { addCard } from "../../store/cardSlice";
 <span>{count}</span>
 <button onClick={() => dispatch(decrement())}>Decrement</button>
 </div> */}
-// const count = useSelector((store) => store.counter.value)
+//
