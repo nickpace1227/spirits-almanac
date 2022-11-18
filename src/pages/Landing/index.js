@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-//import { decrement, increment } from "../../store/counterSlice";
 import { addCard } from "../../store/cardSlice";
 import { removeCard } from "../../store/cardSlice";
+import {v4 as uuidv4} from "uuid";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -13,12 +13,14 @@ export default function LandingPage() {
   const inventory = useSelector((store) => store.inventory.cards);
 
 
+
   const handleClick = () => {
     const newCard = {
       type: type,
       subType: subType,
       brand: brand,
       proof: proof,
+      id: uuidv4(),
     };
     dispatch(addCard(newCard));
   };
