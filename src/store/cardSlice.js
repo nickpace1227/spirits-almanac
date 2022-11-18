@@ -10,7 +10,7 @@ export const cardSlice = createSlice({
       state.cards = [...state.cards, action.payload];
     },
     removeCard: (state, action) => {
-      state.cards = state.cards.filter((card) => {return card.name != action.payload.name})
+      state.cards = state.cards.filter((card) => {return card.brand !== action.payload.brand})
     }
   },
 });
