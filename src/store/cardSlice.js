@@ -9,9 +9,12 @@ export const cardSlice = createSlice({
     addCard: (state, action) => {
       state.cards = [...state.cards, action.payload];
     },
+    removeCard: (state, action) => {
+      state.cards = state.cards.filter((card) => {return card.name != action.payload.name})
+    }
   },
 });
 
-export const { addCard } = cardSlice.actions;
+export const { addCard, removeCard } = cardSlice.actions;
 
 export default cardSlice.reducer;

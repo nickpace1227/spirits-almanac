@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //import { decrement, increment } from "../../store/counterSlice";
 import { addCard } from "../../store/cardSlice";
+import { removeCard } from "../../store/cardSlice";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ export default function LandingPage() {
   const [brand, setBrand] = useState(null);
   const [proof, setProof] = useState(null);
   const inventory = useSelector((store) => store.inventory.cards);
+
 
   const handleClick = () => {
     const newCard = {
@@ -20,6 +22,10 @@ export default function LandingPage() {
     };
     dispatch(addCard(newCard));
   };
+
+  const handleRemove = (card) => {
+    dispatch(removeCard(card))
+  }
 
   return (
     <div className="App">
@@ -57,7 +63,11 @@ export default function LandingPage() {
       <div>Card Details here:</div>
       <div>
         {inventory.map((card, index) => {
-          return <div key={index}> {JSON.stringify(card)} </div>;
+          return (
+          <body>
+          <div key={index}> {JSON.stringify(card)} </div>
+          <button onClick={()=> handleRemove(card)}>Delete Card</button>
+          </body>);
         })}
       </div>
     </div>
