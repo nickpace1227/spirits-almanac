@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import inventoryReducer from "./cardSlice";
+import inventoryReducer from "./pageSlice";
 
 export default configureStore({
   reducer: {
