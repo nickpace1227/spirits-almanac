@@ -4,7 +4,7 @@ export const pageSlice = createSlice({
   name: "inventory",
   initialState: {
     pages: [],
-    favorite: false,
+    favorites: []
   },
   reducers: {
     addPage: (state, action) => {
@@ -13,12 +13,12 @@ export const pageSlice = createSlice({
     removePage: (state, action) => {
       state.pages = state.pages.filter((page) => {return page.id !== action.payload.id})
     },
-    toggleFavorite: (state) => {
-      state.favorite = !state.favorite
+    addFavorite: (state, action) => {
+      state.favorites = [...state.favorites, action.payload]
     }
   },
 });
 
-export const { addPage, removePage, toggleFavorite } = pageSlice.actions;
+export const { addPage, removePage, addFavorite } = pageSlice.actions;
 
 export default pageSlice.reducer;

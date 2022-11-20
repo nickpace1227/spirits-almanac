@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addPage, removePage, toggleFavorite } from "../../store/pageSlice";
+import { addPage, removePage, addFavorite } from "../../store/pageSlice";
 import {v4 as uuidv4} from "uuid";
 
 export default function LandingPage() {
@@ -11,9 +11,9 @@ export default function LandingPage() {
   const [brand, setBrand] = useState("");
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
-  const [favorite, setFavorite] = useState(false);
-  const inventory = useSelector((store) => store.inventory.pages);
-
+  const pages = useSelector((store) => store.inventory.pages);
+  const favorites = useSelector((store) => store.inventory.favorites);
+  
   const clearForm = () => {
     setType("");
     setSubType("");
@@ -21,7 +21,6 @@ export default function LandingPage() {
     setProof("");
     setName("");
     setNotes("");
-    setFavorite(false);
   }
 
   const handleClick = () => {
@@ -32,7 +31,6 @@ export default function LandingPage() {
       brand: brand,
       proof: proof,
       notes: notes,
-      favorite: false,
       id: uuidv4(),
     };
     if (name === "" || type === "") {
@@ -47,17 +45,9 @@ export default function LandingPage() {
     dispatch(removePage(page))
   }
 
-  const handleToggle = (page) => {
-    dispatch(toggleFavorite(page));
+  const handleFavorite = (page) => {
+    dispatch(addFavorite(page));
   };
-
-  const favoriteDisplay = () => {
-    if (favorite === false) {
-      return 
-    } else {
-      return "Favorite"
-    }
-  }
 
   return (
     <div className="App">
@@ -112,7 +102,7 @@ export default function LandingPage() {
       </form>
       <div>Your Almanac:</div>
       <div>
-        {inventory.map((page) => {
+        {pages.map((page) => {
           return (
           <body>
           <div>
@@ -122,11 +112,25 @@ export default function LandingPage() {
             <p>{`Spirit Brand: ${page.brand}`}</p>
             <p>{`Spirit Proof: ${page.proof}`}</p>
             <p>{`Tasting Notes: ${page.notes}`}</p>
-            <p>{`Favorite: ${page.favorite}`}</p>
           </div>
           <button onClick={()=> handleRemove(page)}>Delete Page</button>
-          <button onClick={handleToggle(page)}>Favorite</button>
+          <button onClick={handleFavorite(page)}>Favorite</button>
           </body>);
+        })}
+      </div>
+      <div>Hall of Fame</div>
+      <div>
+        {favorites.map((favorite) => {
+          return (
+            <body>
+              <div>
+                <h2>{favorite.name}</h2>
+                <p>{`Spirit Type: ${favorite.type}`}</p>
+                <p>{`Spirit Subtype: ${favorite.subType}`}</p>
+                <p>{`Spirit Brand: ${favorite.brand}`}</p>
+              </div>
+            </body>
+          )
         })}
       </div>
     </div>
