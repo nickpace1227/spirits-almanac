@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addPage, removePage, toggleFavorite } from "../../store/pageSlice";
+import { addCard, removeCard, toggleFavorite } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
 
 export default function LandingPage() {
@@ -11,7 +11,7 @@ export default function LandingPage() {
   const [brand, setBrand] = useState("");
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
-  const pages = useSelector((store) => store.inventory.pages);
+  const cards = useSelector((store) => store.inventory.cards);
   
   const clearForm = () => {
     setType("");
@@ -23,7 +23,7 @@ export default function LandingPage() {
   };
 
   const handleClick = () => {
-    const newPage = {
+    const newCard = {
       name: name,
       type: type,
       subType: subType,
@@ -36,17 +36,17 @@ export default function LandingPage() {
     if (name === "" || type === "") {
       return (alert("Please enter a name and type of spirit."))
     } else {
-      dispatch(addPage(newPage));
+      dispatch(addCard(newCard));
       clearForm();
     }
   };
 
-  const handleRemove = (page) => {
-    dispatch(removePage(page))
+  const handleRemove = (card) => {
+    dispatch(removeCard(card))
   };
 
-  const handleFavorite = (page) => {
-    dispatch(toggleFavorite(page.id));
+  const handleFavorite = (card) => {
+    dispatch(toggleFavorite(card.id));
   };
 
   return (
@@ -102,19 +102,20 @@ export default function LandingPage() {
       </form>
       <div>Your Almanac:</div>
       <div>
-        {pages.map((page) => {
+        {cards.map((card) => {
           return (
           <body>
           <div>
-            <h2>{page.name}</h2>
-            <p>{`Spirit Type: ${page.type}`}</p>
-            <p>{`Spirit Subtype: ${page.subType}`}</p>
-            <p>{`Spirit Brand: ${page.brand}`}</p>
-            <p>{`Spirit Proof: ${page.proof}`}</p>
-            <p>{`Tasting Notes: ${page.notes}`}</p>
+            <h2>{card.name}</h2>
+            <p>{`Spirit Type: ${card.type}`}</p>
+            <p>{`Spirit Subtype: ${card.subType}`}</p>
+            <p>{`Spirit Brand: ${card.brand}`}</p>
+            <p>{`Spirit Proof: ${card.proof}`}</p>
+            <p>{`Tasting Notes: ${card.notes}`}</p>
+            <p>{`Favorite: ${card.favorite}`}</p>
           </div>
-          <button onClick={()=> handleRemove(page)}>Delete Page</button>
-          <button onClick={handleFavorite(page)}>Favorite</button>
+          <button onClick={() => handleRemove(card)}>Delete</button>
+          <button onClick={() => handleFavorite(card)}>Favorite</button>
           </body>);
         })}
       </div>

@@ -1,0 +1,31 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+export const cardSlice = createSlice({
+  name: "inventory",
+  initialState: {
+    cards: [],
+  },
+  reducers: {
+    addCard: (state, action) => {
+      state.cards = [...state.cards, action.payload];
+    },
+    removeCard: (state, action) => {
+      state.cards = state.cards.filter((card) => {return card.id !== action.payload.id})
+    },
+    toggleFavorite: (state, action) => {
+      state.cards = state.cards.map((card) => {
+        if (card.id === action.payload) {
+          return {
+            ...card,
+            favorite: !card.favorite,
+          }
+        }
+        return card;
+      });
+    },
+  },
+});
+
+export const { addCard, removeCard, toggleFavorite } = cardSlice.actions;
+
+export default cardSlice.reducer;
