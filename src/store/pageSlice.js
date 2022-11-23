@@ -4,7 +4,7 @@ export const pageSlice = createSlice({
   name: "inventory",
   initialState: {
     pages: [],
-    favorites: []
+    favorites: [],
   },
   reducers: {
     addPage: (state, action) => {

@@ -21,7 +21,7 @@ export default function LandingPage() {
     setProof("");
     setName("");
     setNotes("");
-  }
+  };
 
   const handleClick = () => {
     const newPage = {
@@ -43,7 +43,7 @@ export default function LandingPage() {
 
   const handleRemove = (page) => {
     dispatch(removePage(page))
-  }
+  };
 
   const handleFavorite = (page) => {
     dispatch(addFavorite(page));
