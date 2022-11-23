@@ -25,8 +25,15 @@ export default function LoginPage() {
     }
   };
 
+  const handleKeypress = e => {
+    if (e.keyCode === 13) {
+      handleLogin();
+    }
+  };
+
   return (
     <Wrapper>
+      <form onKeyPress={handleKeypress}>
       <p>Login</p>
       <input
         type="username"
@@ -41,6 +48,7 @@ export default function LoginPage() {
       />
       <br />
       <button onClick={handleLogin}>Login</button>
+      </form>
     </Wrapper>
   );
 }

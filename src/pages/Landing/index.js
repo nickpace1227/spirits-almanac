@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addPage, removePage, addFavorite } from "../../store/pageSlice";
+import { addPage, removePage, toggleFavorite } from "../../store/pageSlice";
 import {v4 as uuidv4} from "uuid";
 
 export default function LandingPage() {
@@ -12,7 +12,6 @@ export default function LandingPage() {
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const pages = useSelector((store) => store.inventory.pages);
-  const favorites = useSelector((store) => store.inventory.favorites);
   
   const clearForm = () => {
     setType("");
@@ -31,6 +30,7 @@ export default function LandingPage() {
       brand: brand,
       proof: proof,
       notes: notes,
+      favorite: false,
       id: uuidv4(),
     };
     if (name === "" || type === "") {
@@ -46,7 +46,7 @@ export default function LandingPage() {
   };
 
   const handleFavorite = (page) => {
-    dispatch(addFavorite(page));
+    dispatch(toggleFavorite(page.id));
   };
 
   return (
@@ -116,21 +116,6 @@ export default function LandingPage() {
           <button onClick={()=> handleRemove(page)}>Delete Page</button>
           <button onClick={handleFavorite(page)}>Favorite</button>
           </body>);
-        })}
-      </div>
-      <div>Hall of Fame</div>
-      <div>
-        {favorites.map((favorite) => {
-          return (
-            <body>
-              <div>
-                <h2>{favorite.name}</h2>
-                <p>{`Spirit Type: ${favorite.type}`}</p>
-                <p>{`Spirit Subtype: ${favorite.subType}`}</p>
-                <p>{`Spirit Brand: ${favorite.brand}`}</p>
-              </div>
-            </body>
-          )
         })}
       </div>
     </div>
