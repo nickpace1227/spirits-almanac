@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCard, removeCard, toggleFavorite } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
+import { search } from 'react-router-dom';
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -11,7 +12,12 @@ export default function LandingPage() {
   const [brand, setBrand] = useState("");
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
+  const [searchTerm, setSearchTerm] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const result = queryParams.get(searchTerm);
+  
   
   const clearForm = () => {
     setType("");
@@ -49,9 +55,22 @@ export default function LandingPage() {
     dispatch(toggleFavorite(card.id));
   };
 
+  const handleSearch = () => {
+    
+  }
+
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+          <button onClick={handleSearch}>Submit</button>
+        </form>
       <p>Click below to begin adding pages to your almanac!</p>
       <form>
         <input
@@ -112,7 +131,6 @@ export default function LandingPage() {
             <p>{`Spirit Brand: ${card.brand}`}</p>
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
-            <p>{`Favorite: ${card.favorite}`}</p>
           </div>
           <button onClick={() => handleRemove(card)}>Delete</button>
           <button onClick={() => handleFavorite(card)}>Favorite</button>
