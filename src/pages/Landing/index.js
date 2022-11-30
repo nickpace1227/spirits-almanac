@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCard, removeCard, toggleFavorite } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
-import { useLocation } from 'react-router-dom';
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -12,7 +11,9 @@ export default function LandingPage() {
   const [brand, setBrand] = useState("");
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dropdown, setDropdown] = useState("");
+  const [filteredCards, setFilteredCards] = useState([]);
   const cards = useSelector((store) => store.inventory.cards);
   
   const clearForm = () => {
@@ -51,14 +52,29 @@ export default function LandingPage() {
     dispatch(toggleFavorite(card.id));
   };
 
-  const handleSearch = () => {
+  const searchCards = (card) => {
+    if (card.name === searchTerm) {
+      return card
+    }
+  };
 
+  const handleSearch = () => {
+    setFilteredCards(cards.filter(searchCards))
   };
 
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
         <form onSubmit={handleSearch}>
+          <select onChange={(event) => setDropdown(event.target.value)}>
+            {/* <option value="all">All</option> */}
+            <option value="name">Name</option>
+            <option value="type">Type</option>
+            <option value="subType">Sub Type</option>
+            <option value="brand">Brand</option>
+            <option value="proof">Proof</option>
+            <option value="tastingNotes">Tasting Notes</option>
+          </select>
           <input
             type="text"
             placeholder="Search"
@@ -66,6 +82,22 @@ export default function LandingPage() {
             onChange={(event) => setSearchTerm(event.target.value)}
           />
           <button onClick={handleSearch}>Search</button>
+          <div>
+        <p>Search Result</p>
+        <p>{filteredCards.map((card) => {
+          return (
+          <body>
+          <div>
+            <h2>{card.name}</h2>
+            <p>{`Spirit Type: ${card.type}`}</p>
+            <p>{`Spirit Subtype: ${card.subType}`}</p>
+            <p>{`Spirit Brand: ${card.brand}`}</p>
+            <p>{`Spirit Proof: ${card.proof}`}</p>
+            <p>{`Tasting Notes: ${card.notes}`}</p>
+          </div>
+          </body>);
+        })}</p>
+      </div>
         </form>
       <p>Click below to begin adding pages to your almanac!</p>
       <form>
@@ -116,11 +148,7 @@ export default function LandingPage() {
         </button>
       </form>
       <div>
-        <p>Search Result</p>
-        <p>{}</p>
-      </div>
-      <div>Your Almanac:</div>
-      <div>
+        <div>Your Almanac:</div>
         {cards.map((card) => {
           return (
           <body>
