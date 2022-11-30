@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCard, removeCard, toggleFavorite } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
-import { search } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -14,10 +14,6 @@ export default function LandingPage() {
   const [notes, setNotes] = useState("");
   const [searchTerm, setSearchTerm] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
-  const { search } = useLocation();
-  const queryParams = new URLSearchParams(search);
-  const result = queryParams.get(searchTerm);
-  
   
   const clearForm = () => {
     setType("");
@@ -56,8 +52,8 @@ export default function LandingPage() {
   };
 
   const handleSearch = () => {
-    
-  }
+
+  };
 
   return (
     <div className="App">
@@ -69,7 +65,7 @@ export default function LandingPage() {
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
-          <button onClick={handleSearch}>Submit</button>
+          <button onClick={handleSearch}>Search</button>
         </form>
       <p>Click below to begin adding pages to your almanac!</p>
       <form>
@@ -116,9 +112,13 @@ export default function LandingPage() {
         />
         <br />
         <button type="button" onClick={handleClick}>
-          Submit
+          Add Card
         </button>
       </form>
+      <div>
+        <p>Search Result</p>
+        <p>{}</p>
+      </div>
       <div>Your Almanac:</div>
       <div>
         {cards.map((card) => {
@@ -140,14 +140,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-//commented out, but saved for later Redux application
-{
-  /* <div>
-<button onClick={() => dispatch(increment())}>Increment</button>
-<span>{count}</span>
-<button onClick={() => dispatch(decrement())}>Decrement</button>
-</div> */
-}
-//
-//<div> {JSON.stringify(card)} </div>
