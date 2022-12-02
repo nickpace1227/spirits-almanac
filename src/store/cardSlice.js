@@ -8,7 +8,7 @@ export const cardSlice = createSlice({
       type: "whiskey",
       subType: "Islay",
       brand: "Lagavulin",
-      proof: "40%",
+      proof: "43%",
       notes: "Some really thorough notes",
       favorite: false,
       id: 2,

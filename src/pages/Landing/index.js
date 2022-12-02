@@ -53,8 +53,10 @@ export default function LandingPage() {
   };
 
   const searchCards = (card) => {
-    if (card.name === searchTerm) {
+    if (card.name.includes(searchTerm)) {
       return card
+    } else { 
+      return alert("No Results")
     }
   };
 
@@ -65,7 +67,7 @@ export default function LandingPage() {
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
-        <form onSubmit={handleSearch}>
+        <form>
           <select onChange={(event) => setDropdown(event.target.value)}>
             {/* <option value="all">All</option> */}
             <option value="name">Name</option>
