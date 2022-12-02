@@ -3,26 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const cardSlice = createSlice({
   name: "inventory",
   initialState: {
-    cards: [{      
-      name: "Lagavulin Offerman Edition",
-      type: "whiskey",
-      subType: "Islay",
-      brand: "Lagavulin",
-      proof: "43%",
-      notes: "Some really thorough notes",
-      favorite: false,
-      id: 2,
-    }, 
-    {
-      name: "Compass Box Artist's Blend",
-      type: "Scotch",
-      subType: "Blend",
-      brand: "Compass Box",
-      proof: "43%",
-      notes: "pretty goddamn tasty and reasonably priced",
-      favorite: false,
-      id: 17,
-    }],
+    cards: [],
   },
   reducers: {
     addCard: (state, action) => {

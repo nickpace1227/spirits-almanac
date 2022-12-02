@@ -55,13 +55,16 @@ export default function LandingPage() {
   const searchCards = (card) => {
     if (card.name.includes(searchTerm)) {
       return card
-    } else { 
-      return alert("No Results")
-    }
+    } 
   };
 
   const handleSearch = () => {
     setFilteredCards(cards.filter(searchCards))
+      if (searchTerm === "") {
+      return alert("Please enter a search term")
+    } else if (filteredCards === []){ 
+      return alert("No Results")
+    }
   };
 
   return (
@@ -83,7 +86,7 @@ export default function LandingPage() {
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
-          <button onClick={handleSearch}>Search</button>
+          <button type="button" onClick={() => handleSearch()}>Search</button>
           <div>
         <p>Search Result</p>
         <p>{filteredCards.map((card) => {
