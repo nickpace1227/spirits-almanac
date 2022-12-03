@@ -3,7 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 export const cardSlice = createSlice({
   name: "inventory",
   initialState: {
-    cards: [],
+    cards: [
+      {
+      name: "Lagvulin 16",
+      type: "whiskey",
+      subType: "islay",
+      brand: "Lagavulin",
+      proof: "43%",
+      notes: "things and stuff"
+      },
+      {
+        name: "Redbreast 12",
+        type: "whiskey",
+        subType: "Irish",
+        brand: "Redbreast",
+        proof: "43%",
+        notes: "tastes like whiskey to me",
+      }
+    ],
   },
   reducers: {
     addCard: (state, action) => {

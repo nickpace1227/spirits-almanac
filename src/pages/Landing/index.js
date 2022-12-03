@@ -59,11 +59,12 @@ export default function LandingPage() {
   };
 
   const handleSearch = () => {
-    setFilteredCards(cards.filter(searchCards))
       if (searchTerm === "") {
       return alert("Please enter a search term")
-    } else if (filteredCards === []){ 
+    } else if (filteredCards === []) { 
       return alert("No Results")
+    } else {
+      setFilteredCards(cards.filter(searchCards))
     }
   };
 
@@ -79,6 +80,7 @@ export default function LandingPage() {
             <option value="brand">Brand</option>
             <option value="proof">Proof</option>
             <option value="tastingNotes">Tasting Notes</option>
+            <option value="favorite">Favorite</option> 
           </select>
           <input
             type="text"
