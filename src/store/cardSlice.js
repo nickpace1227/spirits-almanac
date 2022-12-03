@@ -5,20 +5,24 @@ export const cardSlice = createSlice({
   initialState: {
     cards: [
       {
-      name: "Lagvulin 16",
+      name: "Lagavulin 16",
       type: "whiskey",
       subType: "islay",
       brand: "Lagavulin",
       proof: "43%",
-      notes: "things and stuff"
+      notes: "things and stuff",
+      id: 1,
+      favorite: false,
       },
       {
-        name: "Redbreast 12",
-        type: "whiskey",
-        subType: "Irish",
-        brand: "Redbreast",
-        proof: "43%",
-        notes: "tastes like whiskey to me",
+        name: "Spirit Labs Old Tom Gin",
+        type: "gin",
+        subType: "Old Tom",
+        brand: "Spirit Labs",
+        proof: "40%",
+        notes: "Lots of botanicals",
+        id: 2,
+        favorite: false,
       }
     ],
   },

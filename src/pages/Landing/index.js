@@ -12,7 +12,7 @@ export default function LandingPage() {
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [dropdown, setDropdown] = useState("");
+  const [dropdown, setDropdown] = useState("name");
   const [filteredCards, setFilteredCards] = useState([]);
   const cards = useSelector((store) => store.inventory.cards);
   
@@ -53,7 +53,13 @@ export default function LandingPage() {
   };
 
   const searchCards = (card) => {
-    if (card.name.includes(searchTerm)) {
+    if (dropdown === "name" && card.name.includes(searchTerm)) {
+      return card
+    } else if (dropdown === "type" && card.type.includes(searchTerm)) {
+      return card
+    } else if (dropdown === "subType" && card.subType.includes(searchTerm)) {
+      return card
+    } else if (dropdown === "brand" && card.brand.includes(searchTerm)) {
       return card
     } 
   };
@@ -78,9 +84,6 @@ export default function LandingPage() {
             <option value="type">Type</option>
             <option value="subType">Sub Type</option>
             <option value="brand">Brand</option>
-            <option value="proof">Proof</option>
-            <option value="tastingNotes">Tasting Notes</option>
-            <option value="favorite">Favorite</option> 
           </select>
           <input
             type="text"
