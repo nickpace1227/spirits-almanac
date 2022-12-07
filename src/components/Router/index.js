@@ -6,6 +6,7 @@ import { Wrapper } from "./styles";
 import Header from "../Header";
 import LoginPage from "../../pages/Login";
 import Landing from "../../pages/Landing";
+import AdvancedSearch from "../../pages/AdvancedSearch";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
             <Routes>
               <Route path="/" exact element={<LoginPage />} />
               <Route path="/Landing" exact element={<Landing />} />
+              <Route path="/advancedsearch" exact element={<AdvancedSearch />} />
             </Routes>
           </div>
         </main>

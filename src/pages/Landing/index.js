@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCard, removeCard, toggleFavorite } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
+import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export default function LandingPage() {
   const [brand, setBrand] = useState("");
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
+  const [rating, setRating] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdown, setDropdown] = useState("name");
   const [filteredCards, setFilteredCards] = useState([]);
@@ -23,6 +25,7 @@ export default function LandingPage() {
     setProof("");
     setName("");
     setNotes("");
+    setRating("")
   };
 
   const handleClick = () => {
@@ -35,6 +38,7 @@ export default function LandingPage() {
       notes: notes,
       favorite: false,
       id: uuidv4(),
+      rating: rating,
     };
     if (name === "" || type === "") {
       return (alert("Please enter a name and type of spirit."))
@@ -52,14 +56,17 @@ export default function LandingPage() {
     dispatch(toggleFavorite(card.id));
   };
 
+
+
   const searchCards = (card) => {
-    if (dropdown === "name" && card.name.includes(searchTerm)) {
+    const lowerCaseSearch = searchTerm.toLowerCase();
+    if (dropdown === "name" && card.name.toLowerCase().includes(lowerCaseSearch)) {
       return card
-    } else if (dropdown === "type" && card.type.includes(searchTerm)) {
+    } else if (dropdown === "type" && card.type.toLowerCase().includes(lowerCaseSearch)) {
       return card
-    } else if (dropdown === "subType" && card.subType.includes(searchTerm)) {
+    } else if (dropdown === "subType" && card.subType.toLowerCase().includes(lowerCaseSearch)) {
       return card
-    } else if (dropdown === "brand" && card.brand.includes(searchTerm)) {
+    } else if (dropdown === "brand" && card.brand.toLowerCase().includes(lowerCaseSearch)) {
       return card
     } 
   };
@@ -67,12 +74,13 @@ export default function LandingPage() {
   const handleSearch = () => {
       if (searchTerm === "") {
       return alert("Please enter a search term")
-    } else if (filteredCards === []) { 
-      return alert("No Results")
     } else {
-      setFilteredCards(cards.filter(searchCards))
+      setFilteredCards(cards.filter(searchCards));
     }
-  };
+    if (filteredCards.length === 0) {
+        return alert("No Results")
+      }
+    };
 
   return (
     <div className="App">
@@ -93,6 +101,7 @@ export default function LandingPage() {
           />
           <button type="button" onClick={() => handleSearch()}>Search</button>
           <div>
+          <Link to="/advancedsearch">Advanced Search</Link>
         <p>Search Result</p>
         <p>{filteredCards.map((card) => {
           return (
@@ -104,6 +113,7 @@ export default function LandingPage() {
             <p>{`Spirit Brand: ${card.brand}`}</p>
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
+            <p>{`Rating: ${card.rating}`}</p>
           </div>
           </body>);
         })}</p>
@@ -153,6 +163,20 @@ export default function LandingPage() {
           onChange={(event) => setNotes(event.target.value)}
         />
         <br />
+        <select onChange={(event) => setRating(event.target.value)}>
+          <option value="empty">Select a rating</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <br />
         <button type="button" onClick={handleClick}>
           Add Card
         </button>
@@ -169,6 +193,7 @@ export default function LandingPage() {
             <p>{`Spirit Brand: ${card.brand}`}</p>
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
+            <p>{`Rating: ${card.rating}`}</p>
           </div>
           <button onClick={() => handleRemove(card)}>Delete</button>
           <button onClick={() => handleFavorite(card)}>Favorite</button>

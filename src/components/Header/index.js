@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <div>
-      <p>Spirits Almanac</p>
+      <Link to="/landing">Spirits Almanac</Link>
     </div>
   );
 }

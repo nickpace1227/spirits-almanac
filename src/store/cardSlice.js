@@ -13,6 +13,7 @@ export const cardSlice = createSlice({
       notes: "things and stuff",
       id: 1,
       favorite: false,
+      rating: 10,
       },
       {
         name: "Spirit Labs Old Tom Gin",
@@ -23,6 +24,7 @@ export const cardSlice = createSlice({
         notes: "Lots of botanicals",
         id: 2,
         favorite: false,
+        rating: 8,
       }
     ],
   },
