@@ -60,16 +60,10 @@ export default function LandingPage() {
 
   const searchCards = (card) => {
     const lowerCaseSearch = searchTerm.toLowerCase();
-    if (dropdown === "name" && card.name.toLowerCase().includes(lowerCaseSearch)) {
+    if (card[dropdown].toLowerCase().includes(lowerCaseSearch)) {
       return card
-    } else if (dropdown === "type" && card.type.toLowerCase().includes(lowerCaseSearch)) {
-      return card
-    } else if (dropdown === "subType" && card.subType.toLowerCase().includes(lowerCaseSearch)) {
-      return card
-    } else if (dropdown === "distillery" && card.distillery.toLowerCase().includes(lowerCaseSearch)) {
-      return card
-    } 
   };
+}
 
   const handleSearch = () => {
       if (searchTerm === "") {
