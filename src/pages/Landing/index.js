@@ -9,7 +9,7 @@ export default function LandingPage() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
-  const [brand, setBrand] = useState("");
+  const [distillery, setDistillery] = useState("");
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const [rating, setRating] = useState("");
@@ -21,7 +21,7 @@ export default function LandingPage() {
   const clearForm = () => {
     setType("");
     setSubType("");
-    setBrand("");
+    setDistillery("");
     setProof("");
     setName("");
     setNotes("");
@@ -33,7 +33,7 @@ export default function LandingPage() {
       name: name,
       type: type,
       subType: subType,
-      brand: brand,
+      distillery: distillery,
       proof: proof,
       notes: notes,
       favorite: false,
@@ -66,7 +66,7 @@ export default function LandingPage() {
       return card
     } else if (dropdown === "subType" && card.subType.toLowerCase().includes(lowerCaseSearch)) {
       return card
-    } else if (dropdown === "brand" && card.brand.toLowerCase().includes(lowerCaseSearch)) {
+    } else if (dropdown === "distillery" && card.distillery.toLowerCase().includes(lowerCaseSearch)) {
       return card
     } 
   };
@@ -75,23 +75,23 @@ export default function LandingPage() {
       if (searchTerm === "") {
       return alert("Please enter a search term")
     } else {
+      const newFilteredCards = cards.filter(searchCards);
       setFilteredCards(cards.filter(searchCards));
-    }
-    if (filteredCards.length === 0) {
-        return alert("No Results")
+      if (newFilteredCards.length === 0) {
+        return alert("No Results");
       }
-    };
+    }
+  };
 
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
         <form>
           <select onChange={(event) => setDropdown(event.target.value)}>
-            {/* <option value="all">All</option> */}
             <option value="name">Name</option>
             <option value="type">Type</option>
             <option value="subType">Sub Type</option>
-            <option value="brand">Brand</option>
+            <option value="distillery">Distillery</option>
           </select>
           <input
             type="text"
@@ -110,7 +110,7 @@ export default function LandingPage() {
             <h2>{card.name}</h2>
             <p>{`Spirit Type: ${card.type}`}</p>
             <p>{`Spirit Subtype: ${card.subType}`}</p>
-            <p>{`Spirit Brand: ${card.brand}`}</p>
+            <p>{`Spirit Distillery: ${card.distillery}`}</p>
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
@@ -144,9 +144,9 @@ export default function LandingPage() {
         <br />
         <input
           type="text"
-          placeholder="Spirit Brand"
-          value={brand}
-          onChange={(event) => setBrand(event.target.value)}
+          placeholder="Spirit Distillery"
+          value={distillery}
+          onChange={(event) => setDistillery(event.target.value)}
         />
         <br />
         <input
@@ -190,7 +190,7 @@ export default function LandingPage() {
             <h2>{card.name}</h2>
             <p>{`Spirit Type: ${card.type}`}</p>
             <p>{`Spirit Subtype: ${card.subType}`}</p>
-            <p>{`Spirit Brand: ${card.brand}`}</p>
+            <p>{`Spirit Distillery: ${card.distillery}`}</p>
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
