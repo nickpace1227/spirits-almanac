@@ -11,54 +11,103 @@ export default function AdvancedSearch() {
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const [rating, setRating] = useState("");
+  const [favorite, setFavorite] = useState(false)
+  const [searchResults, setSearchResults] = useState([]);
   const cards = useSelector((store) => store.inventory.cards);
+
+  const handleAdvancedSearch = (filteredResults) => {
+    let resultArray = [...filteredResults];
+
+    if (name !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.name.includes(name));
+      resultArray = [...newResult];
+    }
+
+    if (type !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.type.includes(type));
+      resultArray = [...newResult];
+    }
+
+    if (subType !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.subType.includes(subType));
+      resultArray = [...newResult];
+    }
+
+    if (distillery !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.distillery.includes(distillery));
+      resultArray = [...newResult];
+    }
+
+    if (proof !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.proof.includes(proof));
+      resultArray = [...newResult];
+    }
+
+    if (notes !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.notes.includes(notes));
+      resultArray = [...newResult]
+    }
+
+    if (rating !== "") {
+      const newResult = resultArray.filter((bottle) => bottle.rating.includes(rating));
+      resultArray = [...newResult]
+    }
+  }
 
   return (
     <div>
-      <div>Spirits Almanac Advanced Search</div>
+      <h1>Spirits Almanac Advanced Search</h1>
+      <div>Select from the below options to narrow down what bottle you're looking for.</div>
       <form>
         <input 
           type="text"
           placeholder="Spirit Name" 
+          value={name}
           onChange={(event) => setName(event.target.value)}
           />
           <br />
         <input
           type="text"
           placeholder="Spirit Type"
+          value={type}
           onChange={(event) => setType(event.target.value)} 
           />
           <br />
         <input 
          type="text"
          placeholder="Spirit Subtype" 
+         value={subType}
          onChange={(event) => setSubType(event.target.value)}
          />
          <br />
         <input
           type="text"
           placeholder="Spirit Distillery" 
+          value={distillery}
           onChange={(event) => setDistillery(event.target.value)}
           />
           <br />
         <input 
           type="number"
           placeholder="Spirit Proof" 
+          value={proof}
           onChange={(event) => setProof(event.target.value)}
           />
           <br />
         <input
           type="text"
           placeholder="Tasting Notes" 
+          value={notes}
           onChange={(event) => setNotes(event.target.value)}
           />
           <br />
         <label>
         Limit Search to Favorites?
           <input
-            type="checkbox" />
+            type="checkbox" 
+            onChange={() => setFavorite(favorite => !favorite)}/>
           <br />
-        <select>
+        <select onChange={(event) => setRating(event.target.value)} >
           <option value="empty">Select a Rating</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -73,6 +122,7 @@ export default function AdvancedSearch() {
         </select>
         </label>
       </form>
+      <button type="button" onClick={handleAdvancedSearch} >Search</button>
       <div>
         Search Results:
       </div>
