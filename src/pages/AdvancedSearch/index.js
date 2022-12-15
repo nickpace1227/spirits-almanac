@@ -11,47 +11,43 @@ export default function AdvancedSearch() {
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const [rating, setRating] = useState("");
-  const [favorite, setFavorite] = useState(false)
-  const [searchResults, setSearchResults] = useState([]);
+  const [favorite, setFavorite] = useState();
   const cards = useSelector((store) => store.inventory.cards);
+  const [searchResults, setSearchResults] = useState(cards);
+  
 
-  const handleAdvancedSearch = (filteredResults) => {
-    let resultArray = [...filteredResults];
+  const handleAdvancedSearch = (stuffToFilter) => {
+    const resultArray = [stuffToFilter];
 
-    if (name !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.name.includes(name));
-      resultArray = [...newResult];
-    }
-
-    if (type !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.type.includes(type));
-      resultArray = [...newResult];
-    }
-
-    if (subType !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.subType.includes(subType));
-      resultArray = [...newResult];
-    }
-
-    if (distillery !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.distillery.includes(distillery));
-      resultArray = [...newResult];
-    }
-
-    if (proof !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.proof.includes(proof));
-      resultArray = [...newResult];
-    }
-
-    if (notes !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.notes.includes(notes));
+    if(name !== ''){
+      const newResult = resultArray.filter((bottle)=> bottle.name.includes(name));
       resultArray = [...newResult]
-    }
-
-    if (rating !== "") {
-      const newResult = resultArray.filter((bottle) => bottle.rating.includes(rating));
-      resultArray = [...newResult]
-    }
+  }
+  if(type !== ''){
+    const newResult = resultArray.filter((bottle)=> bottle.type.includes(type));
+    resultArray = [...newResult]
+  }
+  if(subType !== ''){
+    const newResult = resultArray.filter((bottle)=> bottle.subType.includes(subType));
+    resultArray = [...newResult]
+  }
+  if(distillery !== ''){
+    const newResult = resultArray.filter((bottle)=> bottle.distillery.includes(distillery));
+    resultArray = [...newResult]
+  }
+  if(proof !== ''){
+    const newResult = resultArray.filter((bottle)=> bottle.proof.includes(proof));
+    resultArray = [...newResult]
+  }
+  if(notes !== ''){
+    const newResult = resultArray.filter((bottle)=> bottle.notes.includes(notes));
+    resultArray = [...newResult]
+  }
+  if(rating !== ''){
+    const newResult = resultArray.filter((bottle)=> bottle.rating.includes(rating));
+    resultArray = [...newResult]
+  }
+  setSearchResults(resultArray)
   }
 
   return (
@@ -105,7 +101,7 @@ export default function AdvancedSearch() {
         Limit Search to Favorites?
           <input
             type="checkbox" 
-            onChange={() => setFavorite(favorite => !favorite)}/>
+            onChange={() => setFavorite(favorite = !favorite)}/>
           <br />
         <select onChange={(event) => setRating(event.target.value)} >
           <option value="empty">Select a Rating</option>
@@ -126,7 +122,7 @@ export default function AdvancedSearch() {
       <div>
         Search Results:
       </div>
-      {cards.map((card) => {
+      {searchResults.map((card) => {
         return (
           <body>
             <div>
