@@ -157,18 +157,18 @@ export default function LandingPage() {
           onChange={(event) => setNotes(event.target.value)}
         />
         <br />
-        <select onChange={(event) => setRating(event.target.value)}>
+        <select value={rating} onChange={(event) => setRating(event.target.value)}>
           <option value="">Select a rating</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
         </select>
         <br />
         <button type="button" onClick={handleClick}>
@@ -189,8 +189,8 @@ export default function LandingPage() {
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
           </div>
-          <button onClick={() => handleRemove(card)}>Delete</button>
-          <button onClick={() => handleFavorite(card)}>Favorite</button>
+          <button type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
           </body>);
         })}
       </div>

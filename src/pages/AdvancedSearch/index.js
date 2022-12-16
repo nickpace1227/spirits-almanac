@@ -1,9 +1,9 @@
-import React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removeCard, toggleFavorite } from "../../store/cardSlice";
 
 export default function AdvancedSearch() {
-
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
@@ -11,9 +11,17 @@ export default function AdvancedSearch() {
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const [rating, setRating] = useState("");
-  const [favorite, setFavorite] = useState();
+  const [favorite, setFavorite] = useState(false);
   const cards = useSelector((store) => store.inventory.cards);
   const [searchResults, setSearchResults] = useState(cards);
+
+  const handleRemove = (card) => {
+    dispatch(removeCard(card));
+  };
+
+  const handleFavorite = (card) => {
+    dispatch(toggleFavorite(card.id));
+  };
 
   const handleAdvancedSearch = () => {
     let resultArray = cards;
@@ -43,11 +51,28 @@ export default function AdvancedSearch() {
     resultArray = [...newResult]
   }
   if(rating !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.rating.includes(rating));
+    const newResult = resultArray.filter((bottle)=> bottle.rating === rating);
     resultArray = [...newResult]
   }
+  if(favorite !== false){
+    const newResult = resultArray.filter((bottle) => bottle.favorite === true)
+    resultArray = [...newResult]
+  }
+
   setSearchResults(resultArray)
   };
+
+  const handleClearForm = () => {
+    setName("")
+    setType("")
+    setSubType("")
+    setDistillery("")
+    setProof("")
+    setNotes("")
+    setRating("")
+    setFavorite(false)
+    setSearchResults(cards)
+  }
 
   return (
     <div>
@@ -100,24 +125,25 @@ export default function AdvancedSearch() {
         Limit Search to Favorites?
           <input
             type="checkbox" 
-            onChange={() => setFavorite(favorite = !favorite)}/>
+            onChange={() => setFavorite(!favorite)}/>
           <br />
-        <select onChange={(event) => setRating(event.target.value)} >
-          <option value="empty">Select a Rating</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
         </label>
+        <select value={rating} onChange={(event) => setRating(event.target.value)} >
+          <option value="">Select a Rating</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
+        </select>
       </form>
       <button type="button" onClick={handleAdvancedSearch} >Search</button>
+      <button type="button" onClick={handleClearForm}>Clear Form</button>
       <div>
         Search Results:
       </div>
@@ -133,6 +159,8 @@ export default function AdvancedSearch() {
               <p>{`Tasting Notes: ${card.notes}`}</p>
               <p>{`Rating: ${card.rating}`}</p>
             </div>
+            <button type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
           </body>
         )
       })}
