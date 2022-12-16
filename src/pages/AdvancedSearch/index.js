@@ -16,10 +16,10 @@ export default function AdvancedSearch() {
   const [searchResults, setSearchResults] = useState(cards);
   
 
-  const handleAdvancedSearch = (stuffToFilter) => {
-    const resultArray = [stuffToFilter];
+  const handleAdvancedSearch = () => {
+    let resultArray = [searchResults];
 
-    if(name !== ''){
+  if(name !== ''){
       const newResult = resultArray.filter((bottle)=> bottle.name.includes(name));
       resultArray = [...newResult]
   }
