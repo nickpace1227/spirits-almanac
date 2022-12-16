@@ -14,10 +14,9 @@ export default function AdvancedSearch() {
   const [favorite, setFavorite] = useState();
   const cards = useSelector((store) => store.inventory.cards);
   const [searchResults, setSearchResults] = useState(cards);
-  
 
   const handleAdvancedSearch = () => {
-    let resultArray = [searchResults];
+    let resultArray = cards;
 
   if(name !== ''){
       const newResult = resultArray.filter((bottle)=> bottle.name.includes(name));
@@ -48,7 +47,7 @@ export default function AdvancedSearch() {
     resultArray = [...newResult]
   }
   setSearchResults(resultArray)
-  }
+  };
 
   return (
     <div>
