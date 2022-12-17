@@ -1,6 +1,6 @@
 import React from "react";
 import { Wrapper } from "./styles";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 const ACCEPTABLE_LOGIN = { username: "changeMe", password: "changeMe" };
 
@@ -49,6 +49,7 @@ export default function LoginPage() {
       <br />
       <button onClick={handleLogin}>Login</button>
       </form>
+      <h3>Don't have an account? Click <Link to="/CreateUser">Here!</Link></h3>
     </Wrapper>
   );
 }

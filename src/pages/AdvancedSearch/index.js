@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function AdvancedSearch() {
-  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");

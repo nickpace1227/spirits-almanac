@@ -9,6 +9,7 @@ import Almanac from "../../pages/Almanac";
 import AdvancedSearch from "../../pages/AdvancedSearch";
 import HomePage from "../../pages/HomePage";
 import ContactUs from "../../pages/ContactUs";
+import CreateUser from "../../pages/CreateUser";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
               <Route path="/AdvancedSearch" exact element={<AdvancedSearch />} />
               <Route path="/HomePage" exact element={<HomePage />} />
               <Route path="/ContactUs" exact element={<ContactUs />} />
+              <Route path="/CreateUser" exact element={<CreateUser />} />
             </Routes>
           </div>
         </main>
