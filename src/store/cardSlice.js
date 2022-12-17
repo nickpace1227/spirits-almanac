@@ -48,7 +48,7 @@ export const cardSlice = createSlice({
     },
     toggleFavorite: (state, action) => {
       state.cards = state.cards.map((card) => {
-        if (card.id === action.payload) {
+        if (card.id === action.payload.id) {
           return {
             ...card,
             favorite: !card.favorite,

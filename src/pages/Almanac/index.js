@@ -4,7 +4,7 @@ import { addCard, removeCard, toggleFavorite, editCard } from "../../store/cardS
 import {v4 as uuidv4} from "uuid";
 import { Link } from "react-router-dom";
 
-export default function LandingPage() {
+export default function Almanac() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
@@ -16,6 +16,7 @@ export default function LandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdown, setDropdown] = useState("name");
   const [filteredCards, setFilteredCards] = useState([]);
+  const [spiritId, setSpiritId] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
   
   const clearForm = () => {
@@ -53,7 +54,7 @@ export default function LandingPage() {
   };
 
   const handleFavorite = (card) => {
-    dispatch(toggleFavorite(card.id));
+    dispatch(toggleFavorite(card));
   };
 
   const handleEditCard = (card) => {
@@ -64,6 +65,7 @@ export default function LandingPage() {
     setProof(card.proof);
     setNotes(card.notes);
     setRating(card.rating);
+    setSpiritId(card.id);
   }
 
   const searchCards = (card) => {
@@ -94,7 +96,7 @@ export default function LandingPage() {
       proof: proof,
       notes: notes,
       favorite: card.favorite,
-      id: card.id,
+      id: spiritId,
       rating: rating,
     };
     if (name === "" || type === "") {
@@ -123,7 +125,6 @@ export default function LandingPage() {
           <button type="button" onClick={() => handleSearch()}>Search</button>
           <div>
           <Link to="/advancedsearch">Advanced Search</Link>
-        <p>Search Result</p>
         <p>{filteredCards.map((card) => {
           return (
           <body>
@@ -174,7 +175,7 @@ export default function LandingPage() {
         />
         <br />
         <input
-          type="text"
+          type="number"
           placeholder="Spirit Proof"
           value={proof}
           onChange={(event) => setProof(event.target.value)}
@@ -219,6 +220,7 @@ export default function LandingPage() {
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
+            <p>{`Id: ${card.id}`}</p>
           </div>
           <button type="button" onClick={() => handleRemove(card)}>Delete</button>
           <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>

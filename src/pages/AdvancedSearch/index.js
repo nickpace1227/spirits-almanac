@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeCard, toggleFavorite } from "../../store/cardSlice";
 
 export default function AdvancedSearch() {
   const dispatch = useDispatch();
@@ -20,27 +19,32 @@ export default function AdvancedSearch() {
     let resultArray = cards;
 
   if(name !== ''){
-      const newResult = resultArray.filter((bottle)=> bottle.name.includes(name));
+      const lowerCaseName = name.toLowerCase();
+      const newResult = resultArray.filter((bottle)=> bottle.name.toLowerCase().includes(lowerCaseName));
       resultArray = [...newResult]
   }
   if(type !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.type.includes(type));
+    const lowerCaseType = type.toLowerCase();
+    const newResult = resultArray.filter((bottle)=> bottle.type.toLowerCase().includes(lowerCaseType));
     resultArray = [...newResult]
   }
   if(subType !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.subType.includes(subType));
+    const lowerCaseSubType = subType.toLowerCase();
+    const newResult = resultArray.filter((bottle)=> bottle.subType.toLowerCase().includes(lowerCaseSubType));
     resultArray = [...newResult]
   }
   if(distillery !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.distillery.includes(distillery));
+    const lowerCaseDistillery = distillery.toLowerCase();
+    const newResult = resultArray.filter((bottle)=> bottle.distillery.toLowerCase().includes(lowerCaseDistillery));
     resultArray = [...newResult]
   }
   if(proof !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.proof.includes(proof));
+    const newResult = resultArray.filter((bottle)=> bottle.proof.toLowerCase().includes(proof));
     resultArray = [...newResult]
   }
   if(notes !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.notes.includes(notes));
+    const lowerCaseNotes = notes.toLowerCase();
+    const newResult = resultArray.filter((bottle)=> bottle.notes.toLowerCase().includes(lowerCaseNotes));
     resultArray = [...newResult]
   }
   if(rating !== ''){

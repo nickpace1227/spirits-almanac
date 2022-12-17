@@ -5,8 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Wrapper } from "./styles";
 import Header from "../Header";
 import LoginPage from "../../pages/Login";
-import Landing from "../../pages/Landing";
+import Almanac from "../../pages/Almanac";
 import AdvancedSearch from "../../pages/AdvancedSearch";
+import HomePage from "../../pages/HomePage";
+import ContactUs from "../../pages/ContactUs";
 
 function Router() {
   return (
@@ -17,8 +19,10 @@ function Router() {
           <div className="page">
             <Routes>
               <Route path="/" exact element={<LoginPage />} />
-              <Route path="/Landing" exact element={<Landing />} />
-              <Route path="/advancedsearch" exact element={<AdvancedSearch />} />
+              <Route path="/YourAlmanac" exact element={<Almanac />} />
+              <Route path="/AdvancedSearch" exact element={<AdvancedSearch />} />
+              <Route path="/HomePage" exact element={<HomePage />} />
+              <Route path="/ContactUs" exact element={<ContactUs />} />
             </Routes>
           </div>
         </main>
