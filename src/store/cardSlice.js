@@ -57,9 +57,26 @@ export const cardSlice = createSlice({
         return card;
       });
     },
+    editCard: (state, action) => {
+      state.cards = state.cards.map((card) => {
+        if (card.id === action.payload.id) {
+          return {
+            ...card,
+            name: action.payload.name,
+            type: action.payload.type,
+            subType: action.payload.subType,
+            distillery: action.payload.distillery,
+            proof: action.payload.proof,
+            notes: action.payload.notes,
+            rating: action.payload.notes,
+          }
+        }
+        return card;
+      })
+    },
   },
 });
 
-export const { addCard, removeCard, toggleFavorite } = cardSlice.actions;
+export const { addCard, removeCard, toggleFavorite, editCard } = cardSlice.actions;
 
 export default cardSlice.reducer;

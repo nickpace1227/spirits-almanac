@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addCard, removeCard, toggleFavorite } from "../../store/cardSlice";
+import { addCard, removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
 import { Link } from "react-router-dom";
 
@@ -56,7 +56,15 @@ export default function LandingPage() {
     dispatch(toggleFavorite(card.id));
   };
 
-
+  const handleEditCard = (card) => {
+    setName(card.name);
+    setType(card.type);
+    setSubType(card.subType);
+    setDistillery(card.distillery);
+    setProof(card.proof);
+    setNotes(card.notes);
+    setRating(card.rating);
+  }
 
   const searchCards = (card) => {
     const lowerCaseSearch = searchTerm.toLowerCase();
@@ -76,6 +84,25 @@ export default function LandingPage() {
       }
     }
   };
+
+  const handleEdit = (card) => {
+    const updatedCard = {
+      name: name,
+      type: type,
+      subType: subType,
+      distillery: distillery,
+      proof: proof,
+      notes: notes,
+      favorite: card.favorite,
+      id: card.id,
+      rating: rating,
+    };
+    if (name === "" || type === "") {
+      return (alert("Please enter a name and type of spirit."))
+    } else {
+      dispatch(editCard(updatedCard));
+  }
+}
 
   return (
     <div className="App">
@@ -109,6 +136,9 @@ export default function LandingPage() {
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
           </div>
+          <button type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
+          <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
           </body>);
         })}</p>
       </div>
@@ -174,6 +204,7 @@ export default function LandingPage() {
         <button type="button" onClick={handleClick}>
           Add Card
         </button>
+        <button type="button" onClick={handleEdit}>Edit Card</button>
       </form>
       <div>
         <div>Your Almanac:</div>
@@ -191,6 +222,7 @@ export default function LandingPage() {
           </div>
           <button type="button" onClick={() => handleRemove(card)}>Delete</button>
           <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
+          <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
           </body>);
         })}
       </div>

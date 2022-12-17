@@ -15,13 +15,6 @@ export default function AdvancedSearch() {
   const cards = useSelector((store) => store.inventory.cards);
   const [searchResults, setSearchResults] = useState(cards);
 
-  const handleRemove = (card) => {
-    dispatch(removeCard(card));
-  };
-
-  const handleFavorite = (card) => {
-    dispatch(toggleFavorite(card.id));
-  };
 
   const handleAdvancedSearch = () => {
     let resultArray = cards;
@@ -159,8 +152,6 @@ export default function AdvancedSearch() {
               <p>{`Tasting Notes: ${card.notes}`}</p>
               <p>{`Rating: ${card.rating}`}</p>
             </div>
-            <button type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
           </body>
         )
       })}
