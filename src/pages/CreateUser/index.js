@@ -45,7 +45,7 @@ export default function CreateUser() {
           onChange={(event) => setPassword(event.target.value)}
         />
         <br />
-        <button type="button" onClick={handleCreateAccount}>Login</button>
+        <button type="button" onClick={handleCreateAccount}>Create Account</button>
         </form>
     )
 }
