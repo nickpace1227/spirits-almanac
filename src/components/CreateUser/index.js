@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function CreateUser() {
@@ -6,15 +6,18 @@ export default function CreateUser() {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    
+    const newUser = {
+      name: name,
+      username: username,
+      password: password,
+    };
+
+    useEffect(() => {
+      localStorage.setItem(newUser, JSON.stringify({newUser}));
+    }, [name]);
 
     const handleCreateAccount = () => {
-        const newUser = {
-            name: name,
-            username: username,
-            password: password,
-        }
-
-        localStorage.setItem('userData', JSON.stringify([...userData, newUser]));
         navigate("/LoginPage")
     }
 
@@ -26,7 +29,7 @@ export default function CreateUser() {
 
 
     return (
-        <form onKeyPress={handleKeypress}>
+        <form onKeyDown={handleKeypress}>
         <p>Create an Account</p>
         <input 
           type="text"
@@ -48,4 +51,4 @@ export default function CreateUser() {
         <button type="button" onClick={handleCreateAccount}>Create Account</button>
         </form>
     )
-}
+};

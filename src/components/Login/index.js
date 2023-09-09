@@ -2,7 +2,7 @@ import React from "react";
 import { Wrapper } from "./styles";
 import {useNavigate, Link} from "react-router-dom";
 
-const ACCEPTABLE_LOGIN = { username: "changeMe", password: "changeMe" };
+
 
 export default function LoginPage() {
   const [username, setUsername] = React.useState("");
@@ -14,11 +14,11 @@ export default function LoginPage() {
 
   const handleLogin = () => {
     if (
-      username === ACCEPTABLE_LOGIN.username &&
-      password === ACCEPTABLE_LOGIN.password
+      username === localStorage.newUser.username &&
+      password === localStorage.newUser.password
     ) {
       //do login stuff here, like redirect to inventory page
-      navigate("/landing")
+      navigate("/HomePage")
     } else {
       alert("Incorrect Username or Password");
       refreshPage()
@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <Wrapper>
-      <form onKeyPress={handleKeypress}>
+      <form onKeyDown={handleKeypress}>
       <p>Login</p>
       <input
         type="username"

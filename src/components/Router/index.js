@@ -4,14 +4,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Relative imports
 import { Wrapper } from "./styles";
 import Header from "../Header";
-import LoginPage from "../../pages/Login";
-import Almanac from "../../pages/Almanac";
-import AdvancedSearch from "../../pages/AdvancedSearch";
-import HomePage from "../../pages/HomePage";
-import ContactUs from "../../pages/ContactUs";
-import CreateUser from "../../pages/CreateUser";
+import LoginPage from "../Login";
+import Almanac from "../Almanac";
+import AdvancedSearch from "../AdvancedSearch";
+import HomePage from "../HomePage";
+import ContactUs from "../ContactUs";
+import CreateUser from "../CreateUser";
 
-function Router() {
+export default function SpiritsAlmanac() {
   return (
     <BrowserRouter>
       <Wrapper>
@@ -19,18 +19,17 @@ function Router() {
           <Header />
           <div className="page">
             <Routes>
+              <Route path="/CreateUser" exact element={<CreateUser />} />
               <Route path="/" exact element={<LoginPage />} />
+              <Route path="/LoginPage" exact element={<LoginPage />} />
               <Route path="/YourAlmanac" exact element={<Almanac />} />
               <Route path="/AdvancedSearch" exact element={<AdvancedSearch />} />
               <Route path="/HomePage" exact element={<HomePage />} />
               <Route path="/ContactUs" exact element={<ContactUs />} />
-              <Route path="/CreateUser" exact element={<CreateUser />} />
             </Routes>
           </div>
         </main>
       </Wrapper>
     </BrowserRouter>
   );
-}
-
-export default Router;
+};
