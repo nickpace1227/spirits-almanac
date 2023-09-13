@@ -68,7 +68,7 @@ export const cardSlice = createSlice({
             distillery: action.payload.distillery,
             proof: action.payload.proof,
             notes: action.payload.notes,
-            rating: action.payload.notes,
+            rating: action.payload.rating,
           }
         }
         return card;

@@ -18,6 +18,7 @@ export default function Almanac() {
   const [filteredCards, setFilteredCards] = useState([]);
   const [spiritId, setSpiritId] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
+  const [editingSpirit, setEditingSpirt] = useState(false);
   
   const clearForm = () => {
     setType("");
@@ -29,7 +30,7 @@ export default function Almanac() {
     setRating("")
   };
 
-  const handleClick = () => {
+  const handleAdd = () => {
     const newCard = {
       name: name,
       type: type,
@@ -58,6 +59,7 @@ export default function Almanac() {
   };
 
   const handleEditCard = (card) => {
+    setEditingSpirt(true);
     setName(card.name);
     setType(card.type);
     setSubType(card.subType);
@@ -66,14 +68,14 @@ export default function Almanac() {
     setNotes(card.notes);
     setRating(card.rating);
     setSpiritId(card.id);
-  }
+  };
 
   const searchCards = (card) => {
     const lowerCaseSearch = searchTerm.toLowerCase();
     if (card[dropdown].toLowerCase().includes(lowerCaseSearch)) {
       return card
   };
-}
+};
 
   const handleSearch = () => {
       if (searchTerm === "") {
@@ -103,12 +105,14 @@ export default function Almanac() {
       return (alert("Please enter a name and type of spirit."))
     } else {
       dispatch(editCard(updatedCard));
+      clearForm();
   }
-}
+};
 
   return (
     <div className="App">
       <p>Welcome to Spirits Almanac!</p>
+      <p>Click below to begin adding pages to your almanac or use our search tool to look through your saved spirits!</p>
         <form>
           <select onChange={(event) => setDropdown(event.target.value)}>
             <option value="name">Name</option>
@@ -127,7 +131,7 @@ export default function Almanac() {
           <Link to="/advancedsearch">Advanced Search</Link>
         <p>{filteredCards.map((card) => {
           return (
-          <body>
+          <div>
           <div>
             <h2>{card.name}</h2>
             <p>{`Spirit Type: ${card.type}`}</p>
@@ -140,11 +144,14 @@ export default function Almanac() {
           <button type="button" onClick={() => handleRemove(card)}>Delete</button>
           <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
           <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
-          </body>);
+          </div>);
         })}</p>
       </div>
         </form>
-      <p>Click below to begin adding pages to your almanac!</p>
+      <div>
+      {editingSpirit === false && (
+      <div>
+      <h3>Add a Spirit</h3>
       <form>
         <input
           type="text"
@@ -175,10 +182,10 @@ export default function Almanac() {
         />
         <br />
         <input
-          type="number"
+          type="text"
           placeholder="Spirit Proof"
           value={proof}
-          onChange={(event) => setProof(event.target.value)}
+          onChange={(e) => setProof(e.target.value)}
         />
         <br />
         <input
@@ -202,16 +209,82 @@ export default function Almanac() {
           <option value={10}>10</option>
         </select>
         <br />
-        <button type="button" onClick={handleClick}>
+        <button type="button" onClick={handleAdd}>
           Add Card
         </button>
-        <button type="button" onClick={handleEdit}>Edit Card</button>
       </form>
+      </div>)}
+      {editingSpirit === true && (
+      <div>
+      <h3>Edit Your Spirit</h3>
+      <form>
+        <input
+          type="text"
+          placeholder="Spirit Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Spirit Type"
+          value={type}
+          onChange={(event) => setType(event.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Spirit Subtype"
+          value={subType}
+          onChange={(event) => setSubType(event.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Spirit Distillery"
+          value={distillery}
+          onChange={(event) => setDistillery(event.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Spirit Proof"
+          value={proof}
+          onChange={(e) => setProof(e.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Tasting Notes"
+          value={notes}
+          onChange={(event) => setNotes(event.target.value)}
+        />
+        <br />
+        <select value={rating} onChange={(event) => setRating(event.target.value)}>
+          <option value="">Select a rating</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
+        </select>
+        <br />
+        <button type="button" onClick={handleEdit}>
+          Edit Card
+        </button>
+      </form>
+      </div>)}
+      </div>
       <div>
         <div>Your Almanac:</div>
         {cards.map((card) => {
           return (
-          <body>
+          <div>
           <div>
             <h2>{card.name}</h2>
             <p>{`Spirit Type: ${card.type}`}</p>
@@ -220,12 +293,11 @@ export default function Almanac() {
             <p>{`Spirit Proof: ${card.proof}`}</p>
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
-            <p>{`Id: ${card.id}`}</p>
           </div>
           <button type="button" onClick={() => handleRemove(card)}>Delete</button>
           <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
           <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
-          </body>);
+          </div>);
         })}
       </div>
     </div>

@@ -6,20 +6,20 @@ export default function CreateUser() {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    
-    const newUser = {
+
+    const userData = {
       name: name,
       username: username,
       password: password,
     };
 
     useEffect(() => {
-      localStorage.setItem(newUser, JSON.stringify({newUser}));
-    }, [name]);
+      localStorage.setItem('userData', JSON.stringify(userData));
+    }, [userData]);
 
     const handleCreateAccount = () => {
         navigate("/LoginPage")
-    }
+    };
 
     const handleKeypress = e => {
         if (e.keyCode === 13) {

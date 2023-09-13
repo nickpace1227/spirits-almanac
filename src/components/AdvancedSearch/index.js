@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
+
 
 export default function AdvancedSearch() {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [subType, setSubType] = useState("");
@@ -12,7 +15,38 @@ export default function AdvancedSearch() {
   const [favorite, setFavorite] = useState(false);
   const cards = useSelector((store) => store.inventory.cards);
   const [searchResults, setSearchResults] = useState(cards);
+  const [spiritId, setSpiritId] = useState("")
+  const [editingSpirit, setEditingSpirit] = useState(false);
 
+  const clearForm = () => {
+    setType("");
+    setSubType("");
+    setDistillery("");
+    setProof("");
+    setName("");
+    setNotes("");
+    setRating("")
+  };
+
+  const handleRemove = (card) => {
+    dispatch(removeCard(card))
+  };
+
+  const handleFavorite = (card) => {
+    dispatch(toggleFavorite(card));
+  };
+
+  const handleEditCard = (card) => {
+    setEditingSpirit(true);
+    setName(card.name);
+    setType(card.type);
+    setSubType(card.subType);
+    setDistillery(card.distillery);
+    setProof(card.proof);
+    setNotes(card.notes);
+    setRating(card.rating);
+    setSpiritId(card.id);
+  };
 
   const handleAdvancedSearch = () => {
     let resultArray = cards;
@@ -58,6 +92,27 @@ export default function AdvancedSearch() {
   setSearchResults(resultArray)
   };
 
+  const handleEdit = (card) => {
+    const updatedCard = {
+      name: name,
+      type: type,
+      subType: subType,
+      distillery: distillery,
+      proof: proof,
+      notes: notes,
+      favorite: card.favorite,
+      id: spiritId,
+      rating: rating,
+    };
+    if (name === "" || type === "") {
+      return (alert("Please enter a name and type of spirit."))
+    } else {
+      dispatch(editCard(updatedCard));
+      setEditingSpirit(false);
+      clearForm();
+  }
+};
+
   const handleClearForm = () => {
     setName("")
     setType("")
@@ -73,7 +128,11 @@ export default function AdvancedSearch() {
   return (
     <div>
       <h1>Spirits Almanac Advanced Search</h1>
-      <div>Select from the below options to narrow down what bottle you're looking for.</div>
+      <h3>Use the options below to manage your almanac.</h3>
+      <div>
+      {editingSpirit === false && (
+      <div>
+      <h2>Advanced Search</h2>
       <form>
         <input 
           type="text"
@@ -104,7 +163,7 @@ export default function AdvancedSearch() {
           />
           <br />
         <input 
-          type="number"
+          type="text"
           placeholder="Spirit Proof" 
           value={proof}
           onChange={(event) => setProof(event.target.value)}
@@ -140,12 +199,82 @@ export default function AdvancedSearch() {
       </form>
       <button type="button" onClick={handleAdvancedSearch} >Search</button>
       <button type="button" onClick={handleClearForm}>Clear Form</button>
+      </div>)}
+      </div>
+      <div>
+        {editingSpirit === true && (
+          <div>
+          <h3>Edit Your Spirit</h3>
+          <form>
+            <input
+              type="text"
+              placeholder="Spirit Name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Spirit Type"
+              value={type}
+              onChange={(event) => setType(event.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Spirit Subtype"
+              value={subType}
+              onChange={(event) => setSubType(event.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Spirit Distillery"
+              value={distillery}
+              onChange={(event) => setDistillery(event.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Spirit Proof"
+              value={proof}
+              onChange={(e) => setProof(e.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Tasting Notes"
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
+            />
+            <br />
+            <select value={rating} onChange={(event) => setRating(event.target.value)}>
+              <option value="">Select a rating</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
+              <option value={9}>9</option>
+              <option value={10}>10</option>
+            </select>
+            <br />
+            <button type="button" onClick={handleEdit}>
+              Edit Card
+            </button>
+          </form>
+          </div>
+        )}
+      </div>
       <div>
         Search Results:
       </div>
       {searchResults.map((card) => {
         return (
-          <body>
+          <div>
             <div>
               <h2>{card.name}</h2>
               <p>{`Spirit Type: ${card.type}`}</p>
@@ -155,7 +284,10 @@ export default function AdvancedSearch() {
               <p>{`Tasting Notes: ${card.notes}`}</p>
               <p>{`Rating: ${card.rating}`}</p>
             </div>
-          </body>
+            <button type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
+          <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
+          </div>
         )
       })}
     </div>

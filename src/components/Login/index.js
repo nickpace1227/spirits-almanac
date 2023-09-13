@@ -1,23 +1,30 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Wrapper } from "./styles";
 import {useNavigate, Link} from "react-router-dom";
 
 
 
 export default function LoginPage() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginData, setLoginData] = useState("pizza");
   const navigate = useNavigate();
   const refreshPage = () => {
     window.location.reload(false)
-  }
+  };
+
+  useEffect(() => {
+    const loginData = JSON.parse(localStorage.getItem("userData"));
+    if (loginData) {
+      setLoginData(loginData)
+    }
+  }, []);
 
   const handleLogin = () => {
     if (
-      username === localStorage.newUser.username &&
-      password === localStorage.newUser.password
+      username === loginData.username &&
+      password === loginData.password
     ) {
-      //do login stuff here, like redirect to inventory page
       navigate("/HomePage")
     } else {
       alert("Incorrect Username or Password");
