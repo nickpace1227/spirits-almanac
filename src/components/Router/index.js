@@ -2,7 +2,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Relative imports
-import { Wrapper } from "./styles";
+import { GlobalStyles } from "../Styles/GlobalStyles";
+import GlobalFonts from "../Fonts/fonts.js";
 import Header from "../Header";
 import LoginPage from "../Login";
 import Almanac from "../Almanac";
@@ -14,7 +15,8 @@ import CreateUser from "../CreateUser";
 export default function SpiritsAlmanac() {
   return (
     <BrowserRouter>
-      <Wrapper>
+      <GlobalStyles>
+        <GlobalFonts />
         <main>
           <Header />
           <div className="page">
@@ -29,7 +31,7 @@ export default function SpiritsAlmanac() {
             </Routes>
           </div>
         </main>
-      </Wrapper>
+      </GlobalStyles>
     </BrowserRouter>
   );
 };

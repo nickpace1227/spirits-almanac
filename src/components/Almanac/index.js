@@ -18,7 +18,7 @@ export default function Almanac() {
   const [filteredCards, setFilteredCards] = useState([]);
   const [spiritId, setSpiritId] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
-  const [editingSpirit, setEditingSpirt] = useState(false);
+  const [editingSpirit, setEditingSpirit] = useState(false);
   
   const clearForm = () => {
     setType("");
@@ -59,7 +59,7 @@ export default function Almanac() {
   };
 
   const handleEditCard = (card) => {
-    setEditingSpirt(true);
+    setEditingSpirit(true);
     setName(card.name);
     setType(card.type);
     setSubType(card.subType);
@@ -105,6 +105,7 @@ export default function Almanac() {
       return (alert("Please enter a name and type of spirit."))
     } else {
       dispatch(editCard(updatedCard));
+      setEditingSpirit(false);
       clearForm();
   }
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
 
@@ -18,6 +18,10 @@ export default function AdvancedSearch() {
   const [spiritId, setSpiritId] = useState("")
   const [editingSpirit, setEditingSpirit] = useState(false);
 
+  useEffect(() => {
+    handleAdvancedSearch();
+  }, [cards]);
+
   const clearForm = () => {
     setType("");
     setSubType("");
@@ -30,6 +34,7 @@ export default function AdvancedSearch() {
 
   const handleRemove = (card) => {
     dispatch(removeCard(card))
+    handleAdvancedSearch();
   };
 
   const handleFavorite = (card) => {

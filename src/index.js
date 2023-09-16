@@ -3,7 +3,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 // Relative imports
-import "./globalStyles.css";
+import "./rootStyles.css";
 import SpiritsAlmanac from "./components/Router";
 import store from "./store";
 
