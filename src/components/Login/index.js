@@ -22,10 +22,11 @@ export default function LoginPage() {
 
   const handleLogin = () => {
     if (
-      username === loginData.username &&
-      password === loginData.password
+      (username === loginData.username &&
+      password === loginData.password)
     ) {
-      navigate("/HomePage")
+      navigate("/Home");
+      localStorage.setItem("loggedIn", true);
     } else {
       alert("Incorrect Username or Password");
       refreshPage()
@@ -35,13 +36,14 @@ export default function LoginPage() {
   const handleKeypress = e => {
     if (e.keyCode === 13) {
       handleLogin();
+
     }
   };
 
   return (
     <Wrapper>
-      <form onKeyDown={handleKeypress}>
-      <p>Login</p>
+      <form className="login-page" onKeyDown={handleKeypress}>
+      <p className="login-title">Login</p>
       <input
         type="username"
         placeholder="Username"
@@ -54,7 +56,7 @@ export default function LoginPage() {
         onChange={(event) => setPassword(event.target.value)}
       />
       <br />
-      <button onClick={handleLogin}>Login</button>
+      <button type="button" onClick={handleLogin}>Login</button>
       </form>
       <h3>Don't have an account? Click <Link to="/CreateUser">Here!</Link></h3>
     </Wrapper>

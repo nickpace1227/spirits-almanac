@@ -1,7 +1,17 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .login-page {
     display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .login-title {
+    
   }
 `;

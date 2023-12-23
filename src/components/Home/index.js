@@ -1,8 +1,7 @@
 import React from "react";
-import Almanac from "../Almanac";
 import { Link } from "react-router-dom";
 
-export default function HomePage() {
+export default function Home() {
     return (
         <div>
         <h1>
@@ -10,7 +9,7 @@ export default function HomePage() {
         </h1>
         <p>Here at Spirits Almanac we strive to ensure that you can keep track of your spirits and how you feel about them. Our goal is simple: create a way to catalog and record whatever spirit you've had in whatever way you'd like to have it be remembered. If you had an incredible dram from any distillery on the planet, we'll make sure that you can remember it long after you've forgotten it.</p>
         <h2>Getting Started</h2>
-        <p>We recommend heading over to <Link to="/YourAlmanac">Your Almanac</Link> to get started. If you need a little help fleshing out some of the finer points see our suggestions below.</p>
+        <p>We recommend heading over to <Link to="/YourAlmanac">your almanac</Link> to get started. If you need a little help fleshing out some of the finer points see our suggestions below.</p>
         <h2>Suggestions</h2>
         <p>When adding spirits to the Almanac consider the following:</p>
         <ul>
