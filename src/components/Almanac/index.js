@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCard, removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
 import {v4 as uuidv4} from "uuid";
 import { Link } from "react-router-dom";
+import {Wrapper} from "./styles.js";
 
 export default function Almanac() {
   const dispatch = useDispatch();
@@ -111,10 +112,11 @@ export default function Almanac() {
 };
 
   return (
-    <div className="App">
-      <p>Welcome to Spirits Almanac!</p>
-      <p>Click below to begin adding pages to your almanac or use our search tool to look through your saved spirits!</p>
-        <form>
+  <Wrapper>
+    <div className="main-div">
+      <h1 className="almanac-title general">Welcome to your own Spirits Almanac!</h1>
+      <p className="almanac-description general">Click below to begin adding pages to your almanac or use our search tool to look through your saved spirits!</p>
+      <div className="general">
           <select onChange={(event) => setDropdown(event.target.value)}>
             <option value="name">Name</option>
             <option value="type">Type</option>
@@ -127,9 +129,10 @@ export default function Almanac() {
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
-          <button type="button" onClick={() => handleSearch()}>Search</button>
-          <div>
-          <Link to="/advancedsearch">Advanced Search</Link>
+          <button className="general" type="button" onClick={() => handleSearch()}>Search</button>
+          <Link className="advanced-search" to="/advancedsearch">Advanced Search</Link>
+        </div>
+        <div className="search-results">
         <p>{filteredCards.map((card) => {
           return (
           <div>
@@ -147,8 +150,7 @@ export default function Almanac() {
           <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
           </div>);
         })}</p>
-      </div>
-        </form>
+        </div>
       <div>
       {editingSpirit === false && (
       <div>
@@ -302,5 +304,6 @@ export default function Almanac() {
         })}
       </div>
     </div>
+    </Wrapper>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {Wrapper} from './styles.js';
 
 export default function CreateUser() {
     const navigate = useNavigate();
@@ -29,26 +30,32 @@ export default function CreateUser() {
 
 
     return (
-        <form onKeyDown={handleKeypress}>
-        <p>Create an Account</p>
-        <input 
-          type="text"
-          placeholder="Name"
-          onChange={(event) => setName(event.target.value)} />
-          <br/>
-        <input
-          type="username"
-          placeholder="Username"
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <br />
-        <button type="button" onClick={handleCreateAccount}>Create Account</button>
-        </form>
+      <Wrapper>
+        <div className="create-user-page">
+          <div>
+            <form className="create-user-form" onKeyDown={handleKeypress}>
+            <p>Create an Account</p>
+            <input 
+              className="create-user-input"
+              type="text"
+              placeholder="Name"
+              onChange={(event) => setName(event.target.value)} />
+            <input
+              className="create-user-input"
+              type="username"
+              placeholder="Username"
+              onChange={(event) => setUsername(event.target.value)}
+            />
+            <input
+              className="create-user-input"
+              type="password"
+              placeholder="Password"
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <button className="create-user-button" type="button" onClick={handleCreateAccount}>Create Account</button>
+            </form>
+          </div>
+        </div>
+      </Wrapper>
     )
 };

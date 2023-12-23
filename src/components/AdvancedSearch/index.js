@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
+import {Wrapper} from "./styles.js";
 
 
 export default function AdvancedSearch() {
@@ -131,7 +132,8 @@ export default function AdvancedSearch() {
   }
 
   return (
-    <div>
+  <Wrapper>
+    <div className="advanced-search">
       <h1>Spirits Almanac Advanced Search</h1>
       <h3>Use the options below to manage your almanac.</h3>
       <div>
@@ -296,5 +298,6 @@ export default function AdvancedSearch() {
         )
       })}
     </div>
+    </Wrapper>
   );
 }

@@ -5,9 +5,11 @@ import barrels from "../../assets/images/barrels.jpg";
 
 export const GlobalStyles = styled.div`
 height: 100%;
-position: relative;
 min-height: 100vh;
 background-image: url(${barrels});
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center;
 
 @font-face {
   font-family: 'MerriweatherBlack';

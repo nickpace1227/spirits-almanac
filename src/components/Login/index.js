@@ -26,7 +26,6 @@ export default function LoginPage() {
       password === loginData.password)
     ) {
       navigate("/Home");
-      localStorage.setItem("loggedIn", true);
     } else {
       alert("Incorrect Username or Password");
       refreshPage()
@@ -42,23 +41,28 @@ export default function LoginPage() {
 
   return (
     <Wrapper>
-      <form className="login-page" onKeyDown={handleKeypress}>
-      <p className="login-title">Login</p>
-      <input
+      <div className="login-page">
+        <form className="login-form" onKeyDown={handleKeypress}>
+        <p className="login-title">Login</p>
+        <div className="login-form">
+        <input
+        className="login-input"
         type="username"
         placeholder="Username"
         onChange={(event) => setUsername(event.target.value)}
-      />
-      <br />
-      <input
+        />
+        <input
+        className="login-input"
         type="password"
         placeholder="Password"
         onChange={(event) => setPassword(event.target.value)}
-      />
-      <br />
-      <button type="button" onClick={handleLogin}>Login</button>
-      </form>
-      <h3>Don't have an account? Click <Link to="/CreateUser">Here!</Link></h3>
+        />
+        </div>
+        <button className="login-button" type="button" onClick={handleLogin}>Login</button>
+        
+        </form>
+        <h3>Don't have an account? Click <Link to="/CreateUser">Here!</Link></h3>
+      </div>
     </Wrapper>
   );
 }
