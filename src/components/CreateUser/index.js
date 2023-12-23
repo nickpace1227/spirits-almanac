@@ -8,13 +8,15 @@ export default function CreateUser() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const userData = {
-      name: name,
-      username: username,
-      password: password,
-    };
+    
 
     useEffect(() => {
+      const userData = {
+        name: name,
+        username: username,
+        password: password,
+      };
+      
       localStorage.setItem('userData', JSON.stringify(userData));
     }, [userData]);
 
