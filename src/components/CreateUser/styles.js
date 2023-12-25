@@ -21,8 +21,13 @@ export const Wrapper = styled.div`
         margin-bottom: 15px;
     }
 
-    .create-user-input {
+    .valid-user-input {
         margin: 2px;
+    }
+
+    .invalid-user-input {
+        margin: 2px;
+        border: solid red;
     }
 
     .create-user-button {

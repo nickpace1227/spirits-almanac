@@ -24,6 +24,11 @@ export const Wrapper = styled.div`
       margin: 2px;
     }
 
+    .invalid-input {
+      margin: 2px;
+      border: solid red;
+    }
+
     .login-button {
       width: auto;
       margin-top: 2px;

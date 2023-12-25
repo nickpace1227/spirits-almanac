@@ -7,21 +7,71 @@ export default function CreateUser() {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [validName, setValidName] = useState(true);
+    const [validUsername, setValidUsername] = useState(true);
+    const [validPassword, setValidPassword] = useState(true);
+    const [validInfo, setValidInfo] = useState(true)
 
-    
+    const userData = {
+      name: name,
+      username: username,
+      password: password,
+    };
 
     useEffect(() => {
-      const userData = {
-        name: name,
-        username: username,
-        password: password,
-      };
-      
       localStorage.setItem('userData', JSON.stringify(userData));
     }, [userData]);
 
     const handleCreateAccount = () => {
-        navigate("/LoginPage")
+      const errorCheck = {
+        name: validName,
+        username: validUsername,
+        password: validPassword,
+        accountInfo: validInfo,
+      };
+
+      if (name === "") {
+        setValidName(false);
+        errorCheck.name = false;
+      }
+
+      if (username === "") {
+        setValidUsername(false);
+        errorCheck.username = false;
+      }
+
+      if (password === "") {
+        setValidPassword(false);
+        errorCheck.password = false;
+      }
+
+      if (name !== "") {
+        setValidName(true);
+        errorCheck.name = true;
+      }
+
+      if (username !== "") {
+        setValidUsername(true);
+        errorCheck.username = true;
+      }
+
+      if (password !== "") {
+        setValidPassword(true);
+        errorCheck.password = true;
+      }
+
+      if (!errorCheck.name || !errorCheck.username || errorCheck.password) {
+        setValidInfo(false);
+        errorCheck.accountInfo = false;
+      }
+      
+      if (errorCheck.name && errorCheck.email && errorCheck.password) {
+        setValidInfo(true);
+        }  
+
+      if (errorCheck.accountInfo) {
+        navigate("/LoginPage");
+      }
     };
 
     const handleKeypress = e => {
@@ -38,18 +88,18 @@ export default function CreateUser() {
             <form className="create-user-form" onKeyDown={handleKeypress}>
             <p>Create an Account</p>
             <input 
-              className="create-user-input"
+              className={validName ? "valid-user-input" : "invalid-user-input"}
               type="text"
               placeholder="Name"
               onChange={(event) => setName(event.target.value)} />
             <input
-              className="create-user-input"
+              className={validUsername ? "valid-user-input" : "invalid-user-input"}
               type="username"
               placeholder="Username"
               onChange={(event) => setUsername(event.target.value)}
             />
             <input
-              className="create-user-input"
+              className={validPassword ? "valid-user-input" : "invalid-user-input"}
               type="password"
               placeholder="Password"
               onChange={(event) => setPassword(event.target.value)}
