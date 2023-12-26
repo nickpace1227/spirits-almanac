@@ -15,6 +15,7 @@ export default function Almanac() {
   const [notes, setNotes] = useState("");
   const [rating, setRating] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [validSearch, setValidSearch] = useState(true);
   const [dropdown, setDropdown] = useState("name");
   const [filteredCards, setFilteredCards] = useState([]);
   const [spiritId, setSpiritId] = useState("")
@@ -79,9 +80,17 @@ export default function Almanac() {
 };
 
   const handleSearch = () => {
+    const errorCheck = {
+      validSearchTerm: validSearch
+    }
+
       if (searchTerm === "") {
-      return alert("Please enter a search term")
-    } else {
+      errorCheck.validSearchTerm = false;
+      setValidSearch(false);
+      return;
+    } 
+    
+    if (searchTerm !== "") {
       const newFilteredCards = cards.filter(searchCards);
       setFilteredCards(cards.filter(searchCards));
       if (newFilteredCards.length === 0) {
@@ -124,10 +133,13 @@ export default function Almanac() {
             <option value="distillery">Distillery</option>
           </select>
           <input
+            className={validSearch ? "valid-search" : "invalid-search"}
             type="text"
             placeholder="Search"
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+            onChange={(event) => {
+              setSearchTerm(event.target.value)
+              setValidSearch(true)}}
           />
           <button className="general" type="button" onClick={() => handleSearch()}>Search</button>
           <Link className="advanced-search" to="/advancedsearch">Advanced Search</Link>
