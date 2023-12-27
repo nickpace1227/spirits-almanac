@@ -8,7 +8,9 @@ import {Wrapper} from "./styles.js";
 export default function Almanac() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [validName, setValidName] = useState(true);
   const [type, setType] = useState("");
+  const [validType, setValidType] = useState(true);
   const [subType, setSubType] = useState("");
   const [distillery, setDistillery] = useState("");
   const [proof, setProof] = useState("");
@@ -21,6 +23,8 @@ export default function Almanac() {
   const [spiritId, setSpiritId] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
   const [editingSpirit, setEditingSpirit] = useState(false);
+  const [noResults, setNoResults] = useState(false);
+  const [validCard, setValidCard] = useState(true);
   
   const clearForm = () => {
     setType("");
@@ -44,9 +48,29 @@ export default function Almanac() {
       id: uuidv4(),
       rating: rating,
     };
-    if (name === "" || type === "") {
-      return (alert("Please enter a name and type of spirit."))
-    } else {
+
+    const cardErrorCheck = {
+      errorCheckName: validName,
+      errorCheckType: validType,
+      errorCheckCard: validCard,
+    }
+
+    if (name === "") {
+      cardErrorCheck.errorCheckCard = false;
+      setValidCard(false);
+    } 
+    
+    if (type === "") {
+      cardErrorCheck.errorCheckCard = false;
+      setValidCard(false);
+    }
+
+    if (name !== "" && type !== "") {
+      cardErrorCheck.errorCheckCard = true;
+      setValidCard(true);
+    }
+    
+    if (cardErrorCheck.errorCheckCard) {
       dispatch(addCard(newCard));
       clearForm();
     }
@@ -91,10 +115,15 @@ export default function Almanac() {
     } 
     
     if (searchTerm !== "") {
+      errorCheck.validSearchTerm = true;
+      setValidSearch(true)
       const newFilteredCards = cards.filter(searchCards);
       setFilteredCards(cards.filter(searchCards));
       if (newFilteredCards.length === 0) {
-        return alert("No Results");
+        setNoResults(true)
+      }
+      if (newFilteredCards.length > 0) {
+        setNoResults(false)
       }
     }
   };
@@ -133,7 +162,7 @@ export default function Almanac() {
             <option value="distillery">Distillery</option>
           </select>
           <input
-            className={validSearch ? "valid-search" : "invalid-search"}
+            className={validSearch ? "valid-input" : "invalid-input"}
             type="text"
             placeholder="Search"
             value={searchTerm}
@@ -144,7 +173,7 @@ export default function Almanac() {
           <button className="general" type="button" onClick={() => handleSearch()}>Search</button>
           <Link className="advanced-search" to="/advancedsearch">Advanced Search</Link>
         </div>
-        <div className="search-results">
+        { noResults ? <div className="no-results">No Results Found</div> : <div className="search-results">
         <p>{filteredCards.map((card) => {
           return (
           <div>
@@ -162,13 +191,14 @@ export default function Almanac() {
           <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
           </div>);
         })}</p>
-        </div>
+        </div>}
       <div>
       {editingSpirit === false && (
       <div>
       <h3>Add a Spirit</h3>
       <form>
         <input
+          className={validName ? "valid-input" : "invalid-input"}
           type="text"
           placeholder="Spirit Name"
           value={name}
@@ -176,6 +206,7 @@ export default function Almanac() {
         />
         <br />
         <input
+          className={validType ? "valid-input" : "invalid-input"}
           type="text"
           placeholder="Spirit Type"
           value={type}

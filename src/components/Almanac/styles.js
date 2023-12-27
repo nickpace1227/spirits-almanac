@@ -16,8 +16,18 @@ export const Wrapper = styled.div`
       text-align: center;
     }
 
-    .search {
+    .valid-input {
+
+    }
+
+    .invalid-input {
+      border: solid red;
+    }
+
+    .no-results {
       text-align: center;
+      margin: 20px;
+      font-size: 25px;
     }
 
     .advanced-search {
