@@ -150,6 +150,11 @@ export default function AdvancedSearch() {
     }
 };
 
+const handleCancel = () => {
+  clearForm();
+  setEditingSpirit(false);
+}
+
   return (
   <Wrapper>
     <div className="main-div">
@@ -162,8 +167,8 @@ export default function AdvancedSearch() {
         
         //Begin Edit Card
         <div className="advanced-search">
-      <h3>Edit Your Spirit</h3>
-      <form className="edit-spirits">
+      <h2>Edit Your Spirit</h2>
+      <form>
         <div className="inputs">
         <input
           className={validName ? "valid-input" : "invalid-input"}
@@ -220,12 +225,17 @@ export default function AdvancedSearch() {
           <option value={9}>9</option>
           <option value={10}>10</option>
         </select>
+        </div>
+        </form>
+        <div>
         <button className="button" type="button" onClick={handleEdit}>
           Save
         </button>
+        <button className="button" type="button" onClick={handleCancel}>
+          Cancel
+        </button>
         </div>
-      </form>
-      </div>
+        </div>
       //End Edit Card
 
       :
@@ -233,7 +243,7 @@ export default function AdvancedSearch() {
       // Begin Advanced Search
       <div className="advanced-search">
       <h2 >Advanced Search</h2>
-      <form className="advanced-search">
+      <form>
         <div className="inputs">
         <input 
           className="valid-input"
@@ -280,6 +290,7 @@ export default function AdvancedSearch() {
         <div>
         Limit Search to Favorites?
           <input
+             className="favorite-selector"
             type="checkbox" 
             onChange={() => setFavorite(!favorite)}/>
         </div>
@@ -326,9 +337,9 @@ export default function AdvancedSearch() {
               <p>{`Rating: ${card.rating}`}</p>
             </div>
         <div>
-          <button className="card-button" type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button className="card-button" type="button" onClick={() => handleFavorite(card)}>Favorite</button>
-          <button className="card-button" type="button" onClick={() => handleEditCard(card)}>Edit</button>
+          <button className="button" type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button className="button" type="button" onClick={() => handleFavorite(card)}>Favorite</button>
+          <button className="button" type="button" onClick={() => handleEditCard(card)}>Edit</button>
         </div>
           </div>
         )

@@ -24,14 +24,6 @@ export const Wrapper = styled.div`
       align-items: center;
     }
 
-    .edit-spirits {
-      width: auto;
-      margin-bottom: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
     .inputs {
       display: flex;
       flex-wrap: wrap;
@@ -50,7 +42,7 @@ export const Wrapper = styled.div`
 
     .button {
       width: 70px;
-      margin: 5px;
+      margin: 5px 2px;
     }
 
     .search-results {
@@ -84,7 +76,7 @@ export const Wrapper = styled.div`
       text-align: center;
     }
 
-    .card-button {
-      margin: 5px 2px;
+    .favorite-selector {
+     margin-top: 7px;
     }
 `;

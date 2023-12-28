@@ -179,6 +179,11 @@ export default function Almanac() {
     }
 };
 
+const handleCancel = () => {
+  clearForm();
+  setEditingSpirit(false);
+}
+
   return (
   <Wrapper>
     <div className="main-div">
@@ -292,13 +297,19 @@ export default function Almanac() {
           <option value={10}>10</option>
         </select>
         </div>
+        <div>
         <button 
         className="button"
         type="button" 
         onClick={handleEdit}>
           Save
         </button>
-        
+        <button className="button"
+        type="button" 
+        onClick={handleCancel}>
+          Cancel
+        </button>
+        </div>
       </form>
       </div>
       //End Edit
