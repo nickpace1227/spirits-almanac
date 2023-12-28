@@ -7,7 +7,9 @@ import {Wrapper} from "./styles.js";
 export default function AdvancedSearch() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [validName, setValidName] = useState(true);
   const [type, setType] = useState("");
+  const [validType, setValidType] = useState(true);
   const [subType, setSubType] = useState("");
   const [distillery, setDistillery] = useState("");
   const [proof, setProof] = useState("");
@@ -18,6 +20,7 @@ export default function AdvancedSearch() {
   const [searchResults, setSearchResults] = useState(cards);
   const [spiritId, setSpiritId] = useState("")
   const [editingSpirit, setEditingSpirit] = useState(false);
+  const [validCard, setValidCard] = useState(true);
 
   useEffect(() => {
     handleAdvancedSearch();
@@ -110,87 +113,177 @@ export default function AdvancedSearch() {
       id: spiritId,
       rating: rating,
     };
-    if (name === "" || type === "") {
-      return (alert("Please enter a name and type of spirit."))
-    } else {
-      dispatch(editCard(updatedCard));
-      setEditingSpirit(false);
-      clearForm();
-  }
-};
 
-  const handleClearForm = () => {
-    setName("")
-    setType("")
-    setSubType("")
-    setDistillery("")
-    setProof("")
-    setNotes("")
-    setRating("")
-    setFavorite(false)
-    setSearchResults(cards)
-  }
+    const editErrorCheck = {
+      errorCheckName: validName,
+      errorCheckType: validType,
+      errorCheckCard: validCard,
+    }
+
+    if (name === "") {
+      editErrorCheck.errorCheckName = false;
+      editErrorCheck.errorCheckCard = false;
+      setValidName(false);
+    } 
+    
+    if (type === "") {
+      editErrorCheck.errorCheckType = false;
+      editErrorCheck.errorCheckCard = false;
+      setValidType(false);
+    }
+
+    if (!editErrorCheck.errorCheckName || !editErrorCheck.errorCheckName || !editErrorCheck.errorCheckCard) {
+      setEditingSpirit(true)
+    }
+
+    if (name !== "" && type !== "") {
+      editErrorCheck.errorCheckCard = true;
+      setValidCard(true);
+    }
+
+    if (editErrorCheck.errorCheckCard) {
+      dispatch(editCard(updatedCard));
+      clearForm();
+      setValidName(true);
+      setValidType(true);
+      setEditingSpirit(false);
+    }
+};
 
   return (
   <Wrapper>
-    <div className="advanced-search">
-      <h1>Spirits Almanac Advanced Search</h1>
-      <h3>Use the options below to manage your almanac.</h3>
-      <div>
-      {editingSpirit === false && (
-      <div>
-      <h2>Advanced Search</h2>
-      <form>
+    <div className="main-div">
+      <h1 className="advanced-search-intro">Spirits Almanac Advanced Search</h1>
+      <h3 className="advanced-search-intro">Use the options below to manage your almanac.</h3>
+
+      {/* Begin Spirits Management */}
+
+      {editingSpirit ? 
+        
+        //Begin Edit Card
+        <div className="advanced-search">
+      <h3>Edit Your Spirit</h3>
+      <form className="edit-spirits">
+        <div className="inputs">
+        <input
+          className={validName ? "valid-input" : "invalid-input"}
+          type="text"
+          placeholder="Spirit Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+        <input
+          className={validType ? "valid-input" : "invalid-input"}
+          type="text"
+          placeholder="Spirit Type"
+          value={type}
+          onChange={(event) => setType(event.target.value)}
+        />
+        <input
+          className="valid-input"
+          type="text"
+          placeholder="Spirit Subtype"
+          value={subType}
+          onChange={(event) => setSubType(event.target.value)}
+        />
+        <input
+          className="valid-input"
+          type="text"
+          placeholder="Spirit Distillery"
+          value={distillery}
+          onChange={(event) => setDistillery(event.target.value)}
+        />
+        <input
+          className="valid-input"
+          type="text"
+          placeholder="Spirit Proof"
+          value={proof}
+          onChange={(e) => setProof(e.target.value)}
+        />
+        <input
+          className="valid-input"
+          type="text"
+          placeholder="Tasting Notes"
+          value={notes}
+          onChange={(event) => setNotes(event.target.value)}
+        />
+        <select value={rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
+          <option value="">Select a rating</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
+        </select>
+        <button className="button" type="button" onClick={handleEdit}>
+          Save
+        </button>
+        </div>
+      </form>
+      </div>
+      //End Edit Card
+
+      :
+
+      // Begin Advanced Search
+      <div className="advanced-search">
+      <h2 >Advanced Search</h2>
+      <form className="advanced-search">
+        <div className="inputs">
         <input 
+          className="valid-input"
           type="text"
           placeholder="Spirit Name" 
           value={name}
           onChange={(event) => setName(event.target.value)}
           />
-          <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Type"
           value={type}
           onChange={(event) => setType(event.target.value)} 
           />
-          <br />
         <input 
-         type="text"
-         placeholder="Spirit Subtype" 
-         value={subType}
-         onChange={(event) => setSubType(event.target.value)}
+          className="valid-input"
+          type="text"
+          placeholder="Spirit Subtype" 
+          value={subType}
+          onChange={(event) => setSubType(event.target.value)}
          />
-         <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Distillery" 
           value={distillery}
           onChange={(event) => setDistillery(event.target.value)}
           />
-          <br />
         <input 
+          className="valid-input"
           type="text"
           placeholder="Spirit Proof" 
           value={proof}
           onChange={(event) => setProof(event.target.value)}
           />
-          <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Tasting Notes" 
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
           />
-          <br />
-        <label>
+        <div>
         Limit Search to Favorites?
           <input
             type="checkbox" 
             onChange={() => setFavorite(!favorite)}/>
-          <br />
-        </label>
-        <select value={rating} onChange={(event) => setRating(event.target.value)} >
+        </div>
+        <select value={rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
           <option value="">Select a Rating</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
@@ -203,87 +296,28 @@ export default function AdvancedSearch() {
           <option value={9}>9</option>
           <option value={10}>10</option>
         </select>
+        </div>
       </form>
-      <button type="button" onClick={handleAdvancedSearch} >Search</button>
-      <button type="button" onClick={handleClearForm}>Clear Form</button>
-      </div>)}
-      </div>
       <div>
-        {editingSpirit === true && (
-          <div>
-          <h3>Edit Your Spirit</h3>
-          <form>
-            <input
-              type="text"
-              placeholder="Spirit Name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-            <br />
-            <input
-              type="text"
-              placeholder="Spirit Type"
-              value={type}
-              onChange={(event) => setType(event.target.value)}
-            />
-            <br />
-            <input
-              type="text"
-              placeholder="Spirit Subtype"
-              value={subType}
-              onChange={(event) => setSubType(event.target.value)}
-            />
-            <br />
-            <input
-              type="text"
-              placeholder="Spirit Distillery"
-              value={distillery}
-              onChange={(event) => setDistillery(event.target.value)}
-            />
-            <br />
-            <input
-              type="text"
-              placeholder="Spirit Proof"
-              value={proof}
-              onChange={(e) => setProof(e.target.value)}
-            />
-            <br />
-            <input
-              type="text"
-              placeholder="Tasting Notes"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-            />
-            <br />
-            <select value={rating} onChange={(event) => setRating(event.target.value)}>
-              <option value="">Select a rating</option>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-            </select>
-            <br />
-            <button type="button" onClick={handleEdit}>
-              Edit Card
-            </button>
-          </form>
-          </div>
-        )}
+      <button className="button" type="button" onClick={handleAdvancedSearch} >Search</button>
+      <button className="button" type="button" onClick={clearForm}>Clear</button>
       </div>
-      <div>
+      </div>
+      // End Advanced Search
+      }
+
+      {/* End Spirits Management */}
+
+      {/* Search Results    */}
+      <h1 className="search-results">
         Search Results:
-      </div>
+      </h1>
+      <div className="user-search">
       {searchResults.map((card) => {
         return (
-          <div>
-            <div>
-              <h2>{card.name}</h2>
+          <div className="search-item">
+            <div className="search-item-layout">
+              <h2 className="card-name">{card.name}</h2>
               <p>{`Spirit Type: ${card.type}`}</p>
               <p>{`Spirit SubType: ${card.subType}`}</p>
               <p>{`Spirit Distillery: ${card.distillery}`}</p>
@@ -291,12 +325,15 @@ export default function AdvancedSearch() {
               <p>{`Tasting Notes: ${card.notes}`}</p>
               <p>{`Rating: ${card.rating}`}</p>
             </div>
-            <button type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
-          <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
+        <div>
+          <button className="card-button" type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button className="card-button" type="button" onClick={() => handleFavorite(card)}>Favorite</button>
+          <button className="card-button" type="button" onClick={() => handleEditCard(card)}>Edit</button>
+        </div>
           </div>
         )
       })}
+    </div>
     </div>
     </Wrapper>
   );

@@ -49,30 +49,32 @@ export default function Almanac() {
       rating: rating,
     };
 
-    const cardErrorCheck = {
+    const addErrorCheck = {
       errorCheckName: validName,
       errorCheckType: validType,
       errorCheckCard: validCard,
     }
 
     if (name === "") {
-      cardErrorCheck.errorCheckCard = false;
-      setValidCard(false);
+      addErrorCheck.errorCheckCard = false;
+      setValidName(false);
     } 
     
     if (type === "") {
-      cardErrorCheck.errorCheckCard = false;
-      setValidCard(false);
+      addErrorCheck.errorCheckCard = false;
+      setValidType(false);
     }
 
     if (name !== "" && type !== "") {
-      cardErrorCheck.errorCheckCard = true;
+      addErrorCheck.errorCheckCard = true;
       setValidCard(true);
     }
     
-    if (cardErrorCheck.errorCheckCard) {
+    if (addErrorCheck.errorCheckCard) {
       dispatch(addCard(newCard));
       clearForm();
+      setValidName(true);
+      setValidType(true);
     }
   };
 
@@ -140,21 +142,52 @@ export default function Almanac() {
       id: spiritId,
       rating: rating,
     };
-    if (name === "" || type === "") {
-      return (alert("Please enter a name and type of spirit."))
-    } else {
+
+    const editErrorCheck = {
+      errorCheckName: validName,
+      errorCheckType: validType,
+      errorCheckCard: validCard,
+    }
+
+    if (name === "") {
+      editErrorCheck.errorCheckName = false;
+      editErrorCheck.errorCheckCard = false;
+      setValidName(false);
+    } 
+    
+    if (type === "") {
+      editErrorCheck.errorCheckType = false;
+      editErrorCheck.errorCheckCard = false;
+      setValidType(false);
+    }
+
+    if (!editErrorCheck.errorCheckName || !editErrorCheck.errorCheckName || !editErrorCheck.errorCheckCard) {
+      setEditingSpirit(true)
+    }
+
+    if (name !== "" && type !== "") {
+      editErrorCheck.errorCheckCard = true;
+      setValidCard(true);
+    }
+
+    if (editErrorCheck.errorCheckCard) {
       dispatch(editCard(updatedCard));
-      setEditingSpirit(false);
       clearForm();
-  }
+      setValidName(true);
+      setValidType(true);
+      setEditingSpirit(false);
+    }
 };
 
   return (
   <Wrapper>
     <div className="main-div">
-      <h1 className="almanac-title general">Welcome to your own Spirits Almanac!</h1>
-      <p className="almanac-description general">Click below to begin adding pages to your almanac or use our search tool to look through your saved spirits!</p>
-      <div className="general">
+      <h1 className="almanac-intro">Welcome to your own Spirits Almanac!</h1>
+      <p className="almanac-intro">Click below to begin adding pages to your almanac or use our search tool to look through your saved spirits!</p>
+
+      {/* Search stuff */}
+      <div className="search-section">
+        <div className="search-bar">
           <select onChange={(event) => setDropdown(event.target.value)}>
             <option value="name">Name</option>
             <option value="type">Type</option>
@@ -162,7 +195,7 @@ export default function Almanac() {
             <option value="distillery">Distillery</option>
           </select>
           <input
-            className={validSearch ? "valid-input" : "invalid-input"}
+            className={validSearch ? "valid-search-input" : "invalid-search-input"}
             type="text"
             placeholder="Search"
             value={searchTerm}
@@ -170,9 +203,10 @@ export default function Almanac() {
               setSearchTerm(event.target.value)
               setValidSearch(true)}}
           />
-          <button className="general" type="button" onClick={() => handleSearch()}>Search</button>
+          <button className="button" type="button" onClick={() => handleSearch()}>Search</button>
+          </div>
           <Link className="advanced-search" to="/advancedsearch">Advanced Search</Link>
-        </div>
+      </div>
         { noResults ? <div className="no-results">No Results Found</div> : <div className="search-results">
         <p>{filteredCards.map((card) => {
           return (
@@ -192,11 +226,16 @@ export default function Almanac() {
           </div>);
         })}</p>
         </div>}
-      <div>
-      {editingSpirit === false && (
-      <div>
-      <h3>Add a Spirit</h3>
-      <form>
+        {/* End Search */}
+
+        {/* Spirit Management */}
+      {editingSpirit ? 
+
+      //Edit a Spirit
+      <div className="almanac-manager">
+      <h3>Edit Your Spirit</h3>
+      <form className="manage-spirits">
+        <div className="inputs">
         <input
           className={validName ? "valid-input" : "invalid-input"}
           type="text"
@@ -204,7 +243,6 @@ export default function Almanac() {
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
-        <br />
         <input
           className={validType ? "valid-input" : "invalid-input"}
           type="text"
@@ -212,36 +250,35 @@ export default function Almanac() {
           value={type}
           onChange={(event) => setType(event.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Subtype"
           value={subType}
           onChange={(event) => setSubType(event.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Distillery"
           value={distillery}
           onChange={(event) => setDistillery(event.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Proof"
           value={proof}
           onChange={(e) => setProof(e.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Tasting Notes"
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
         />
-        <br />
-        <select value={rating} onChange={(event) => setRating(event.target.value)}>
+        <select value={rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
           <option value="">Select a rating</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
@@ -254,59 +291,68 @@ export default function Almanac() {
           <option value={9}>9</option>
           <option value={10}>10</option>
         </select>
-        <br />
-        <button type="button" onClick={handleAdd}>
-          Add Card
+        </div>
+        <button 
+        className="button"
+        type="button" 
+        onClick={handleEdit}>
+          Save
         </button>
+        
       </form>
-      </div>)}
-      {editingSpirit === true && (
-      <div>
-      <h3>Edit Your Spirit</h3>
-      <form>
+      </div>
+      //End Edit
+
+      :
+
+      // Add a spirit
+  <div className="almanac-manager">
+    <h3>Add a Spirit</h3>
+    <form className="manage-spirits">
+        <div className="inputs">
         <input
+          className={validName ? "valid-input" : "invalid-input"}
           type="text"
           placeholder="Spirit Name"
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
-        <br />
         <input
+          className={validType ? "valid-input" : "invalid-input"}
           type="text"
           placeholder="Spirit Type"
           value={type}
           onChange={(event) => setType(event.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Subtype"
           value={subType}
           onChange={(event) => setSubType(event.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Distillery"
           value={distillery}
           onChange={(event) => setDistillery(event.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Spirit Proof"
           value={proof}
           onChange={(e) => setProof(e.target.value)}
         />
-        <br />
         <input
+          className="valid-input"
           type="text"
           placeholder="Tasting Notes"
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
         />
-        <br />
-        <select value={rating} onChange={(event) => setRating(event.target.value)}>
+        <select value={rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
           <option value="">Select a rating</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
@@ -319,20 +365,22 @@ export default function Almanac() {
           <option value={9}>9</option>
           <option value={10}>10</option>
         </select>
-        <br />
-        <button type="button" onClick={handleEdit}>
-          Edit Card
+        </div>
+        <button type="button" className="button" onClick={handleAdd}>
+          Add Card
         </button>
       </form>
-      </div>)}
-      </div>
-      <div>
-        <div>Your Almanac:</div>
+    </div>}
+    {/* End Spirits Management */}
+
+    {/* Begin Almanac */}
+        <h1 className="almanac-title">Your Almanac</h1>
+        <div className="user-almanac">
         {cards.map((card) => {
           return (
-          <div>
-          <div>
-            <h2>{card.name}</h2>
+          <div className="almanac-item">
+          <div className="almanac-item-layout">
+            <h2 className="card-name">{card.name}</h2>
             <p>{`Spirit Type: ${card.type}`}</p>
             <p>{`Spirit Subtype: ${card.subType}`}</p>
             <p>{`Spirit Distillery: ${card.distillery}`}</p>
@@ -340,13 +388,15 @@ export default function Almanac() {
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
           </div>
-          <button type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
-          <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
+          <div>
+          <button className="card-button" type="button" onClick={() => handleRemove(card)}>Delete</button>
+          <button className="card-button" type="button" onClick={() => handleFavorite(card)}>Favorite</button>
+          <button className="card-button" type="button" onClick={() => handleEditCard(card)}>Edit</button>
+          </div>
           </div>);
         })}
       </div>
-    </div>
+      </div>
     </Wrapper>
   );
 }

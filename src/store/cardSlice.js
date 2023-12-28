@@ -36,6 +36,17 @@ export const cardSlice = createSlice({
         id: 3,
         favorite: false,
         rating: "9",
+      },
+      {
+        name: "Makers Mark Cask Strength",
+        type: "whiskey",
+        subType: "bourbon",
+        distillery: "Maker's Mark",
+        proof: "57%",
+        notes: "cherry, oak, and brown sugar",
+        id: 4,
+        favorite: true,
+        rating: "10",
       }
     ],
   },
