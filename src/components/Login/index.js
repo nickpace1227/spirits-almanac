@@ -7,7 +7,7 @@ import {useNavigate, Link} from "react-router-dom";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginData, setLoginData] = useState("pizza");
+  const [loginData, setLoginData] = useState("");
   const [validUsername, setValidUsername] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const navigate = useNavigate();
@@ -35,18 +35,11 @@ export default function LoginPage() {
       errorCheck.password = false;
     }
 
-    if (loginData.username === username) {
-      errorCheck.username = true;
-    }
-
-    if (loginData.password === password) {
-      errorCheck.password = true;
-    }
-
     if (
-      (username === loginData.username &&
-      password === loginData.password)
+      username === loginData.username &&
+      password === loginData.password
     ) {
+      localStorage.setItem("loggedIn", true)
       navigate("/Home");
     }
   };
@@ -65,7 +58,7 @@ export default function LoginPage() {
         <p className="login-title">Login</p>
         <div className="login-form">
         <input
-        className={validUsername ? "login-input" : "invalid-input"}
+        className={validUsername ? "valid-input" : "invalid-input"}
         type="username"
         placeholder="Username"
         onChange={
@@ -73,7 +66,7 @@ export default function LoginPage() {
           setValidUsername(true)}}
         />
         <input
-        className={validPassword ? "login-input" : "invalid-input"}
+        className={validPassword ? "valid-input" : "invalid-input"}
         type="password"
         placeholder="Password"
         onChange={

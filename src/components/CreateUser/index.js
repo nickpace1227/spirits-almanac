@@ -60,7 +60,7 @@ export default function CreateUser() {
         errorCheck.password = true;
       }
 
-      if (!errorCheck.name || !errorCheck.username || errorCheck.password) {
+      if (!errorCheck.name || !errorCheck.username || !errorCheck.password) {
         setValidInfo(false);
         errorCheck.accountInfo = false;
       }

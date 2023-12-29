@@ -13,6 +13,7 @@ export default function Header() {
           <Link className="link-item" to="/YourAlmanac">Almanac</Link>
           <Link className="link-item" to="/ContactUs">Contact Us</Link>
         </div>
+
       </div>
     </Wrapper>
   );

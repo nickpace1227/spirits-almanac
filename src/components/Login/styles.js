@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
       width: 200px;
     }
 
-    .login-input {
+    .valid-input {
       margin: 2px;
     }
 
