@@ -33,10 +33,12 @@ export const Wrapper = styled.div`
 
      .valid-input {
       margin: 2px;
+      border-radius: 5px;
     }
 
     .invalid-input {
       border: solid red;
+      border-radius: 5px;
       margin: 2px;
     }
 
@@ -78,5 +80,38 @@ export const Wrapper = styled.div`
 
     .favorite-selector {
      margin-top: 7px;
+    }
+
+    .favorite-button {
+      background-color: rgb(0, 0, 0, 0);
+      color: gold;
+      font-size: 50px;
+    }
+
+    .editing-modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 100vh;
+      width: 100vh;
+      background-color: rgb(0, 0, 0, 0.7);
+      padding: 0px;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .spirit-modal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #efe1d3;
+      text-align: center;
+      width: 40vw;
+      height: 17vh;
+      border-radius: 15px;
     }
 `;

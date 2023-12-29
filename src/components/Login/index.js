@@ -12,10 +12,6 @@ export default function LoginPage() {
   const [validPassword, setValidPassword] = useState(true);
   const navigate = useNavigate();
 
-  const refreshPage = () => {
-    window.location.reload(false)
-  };
-
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("userData"));
     if (loginData) {

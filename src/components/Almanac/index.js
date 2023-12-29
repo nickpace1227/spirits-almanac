@@ -22,7 +22,7 @@ export default function Almanac() {
   const [filteredCards, setFilteredCards] = useState([]);
   const [spiritId, setSpiritId] = useState("")
   const cards = useSelector((store) => store.inventory.cards);
-  const [editingSpirit, setEditingSpirit] = useState(false);
+  const [modalState, setModalState] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const [validCard, setValidCard] = useState(true);
   
@@ -87,7 +87,7 @@ export default function Almanac() {
   };
 
   const handleEditCard = (card) => {
-    setEditingSpirit(true);
+    setModalState(true);
     setName(card.name);
     setType(card.type);
     setSubType(card.subType);
@@ -162,7 +162,7 @@ export default function Almanac() {
     }
 
     if (!editErrorCheck.errorCheckName || !editErrorCheck.errorCheckName || !editErrorCheck.errorCheckCard) {
-      setEditingSpirit(true)
+      setModalState(true)
     }
 
     if (name !== "" && type !== "") {
@@ -175,13 +175,13 @@ export default function Almanac() {
       clearForm();
       setValidName(true);
       setValidType(true);
-      setEditingSpirit(false);
+      setModalState(false);
     }
 };
 
 const handleCancel = () => {
   clearForm();
-  setEditingSpirit(false);
+  setModalState(false);
 }
 
   return (
@@ -200,7 +200,7 @@ const handleCancel = () => {
             <option value="distillery">Distillery</option>
           </select>
           <input
-            className={validSearch ? "valid-search-input" : "invalid-search-input"}
+            className={validSearch ? "valid-input" : "invalid-input"}
             type="text"
             placeholder="Search"
             value={searchTerm}
@@ -215,9 +215,9 @@ const handleCancel = () => {
         { noResults ? <div className="no-results">No Results Found</div> : <div className="search-results">
         <p>{filteredCards.map((card) => {
           return (
-          <div>
-          <div>
-            <h2>{card.name}</h2>
+            <div className="almanac-item">
+            <div className="almanac-item-layout">
+            <h2 className="card-name">{card.name}</h2>
             <p>{`Spirit Type: ${card.type}`}</p>
             <p>{`Spirit Subtype: ${card.subType}`}</p>
             <p>{`Spirit Distillery: ${card.distillery}`}</p>
@@ -225,19 +225,31 @@ const handleCancel = () => {
             <p>{`Tasting Notes: ${card.notes}`}</p>
             <p>{`Rating: ${card.rating}`}</p>
           </div>
-          <button type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button type="button" onClick={() => handleFavorite(card)}>Favorite</button>
-          <button type="button" onClick={() => handleEditCard(card)}>Edit</button>
+          <div>
+          <button 
+          className="card-button" 
+          type="button" 
+          onClick={() => handleRemove(card)}>Delete</button>
+          <button 
+          className="card-button" 
+          type="button" 
+          onClick={() => 
+            handleFavorite(card)}>{card.favorite ? <>&#9733;</> : <>&#9734;</>}</button>
+          <button 
+          className="card-button" 
+          type="button" 
+          onClick={() => handleEditCard(card)}>Edit</button>
+          </div>
           </div>);
         })}</p>
         </div>}
         {/* End Search */}
 
         {/* Spirit Management */}
-      {editingSpirit ? 
-
-      //Edit a Spirit
-      <div className="almanac-manager">
+      {/* Edit Spirits */}
+      { modalState && (
+    <div className="editing-modal">
+      <div className="spirit-modal">
       <h3>Edit Your Spirit</h3>
       <form className="manage-spirits">
         <div className="inputs">
@@ -312,11 +324,12 @@ const handleCancel = () => {
         </div>
       </form>
       </div>
-      //End Edit
+      </div>)}
+      {/* End Edit */}
 
-      :
 
-      // Add a spirit
+      {/* Add a spirit */}
+
   <div className="almanac-manager">
     <h3>Add a Spirit</h3>
     <form className="manage-spirits">
@@ -381,7 +394,7 @@ const handleCancel = () => {
           Add Card
         </button>
       </form>
-    </div>}
+    </div>
     {/* End Spirits Management */}
 
     {/* Begin Almanac */}
@@ -400,9 +413,19 @@ const handleCancel = () => {
             <p>{`Rating: ${card.rating}`}</p>
           </div>
           <div>
-          <button className="card-button" type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button className="card-button" type="button" onClick={() => handleFavorite(card)}>Favorite</button>
-          <button className="card-button" type="button" onClick={() => handleEditCard(card)}>Edit</button>
+          <button 
+          className="favorite-button" 
+          type="button" 
+          onClick={() => 
+            handleFavorite(card)}>{card.favorite ? <>&#9733;</> : <>&#9734;</>}</button>
+          <button 
+          className="card-button" 
+          type="button" 
+          onClick={() => handleRemove(card)}>Delete</button>
+          <button 
+          className="card-button" 
+          type="button" 
+          onClick={() => handleEditCard(card)}>Edit</button>
           </div>
           </div>);
         })}

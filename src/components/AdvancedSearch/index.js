@@ -19,7 +19,7 @@ export default function AdvancedSearch() {
   const cards = useSelector((store) => store.inventory.cards);
   const [searchResults, setSearchResults] = useState(cards);
   const [spiritId, setSpiritId] = useState("")
-  const [editingSpirit, setEditingSpirit] = useState(false);
+  const [modalState, setModalState] = useState(false);
   const [validCard, setValidCard] = useState(true);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function AdvancedSearch() {
   };
 
   const handleEditCard = (card) => {
-    setEditingSpirit(true);
+    setModalState(true);
     setName(card.name);
     setType(card.type);
     setSubType(card.subType);
@@ -133,7 +133,7 @@ export default function AdvancedSearch() {
     }
 
     if (!editErrorCheck.errorCheckName || !editErrorCheck.errorCheckName || !editErrorCheck.errorCheckCard) {
-      setEditingSpirit(true)
+      setModalState(true)
     }
 
     if (name !== "" && type !== "") {
@@ -146,13 +146,13 @@ export default function AdvancedSearch() {
       clearForm();
       setValidName(true);
       setValidType(true);
-      setEditingSpirit(false);
+      setModalState(false);
     }
 };
 
 const handleCancel = () => {
   clearForm();
-  setEditingSpirit(false);
+  setModalState(false);
 }
 
   return (
@@ -163,10 +163,10 @@ const handleCancel = () => {
 
       {/* Begin Spirits Management */}
 
-      {editingSpirit ? 
-        
-        //Begin Edit Card
-        <div className="advanced-search">
+      {/* Begin Edit Card */}
+      {modalState && (
+    <div className="editing-modal">
+      <div className="spirit-modal">
       <h2>Edit Your Spirit</h2>
       <form>
         <div className="inputs">
@@ -236,11 +236,11 @@ const handleCancel = () => {
         </button>
         </div>
         </div>
-      //End Edit Card
+        </div>)}
 
-      :
+      {/* End Edit Card */}
 
-      // Begin Advanced Search
+      {/* Begin Advanced Search */}
       <div className="advanced-search">
       <h2 >Advanced Search</h2>
       <form>
@@ -314,8 +314,7 @@ const handleCancel = () => {
       <button className="button" type="button" onClick={clearForm}>Clear</button>
       </div>
       </div>
-      // End Advanced Search
-      }
+      {/* End Advanced Search */}
 
       {/* End Spirits Management */}
 
@@ -337,9 +336,18 @@ const handleCancel = () => {
               <p>{`Rating: ${card.rating}`}</p>
             </div>
         <div>
-          <button className="button" type="button" onClick={() => handleRemove(card)}>Delete</button>
-          <button className="button" type="button" onClick={() => handleFavorite(card)}>Favorite</button>
-          <button className="button" type="button" onClick={() => handleEditCard(card)}>Edit</button>
+        <button 
+          className="favorite-button"
+           type="button" 
+           onClick={() => handleFavorite(card)}>{card.favorite ? <>&#9733;</> : <>&#9734;</>}</button>
+          <button 
+          className="button" 
+          type="button" 
+          onClick={() => handleRemove(card)}>Delete</button>
+          <button 
+          className="button" 
+          type="button" 
+          onClick={() => handleEditCard(card)}>Edit</button>
         </div>
           </div>
         )
