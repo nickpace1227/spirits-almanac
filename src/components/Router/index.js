@@ -6,7 +6,7 @@ import LoginPage from "../Login";
 import Almanac from "../Almanac";
 import AdvancedSearch from "../AdvancedSearch";
 import Home from "../Home";
-import ContactUs from "../ContactUs";
+import Contact from "../Contact";
 import CreateUser from "../CreateUser";
 
 export default function SpiritsAlmanac() {
@@ -21,7 +21,7 @@ export default function SpiritsAlmanac() {
               <Route path={"/Almanac"} exact element={<Almanac />} />
               <Route path="/AdvancedSearch" exact element={<AdvancedSearch />} />
               <Route path="/Home" exact element={<Home />} />
-              <Route path="/ContactUs" exact element={<ContactUs />} />
+              <Route path="/Contact" exact element={<Contact />} />
             </Routes>
       </GlobalStyles>
     </BrowserRouter>

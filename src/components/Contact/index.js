@@ -1,7 +1,7 @@
 import React from "react";
 import {Wrapper} from "./styles.js";
 
-export default function ContactUs() {
+export default function Contact() {
     return (
         <Wrapper>
         <div className="contact-page">
