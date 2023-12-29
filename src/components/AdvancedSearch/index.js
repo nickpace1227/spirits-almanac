@@ -249,42 +249,42 @@ const handleCancel = () => {
           className="valid-input"
           type="text"
           placeholder="Spirit Name" 
-          value={name}
+          value={modalState ? "" : name}
           onChange={(event) => setName(event.target.value)}
           />
         <input
           className="valid-input"
           type="text"
           placeholder="Spirit Type"
-          value={type}
+          value={modalState ? "" : type}
           onChange={(event) => setType(event.target.value)} 
           />
         <input 
           className="valid-input"
           type="text"
           placeholder="Spirit Subtype" 
-          value={subType}
+          value={modalState ? "" : subType}
           onChange={(event) => setSubType(event.target.value)}
          />
         <input
           className="valid-input"
           type="text"
           placeholder="Spirit Distillery" 
-          value={distillery}
+          value={modalState ? "" : distillery}
           onChange={(event) => setDistillery(event.target.value)}
           />
         <input 
           className="valid-input"
           type="text"
           placeholder="Spirit Proof" 
-          value={proof}
+          value={modalState ? "" : proof}
           onChange={(event) => setProof(event.target.value)}
           />
         <input
           className="valid-input"
           type="text"
           placeholder="Tasting Notes" 
-          value={notes}
+          value={modalState ? "" : notes}
           onChange={(event) => setNotes(event.target.value)}
           />
         <div>
@@ -294,7 +294,7 @@ const handleCancel = () => {
             type="checkbox" 
             onChange={() => setFavorite(!favorite)}/>
         </div>
-        <select value={rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
+        <select value={modalState ? "" : rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
           <option value="">Select a Rating</option>
           <option value={1}>1</option>
           <option value={2}>2</option>

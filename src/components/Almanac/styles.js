@@ -87,6 +87,14 @@ export const Wrapper = styled.div`
       width: auto;
     }
 
+    .results-section {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      height: auto;
+      width: auto;
+    }
+
     .almanac-item {
       display: flex;
       flex-direction: column;
