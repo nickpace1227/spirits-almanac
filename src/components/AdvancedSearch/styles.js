@@ -97,7 +97,7 @@ export const Wrapper = styled.div`
       left: 50%;
       transform: translate(-50%, -50%);
       height: 100vh;
-      width: 100vh;
+      width: 100vw;
       background-color: rgb(0, 0, 0, 0.7);
       padding: 0px;
       overflow: hidden;
@@ -110,8 +110,8 @@ export const Wrapper = styled.div`
       align-items: center;
       background-color: #efe1d3;
       text-align: center;
-      width: 40vw;
-      height: 17vh;
+      width: auto;
+      height: auto;
       border-radius: 15px;
     }
 `;

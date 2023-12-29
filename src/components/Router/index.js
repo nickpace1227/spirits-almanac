@@ -18,7 +18,7 @@ export default function SpiritsAlmanac() {
               <Route path="/CreateUser" exact element={<CreateUser />} />
               <Route path="/" exact element={<LoginPage />} />
               <Route path="/LoginPage" exact element={<LoginPage />} />
-              <Route path={"/YourAlmanac"} exact element={<Almanac />} />
+              <Route path={"/Almanac"} exact element={<Almanac />} />
               <Route path="/AdvancedSearch" exact element={<AdvancedSearch />} />
               <Route path="/Home" exact element={<Home />} />
               <Route path="/ContactUs" exact element={<ContactUs />} />

@@ -35,6 +35,16 @@ export default function LoginPage() {
       errorCheck.password = false;
     }
 
+    if (username !== loginData.username) {
+      setValidUsername(false);
+      errorCheck.username = false;
+    }
+
+    if (password !== loginData.password) {
+      setValidPassword(false);
+      errorCheck.password = false;
+    }
+
     if (
       username === loginData.username &&
       password === loginData.password

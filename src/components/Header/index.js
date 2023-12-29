@@ -10,7 +10,7 @@ export default function Header() {
         <Link className="header-logo" to="/Home">Spirits Almanac</Link>
         <div className="nav-bar">
           <Link className="link-item" to="/Home">Home</Link> 
-          <Link className="link-item" to="/YourAlmanac">Almanac</Link>
+          <Link className="link-item" to="/Almanac">Almanac</Link>
           <Link className="link-item" to="/ContactUs">Contact Us</Link>
         </div>
 
