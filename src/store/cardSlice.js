@@ -80,6 +80,7 @@ export const cardSlice = createSlice({
             proof: action.payload.proof,
             notes: action.payload.notes,
             rating: action.payload.rating,
+            favorite: action.payload.favorite,
           }
         }
         return card;

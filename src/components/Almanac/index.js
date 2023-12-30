@@ -24,6 +24,7 @@ export default function Almanac() {
   const cards = useSelector((store) => store.inventory.cards);
   const [modalState, setModalState] = useState(false);
   const [validCard, setValidCard] = useState(true);
+  const [favorite, setFavorite] = useState(false);
   
   const clearForm = () => {
     setType("");
@@ -33,6 +34,7 @@ export default function Almanac() {
     setName("");
     setNotes("");
     setRating("")
+    setFavorite(false);
   };
 
   const handleAdd = () => {
@@ -43,7 +45,7 @@ export default function Almanac() {
       distillery: distillery,
       proof: proof,
       notes: notes,
-      favorite: false,
+      favorite: favorite,
       id: uuidv4(),
       rating: rating,
     };
@@ -169,6 +171,7 @@ export default function Almanac() {
     setNotes(card.notes);
     setRating(card.rating);
     setSpiritId(card.id);
+    setFavorite(card.favorite);
   };
 
   const handleClearSearch = () => {
@@ -374,6 +377,14 @@ export default function Almanac() {
           value={modalState ? "" : notes}
           onChange={(event) => setNotes(event.target.value)}
         />
+                <div>
+        Add Spirit to Favorites?
+          <input
+             className="favorite-selector"
+            type="checkbox" 
+            checked={favorite}
+            onChange={() => setFavorite(!favorite)}/>
+        </div>
         <select value={modalState ? "" : rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
           <option value="">Select a rating</option>
           <option value={1}>1</option>
