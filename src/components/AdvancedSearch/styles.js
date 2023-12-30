@@ -86,6 +86,7 @@ export const Wrapper = styled.div`
       background-color: rgb(0, 0, 0, 0);
       color: gold;
       font-size: 50px;
+      text-shadow: 2px 2px 3px black;
     }
 
     .editing-modal {
