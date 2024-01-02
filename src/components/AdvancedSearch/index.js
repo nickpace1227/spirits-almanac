@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
-import {Wrapper} from "./styles.js";
-
+import { Wrapper } from "./styles.js";
 
 export default function AdvancedSearch() {
   const dispatch = useDispatch();
@@ -17,14 +16,9 @@ export default function AdvancedSearch() {
   const [rating, setRating] = useState("");
   const [favorite, setFavorite] = useState(false);
   const cards = useSelector((store) => store.inventory.cards);
-  const [searchResults, setSearchResults] = useState(cards);
-  const [spiritId, setSpiritId] = useState("")
+  const [spiritId, setSpiritId] = useState("");
   const [modalState, setModalState] = useState(false);
   const [validCard, setValidCard] = useState(true);
-
-  useEffect(() => {
-    handleAdvancedSearch();
-  }, [cards]);
 
   const clearForm = () => {
     setType("");
@@ -33,12 +27,11 @@ export default function AdvancedSearch() {
     setProof("");
     setName("");
     setNotes("");
-    setRating("")
+    setRating("");
   };
 
   const handleRemove = (card) => {
-    dispatch(removeCard(card))
-    handleAdvancedSearch();
+    dispatch(removeCard(card));
   };
 
   const handleFavorite = (card) => {
@@ -55,50 +48,6 @@ export default function AdvancedSearch() {
     setNotes(card.notes);
     setRating(card.rating);
     setSpiritId(card.id);
-  };
-
-  const handleAdvancedSearch = () => {
-    let resultArray = cards;
-
-  if(name !== ''){
-      const lowerCaseName = name.toLowerCase();
-      const newResult = resultArray.filter((bottle)=> bottle.name.toLowerCase().includes(lowerCaseName));
-      resultArray = [...newResult]
-  }
-  if(type !== ''){
-    const lowerCaseType = type.toLowerCase();
-    const newResult = resultArray.filter((bottle)=> bottle.type.toLowerCase().includes(lowerCaseType));
-    resultArray = [...newResult]
-  }
-  if(subType !== ''){
-    const lowerCaseSubType = subType.toLowerCase();
-    const newResult = resultArray.filter((bottle)=> bottle.subType.toLowerCase().includes(lowerCaseSubType));
-    resultArray = [...newResult]
-  }
-  if(distillery !== ''){
-    const lowerCaseDistillery = distillery.toLowerCase();
-    const newResult = resultArray.filter((bottle)=> bottle.distillery.toLowerCase().includes(lowerCaseDistillery));
-    resultArray = [...newResult]
-  }
-  if(proof !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.proof.toLowerCase().includes(proof));
-    resultArray = [...newResult]
-  }
-  if(notes !== ''){
-    const lowerCaseNotes = notes.toLowerCase();
-    const newResult = resultArray.filter((bottle)=> bottle.notes.toLowerCase().includes(lowerCaseNotes));
-    resultArray = [...newResult]
-  }
-  if(rating !== ''){
-    const newResult = resultArray.filter((bottle)=> bottle.rating === rating);
-    resultArray = [...newResult]
-  }
-  if(favorite !== false){
-    const newResult = resultArray.filter((bottle) => bottle.favorite === true)
-    resultArray = [...newResult]
-  }
-
-  setSearchResults(resultArray)
   };
 
   const handleEdit = (card) => {
@@ -118,22 +67,26 @@ export default function AdvancedSearch() {
       errorCheckName: validName,
       errorCheckType: validType,
       errorCheckCard: validCard,
-    }
+    };
 
     if (name === "") {
       editErrorCheck.errorCheckName = false;
       editErrorCheck.errorCheckCard = false;
       setValidName(false);
-    } 
-    
+    }
+
     if (type === "") {
       editErrorCheck.errorCheckType = false;
       editErrorCheck.errorCheckCard = false;
       setValidType(false);
     }
 
-    if (!editErrorCheck.errorCheckName || !editErrorCheck.errorCheckName || !editErrorCheck.errorCheckCard) {
-      setModalState(true)
+    if (
+      !editErrorCheck.errorCheckName ||
+      !editErrorCheck.errorCheckName ||
+      !editErrorCheck.errorCheckCard
+    ) {
+      setModalState(true);
     }
 
     if (name !== "" && type !== "") {
@@ -148,212 +101,287 @@ export default function AdvancedSearch() {
       setValidType(true);
       setModalState(false);
     }
-};
+  };
 
-const handleCancel = () => {
-  clearForm();
-  setModalState(false);
-}
+  const handleCancel = () => {
+    clearForm();
+    setModalState(false);
+  };
+
+  let resultArray = cards;
+
+  if (name !== "") {
+    const lowerCaseName = name.toLowerCase();
+    const newResult = resultArray.filter((bottle) =>
+      bottle.name.toLowerCase().includes(lowerCaseName)
+    );
+    resultArray = [...newResult];
+  }
+  if (type !== "") {
+    const lowerCaseType = type.toLowerCase();
+    const newResult = resultArray.filter((bottle) =>
+      bottle.type.toLowerCase().includes(lowerCaseType)
+    );
+    resultArray = [...newResult];
+  }
+  if (subType !== "") {
+    const lowerCaseSubType = subType.toLowerCase();
+    const newResult = resultArray.filter((bottle) =>
+      bottle.subType.toLowerCase().includes(lowerCaseSubType)
+    );
+    resultArray = [...newResult];
+  }
+  if (distillery !== "") {
+    const lowerCaseDistillery = distillery.toLowerCase();
+    const newResult = resultArray.filter((bottle) =>
+      bottle.distillery.toLowerCase().includes(lowerCaseDistillery)
+    );
+    resultArray = [...newResult];
+  }
+  if (proof !== "") {
+    const newResult = resultArray.filter((bottle) =>
+      bottle.proof.toLowerCase().includes(proof)
+    );
+    resultArray = [...newResult];
+  }
+  if (notes !== "") {
+    const lowerCaseNotes = notes.toLowerCase();
+    const newResult = resultArray.filter((bottle) =>
+      bottle.notes.toLowerCase().includes(lowerCaseNotes)
+    );
+    resultArray = [...newResult];
+  }
+  if (rating !== "") {
+    const newResult = resultArray.filter((bottle) => bottle.rating === rating);
+    resultArray = [...newResult];
+  }
+  if (favorite !== false) {
+    const newResult = resultArray.filter((bottle) => bottle.favorite === true);
+    resultArray = [...newResult];
+  }
+
+  // XXXXXXX you need a way to get back to your regular almanac page, like a
 
   return (
-  <Wrapper>
-    <div className="main-div">
-      <h1 className="advanced-search-intro">Spirits Almanac Advanced Search</h1>
-      <h3 className="advanced-search-intro">Use the options below to manage your almanac.</h3>
+    <Wrapper>
+      <div className="main-div">
+        <h1 className="advanced-search-intro">Search for a Spirit</h1>
+        {/* this is unneeded could just delete this header */}
+        <h3 className="advanced-search-intro">
+          Use the options below to manage your almanac.
+        </h3>
 
-      {/* Begin Spirits Management */}
+        {/* Begin Spirits Management */}
 
-      {/* Begin Edit Card */}
-      {modalState && (
-    <div className="editing-modal">
-      <div className="spirit-modal">
-      <h2>Edit Your Spirit</h2>
-      <form>
-        <div className="inputs">
-        <input
-          className={validName ? "valid-input" : "invalid-input"}
-          type="text"
-          placeholder="Spirit Name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-        <input
-          className={validType ? "valid-input" : "invalid-input"}
-          type="text"
-          placeholder="Spirit Type"
-          value={type}
-          onChange={(event) => setType(event.target.value)}
-        />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Subtype"
-          value={subType}
-          onChange={(event) => setSubType(event.target.value)}
-        />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Distillery"
-          value={distillery}
-          onChange={(event) => setDistillery(event.target.value)}
-        />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Proof"
-          value={proof}
-          onChange={(e) => setProof(e.target.value)}
-        />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Tasting Notes"
-          value={notes}
-          onChange={(event) => setNotes(event.target.value)}
-        />
-        <select value={rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
-          <option value="">Select a rating</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-        </select>
-        </div>
-        </form>
-        <div>
-        <button className="button" type="button" onClick={handleEdit}>
-          Save
-        </button>
-        <button className="button" type="button" onClick={handleCancel}>
-          Cancel
-        </button>
-        </div>
-        </div>
-        </div>)}
-
-      {/* End Edit Card */}
-
-      {/* Begin Advanced Search */}
-      <div className="advanced-search">
-      <h2 >Advanced Search</h2>
-      <form>
-        <div className="inputs">
-        <input 
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Name" 
-          value={modalState ? "" : name}
-          onChange={(event) => setName(event.target.value)}
-          />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Type"
-          value={modalState ? "" : type}
-          onChange={(event) => setType(event.target.value)} 
-          />
-        <input 
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Subtype" 
-          value={modalState ? "" : subType}
-          onChange={(event) => setSubType(event.target.value)}
-         />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Distillery" 
-          value={modalState ? "" : distillery}
-          onChange={(event) => setDistillery(event.target.value)}
-          />
-        <input 
-          className="valid-input"
-          type="text"
-          placeholder="Spirit Proof" 
-          value={modalState ? "" : proof}
-          onChange={(event) => setProof(event.target.value)}
-          />
-        <input
-          className="valid-input"
-          type="text"
-          placeholder="Tasting Notes" 
-          value={modalState ? "" : notes}
-          onChange={(event) => setNotes(event.target.value)}
-          />
-        <div>
-        Limit Search to Favorites?
-          <input
-             className="favorite-selector"
-            type="checkbox" 
-            onChange={() => setFavorite(!favorite)}/>
-        </div>
-        <select value={modalState ? "" : rating} onChange={(event) => setRating(event.target.value)} className="valid-input">
-          <option value="">Select a Rating</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-          <option value={8}>8</option>
-          <option value={9}>9</option>
-          <option value={10}>10</option>
-        </select>
-        </div>
-      </form>
-      <div>
-      <button className="button" type="button" onClick={handleAdvancedSearch} >Search</button>
-      <button className="button" type="button" onClick={clearForm}>Clear</button>
-      </div>
-      </div>
-      {/* End Advanced Search */}
-
-      {/* End Spirits Management */}
-
-      {/* Search Results    */}
-      <h1 className="search-results">
-        Search Results:
-      </h1>
-      <div className="user-search">
-      {searchResults.map((card) => {
-        return (
-          <div className="search-item">
-            <div className="search-item-layout">
-              <h2 className="card-name">{card.name}</h2>
-              <p>{`Spirit Type: ${card.type}`}</p>
-              <p>{`Spirit SubType: ${card.subType}`}</p>
-              <p>{`Spirit Distillery: ${card.distillery}`}</p>
-              <p>{`Spirit Proof: ${card.proof}`}</p>
-              <p>{`Tasting Notes: ${card.notes}`}</p>
-              <p>{`Rating: ${card.rating}`}</p>
+        {/* Begin Edit Card */}
+        {modalState && (
+          <div className="editing-modal">
+            <div className="spirit-modal">
+              <h2>Edit Your Spirit</h2>
+              <form>
+                <div className="inputs">
+                  <input
+                    className={validName ? "valid-input" : "invalid-input"}
+                    type="text"
+                    placeholder="Spirit Name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                  <input
+                    className={validType ? "valid-input" : "invalid-input"}
+                    type="text"
+                    placeholder="Spirit Type"
+                    value={type}
+                    onChange={(event) => setType(event.target.value)}
+                  />
+                  <input
+                    className="valid-input"
+                    type="text"
+                    placeholder="Spirit Subtype"
+                    value={subType}
+                    onChange={(event) => setSubType(event.target.value)}
+                  />
+                  <input
+                    className="valid-input"
+                    type="text"
+                    placeholder="Spirit Distillery"
+                    value={distillery}
+                    onChange={(event) => setDistillery(event.target.value)}
+                  />
+                  <input
+                    className="valid-input"
+                    type="text"
+                    placeholder="Spirit Proof"
+                    value={proof}
+                    onChange={(e) => setProof(e.target.value)}
+                  />
+                  <input
+                    className="valid-input"
+                    type="text"
+                    placeholder="Tasting Notes"
+                    value={notes}
+                    onChange={(event) => setNotes(event.target.value)}
+                  />
+                  <select
+                    value={rating}
+                    onChange={(event) => setRating(event.target.value)}
+                    className="valid-input"
+                  >
+                    <option value="">Select a rating</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
+                  </select>
+                </div>
+              </form>
+              <div>
+                <button className="button" type="button" onClick={handleEdit}>
+                  Save
+                </button>
+                <button className="button" type="button" onClick={handleCancel}>
+                  Cancel
+                </button>
+              </div>
             </div>
-        <div>
-        <button 
-          className="favorite-button"
-           type="button" 
-           onClick={() => handleFavorite(card)}>{card.favorite ? <>&#9733;</> : <>&#9734;</>}</button>
-          <button 
-          className="button" 
-          type="button" 
-          onClick={() => handleRemove(card)}>Delete</button>
-          <button 
-          className="button" 
-          type="button" 
-          onClick={() => handleEditCard(card)}>Edit</button>
-        </div>
           </div>
-        )
-      })}
-    </div>
-    </div>
+        )}
+
+        {/* End Edit Card */}
+
+        {/* Begin Advanced Search */}
+        <div className="advanced-search">
+          <h2>Advanced Search</h2>
+          <form>
+            <div className="inputs">
+              <input
+                className="valid-input"
+                type="text"
+                placeholder="Spirit Name"
+                value={modalState ? "" : name}
+                onChange={(event) => setName(event.target.value)}
+              />
+              <input
+                className="valid-input"
+                type="text"
+                placeholder="Spirit Type"
+                value={modalState ? "" : type}
+                onChange={(event) => setType(event.target.value)}
+              />
+              <input
+                className="valid-input"
+                type="text"
+                placeholder="Spirit Subtype"
+                value={modalState ? "" : subType}
+                onChange={(event) => setSubType(event.target.value)}
+              />
+              <input
+                className="valid-input"
+                type="text"
+                placeholder="Spirit Distillery"
+                value={modalState ? "" : distillery}
+                onChange={(event) => setDistillery(event.target.value)}
+              />
+              <input
+                className="valid-input"
+                type="text"
+                placeholder="Spirit Proof"
+                value={modalState ? "" : proof}
+                onChange={(event) => setProof(event.target.value)}
+              />
+              <input
+                className="valid-input"
+                type="text"
+                placeholder="Tasting Notes"
+                value={modalState ? "" : notes}
+                onChange={(event) => setNotes(event.target.value)}
+              />
+              <div>
+                Limit Search to Favorites?
+                <input
+                  className="favorite-selector"
+                  type="checkbox"
+                  onChange={() => setFavorite(!favorite)}
+                />
+              </div>
+              <select
+                value={modalState ? "" : rating}
+                onChange={(event) => setRating(event.target.value)}
+                className="valid-input"
+              >
+                <option value="">Select a Rating</option>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={7}>7</option>
+                <option value={8}>8</option>
+                <option value={9}>9</option>
+                <option value={10}>10</option>
+              </select>
+            </div>
+          </form>
+          <div>
+            <button className="button" type="button" onClick={clearForm}>
+              Clear
+            </button>
+          </div>
+        </div>
+        {/* End Advanced Search */}
+
+        {/* End Spirits Management */}
+
+        {/* Search Results    */}
+        <h1 className="search-results">Search Results:</h1>
+        <div className="user-search">
+          {resultArray.map((card) => {
+            return (
+              <div key={card.id} className="search-item">
+                <div className="search-item-layout">
+                  <h2 className="card-name">{card.name}</h2>
+                  <p>{`Spirit Type: ${card.type}`}</p>
+                  <p>{`Spirit SubType: ${card.subType}`}</p>
+                  <p>{`Spirit Distillery: ${card.distillery}`}</p>
+                  <p>{`Spirit Proof: ${card.proof}`}</p>
+                  <p>{`Tasting Notes: ${card.notes}`}</p>
+                  <p>{`Rating: ${card.rating}`}</p>
+                </div>
+                <div>
+                  <button
+                    className="favorite-button"
+                    type="button"
+                    onClick={() => handleFavorite(card)}
+                  >
+                    {card.favorite ? <>&#9733;</> : <>&#9734;</>}
+                  </button>
+                  <button
+                    className="button"
+                    type="button"
+                    onClick={() => handleRemove(card)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="button"
+                    type="button"
+                    onClick={() => handleEditCard(card)}
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </Wrapper>
   );
 }
