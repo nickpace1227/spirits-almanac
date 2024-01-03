@@ -12,7 +12,6 @@ export default function CreateUser() {
   const [validPassword, setValidPassword] = useState(true);
   const [validInfo, setValidInfo] = useState(true);
 
-  // XXXXXX changed your formatting so that you aren't ALWAYS setting the local storage, but now only when user data changes
   useEffect(() => {
     localStorage.setItem(
       "userData",
@@ -24,10 +23,9 @@ export default function CreateUser() {
     );
   }, [name, username, password]);
 
-  // XXXXXX I reworked your logic a bit. but I really don't like the setValidXXX(true) in here.
-  // what I would rather do is edit the onChange handlers below for each input to set the field to valid when the user starts typing in it.
-  // that way you can remove the setValidXXX(true) from here and just have it in the onChange handlers.
-  const handleCreateAccount = () => {
+  const handleCreateAccount = (e) => {
+    e.preventDefault();
+
     const errorCheck = {
       name: validName,
       username: validUsername,
@@ -39,7 +37,6 @@ export default function CreateUser() {
       setValidName(false);
       errorCheck.name = false;
     } else {
-      setValidName(true);
       errorCheck.name = true;
     }
 
@@ -47,7 +44,6 @@ export default function CreateUser() {
       setValidUsername(false);
       errorCheck.username = false;
     } else {
-      setValidUsername(true);
       errorCheck.username = true;
     }
 
@@ -55,7 +51,6 @@ export default function CreateUser() {
       setValidPassword(false);
       errorCheck.password = false;
     } else {
-      setValidPassword(true);
       errorCheck.password = true;
     }
 
@@ -65,28 +60,23 @@ export default function CreateUser() {
       return;
     }
 
-    navigate("/LoginPage");
-    // XXXXXX as part of this action I would go ahead and do all your "login steps" so that a user doesnt have to re-input all their shit.
-  };
-
-  const handleKeypress = (e) => {
-    if (e.keyCode === 13) {
-      handleCreateAccount();
-    }
+    navigate("/Home");
+    sessionStorage.setItem("loggedIn", true);
   };
 
   return (
     <Wrapper>
       <div className="create-user-page">
         <div>
-          {/* XXXXXX can change the onKeyDown onSubmit={handleCreateAccount} which has a built in keypress handler, and then you can delete this function*/}
-          <form className="create-user-form" onKeyDown={handleKeypress}>
+          <form className="create-user-form" onSubmit={(e) => handleCreateAccount(e)}>
             <p>Create an Account</p>
             <input
               className={validName ? "valid-user-input" : "invalid-user-input"}
               type="text"
               placeholder="Name"
-              onChange={(event) => setName(event.target.value)}
+              onChange={(event) => {
+                setValidName(true);
+                setName(event.target.value)}}
             />
             <input
               className={
@@ -94,7 +84,9 @@ export default function CreateUser() {
               }
               type="username"
               placeholder="Username"
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => {
+                setValidUsername(true);
+                setUsername(event.target.value)}}
             />
             <input
               className={
@@ -102,14 +94,14 @@ export default function CreateUser() {
               }
               type="password"
               placeholder="Password"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={
+                (event) => {
+                setPassword(event.target.value)
+                setValidPassword(true)}}
             />
-            {/* XXXXXX change type to +submit" and delete the onClick handler */}
             <button
               className="create-user-button"
-              type="button"
-              onClick={handleCreateAccount}
-            >
+              type="submit">
               Create Account
             </button>
           </form>

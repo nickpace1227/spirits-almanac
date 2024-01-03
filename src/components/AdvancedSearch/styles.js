@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   .main-div {
-    width: 75vw;
+    width: 900px;
     background-color: #efe1d3;
     display: flex;
     flex-direction: column;
@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
 
   .advanced-search-intro {
     text-align: center;
+    margin-bottom: 0px;
   }
 
   .advanced-search {
@@ -26,25 +27,33 @@ export const Wrapper = styled.div`
 
   .inputs {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 40vw;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
   }
 
   .valid-input {
     margin: 2px;
     border-radius: 5px;
+    padding: 5px;
   }
 
   .invalid-input {
     border: solid red;
     border-radius: 5px;
     margin: 2px;
+    padding: 5px;
   }
 
   .button {
-    width: 70px;
+    width: 80px;
     margin: 5px 2px;
+    height: 25px;
+    padding: 5px;
+  }
+
+  .edit-spirits {
+    margin: 0px 20px 20px 20px;
   }
 
   .search-results {
@@ -62,7 +71,7 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20vw;
+    width: 300px;
     height: auto;
     border: solid 5px black;
     border-radius: 15px;
@@ -114,5 +123,10 @@ export const Wrapper = styled.div`
     width: auto;
     height: auto;
     border-radius: 15px;
+  }
+
+  .edit-section-title {
+    align-text: center;
+    margin: 20px 5px;
   }
 `;

@@ -5,8 +5,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   .main-div {
-    /* same thing as everywhere else */
-    width: 75vw;
+    width: 900px;
     background-color: #efe1d3;
     display: flex;
     flex-direction: column;
@@ -17,24 +16,10 @@ export const Wrapper = styled.div`
 
   .almanac-intro {
     text-align: center;
+    width: 900px;
+    margin-bottom: 20px;
   }
 
-  .search-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .search-bar {
-    text-align: center;
-  }
-
-  .advanced-search {
-    margin-left: 10px;
-    text-decoration: none;
-  }
-
-  /* XXXX this needs a max width on it. it goes from looking neat and organized to chaotic when it gets too wide */
   .almanac-manager {
     display: flex;
     flex-direction: column;
@@ -42,45 +27,46 @@ export const Wrapper = styled.div`
   }
 
   .manage-spirits {
-    width: auto;
-    margin-bottom: 15px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
+  .edit-spirits {
+    margin: 0px 20px 20px 20px;
+  }
+
   .inputs {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 40vw;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
   }
 
   .valid-input {
     margin: 2px;
     border-radius: 5px;
+    padding: 5px;
   }
 
   .invalid-input {
     border: solid red;
     border-radius: 5px;
     margin: 2px;
+    padding: 5px;
   }
 
-  .no-results {
-    text-align: center;
-    margin: 20px;
-    font-size: 25px;
-  }
-
-  /* XXXXXX this needs a height so that the buttons look similar */
   .button {
-    width: 70px;
-    margin: 5px;
+    width: 80px;
+    margin: 5px 2px;
+    height: 25px;
+    padding: 5px;
   }
 
   .almanac-title {
     text-align: center;
+    margin-bottom: 0px;
   }
 
   .user-almanac {
@@ -90,26 +76,17 @@ export const Wrapper = styled.div`
     width: auto;
   }
 
-  .results-section {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    height: auto;
-    width: auto;
-  }
-
-  /* this needs some padding */
   .almanac-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* change to fixed width */
-    width: 20vw;
+    width: 300px;
     height: auto;
     border: solid 5px black;
     border-radius: 15px;
     margin: 10px;
     background-color: white;
+    padding: 10px;
   }
 
   .almanac-item-layout {
@@ -142,7 +119,7 @@ export const Wrapper = styled.div`
     height: 100vh;
     width: 100vw;
     background-color: rgb(0, 0, 0, 0.7);
-    padding: 0px;
+    padding: 10px;
     overflow: hidden;
     z-index: 100;
   }
@@ -156,5 +133,15 @@ export const Wrapper = styled.div`
     width: auto;
     height: auto;
     border-radius: 15px;
+  }
+
+  .section-title {
+    align-text: center;
+    margin: 5px;
+  }
+
+  .edit-section-title {
+    align-text: center;
+    margin: 20px 5px;
   }
 `;

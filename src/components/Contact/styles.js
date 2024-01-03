@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   .contact-page {
-    width: 75vw;
+    width: 900px;
     background-color: #efe1d3;
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 50vw;
+    width: 550px;
     margin-bottom: 20px;
   }
 
@@ -33,15 +33,30 @@ export const Wrapper = styled.div`
     margin-bottom: 20px;
   }
 
-  /* needs padding same as every other input field */
   .valid-input {
     margin: 5px;
+    padding: 5px;
   }
 
-  /* needs padding same as every other input field */
   .invalid-input {
     margin: 5px;
     border: solid red;
+    padding: 5px;
+  }
+
+  .valid-message {
+    margin: 5px;
+    padding: 5px;
+    width: 500px;
+    height: 150px;
+  }
+
+  .invalid-message {
+    margin: 5px;
+    border: solid red;
+    padding: 5px;
+    width: 500px;
+    height: 150px;
   }
 
   .button {

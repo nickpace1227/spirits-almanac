@@ -4,9 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  /* XXXXXX i'd recommend setting this to min-width instead. having variable size contains is back practice */
   .create-user-page {
-    width: 30vw;
+    min-width: 300px;
     background-color: #efe1d3;
     display: flex;
     flex-direction: column;
@@ -22,20 +21,22 @@ export const Wrapper = styled.div`
     margin-bottom: 15px;
   }
 
-  /* XXXXXX I'd add some padding to this, the input fields feel cramped */
   .valid-user-input {
+    border-radius: 5px;
     margin: 2px;
+    padding: 5px;
   }
 
-  /* XXXXXX I'd add some padding to this, the input fields feel cramped */
   .invalid-user-input {
-    margin: 2px;
     border: solid red;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 5px;
   }
 
-  /* XXXXXX I'd add some padding to this, the button feels cramped */
   .create-user-button {
     width: auto;
     margin-top: 2px;
+    padding: 5px;
   }
 `;

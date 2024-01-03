@@ -2,7 +2,7 @@ import React from "react";
 import { Wrapper } from "./styles.js";
 
 export default function Home() {
-  // XXXXXX I'd add code here to check if logged in, and if not, reroute to '/'
+
   return (
     <Wrapper>
       <div className="home-page">

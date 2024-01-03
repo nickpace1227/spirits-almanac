@@ -5,8 +5,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   .home-page {
-    // XXXXXX I would change this to be a min-width and pixels instead of a width and vw. that way it doesnt just perpetually grow
-    width: 75vw;
+    width: 900px;
     background-color: #efe1d3;
     display: flex;
     flex-direction: column;

@@ -100,10 +100,9 @@ export default function Contact() {
               setValidEmail(true);
             }}
           />
-          {/* XXXXX this needs to be bigger in both height and width */}
           <textarea
-            className={validMessage ? "valid-input" : "invalid-input"}
-            placeholder="Your Question/Commission/Print Details/Love Letter"
+            className={validMessage ? "valid-message" : "invalid-message"}
+            placeholder="Your Questions or Feedback."
             name="message"
             onChange={(e) => {
               setMessage(e.target.value);

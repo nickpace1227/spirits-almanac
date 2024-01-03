@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   .login-page {
-    /*XXXXXX I'd change this to min-width' */
     width: 30vw;
     background-color: #efe1d3;
     display: flex;
@@ -21,20 +20,26 @@ export const Wrapper = styled.div`
     width: 200px;
   }
 
-  /* XXXXXX I'd add some padding to this, the input fields feel cramped */
   .valid-input {
+    border-radius: 5px;
     margin: 2px;
+    padding: 5px;
   }
 
-  /* XXXXXX I'd add some padding to this, the input fields feel cramped */
   .invalid-input {
-    margin: 2px;
     border: solid red;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 5px;
   }
 
-  /* XXXXXX I'd add some padding to this, the buttons feel cramped */
   .login-button {
     width: auto;
     margin-top: 2px;
+    padding: 5px;
+  }
+
+  .create-account {
+    margin: 10px;
   }
 `;

@@ -17,7 +17,9 @@ export default function LoginPage() {
     }
   }, []);
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
+
     const errorCheck = {
       username: validUsername,
       password: validPassword,
@@ -34,22 +36,15 @@ export default function LoginPage() {
     }
 
     if (username === loginData.username && password === loginData.password) {
-      localStorage.setItem("loggedIn", true);
       navigate("/Home");
-    }
-  };
-
-  const handleKeypress = (e) => {
-    if (e.keyCode === 13) {
-      handleLogin();
+      sessionStorage.setItem("loggedIn", true);
     }
   };
 
   return (
     <Wrapper>
       <div className="login-page">
-        {/* XXXXXX can change the onKeyDown onSubmit={handleLogin} which has a built in keypress handler, and then you can delete this function*/}
-        <form className="login-form" onKeyDown={handleKeypress}>
+        <form className="login-form" onSubmit={ (e) => {handleLogin(e)}}>
           <p className="login-title">Login</p>
           <div className="login-form">
             <input
@@ -65,22 +60,19 @@ export default function LoginPage() {
               className={validPassword ? "valid-input" : "invalid-input"}
               type="password"
               placeholder="Password"
-              // this is EXACTLY what I mean. this is the proper way to reset the validation for a field.
               onChange={(event) => {
                 setPassword(event.target.value);
                 setValidPassword(true);
               }}
             />
           </div>
-          {/* change this button to type='submit' and then delete the onClick handler */}
-          <button className="login-button" type="button" onClick={handleLogin}>
+          <button className="login-button" type="submit">
             Login
           </button>
         </form>
-        {/* this H3 is bigger in size than the login-title above. you should not have bigger sub-titles than main-titles */}
-        <h3>
+        <div className="create-account">
           Don't have an account? Click <Link to="/CreateUser">Here!</Link>
-        </h3>
+        </div>
       </div>
     </Wrapper>
   );

@@ -21,14 +21,9 @@ export default function Almanac() {
   const [proof, setProof] = useState("");
   const [notes, setNotes] = useState("");
   const [rating, setRating] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [validSearch, setValidSearch] = useState(true);
-  const [dropdown, setDropdown] = useState("name");
-  const [filteredCards, setFilteredCards] = useState([]);
   const [spiritId, setSpiritId] = useState("");
   const cards = useSelector((store) => store.inventory.cards);
-  // if this is going to be true or false then I'd change it to modalActive
-  const [modalState, setModalState] = useState(false);
+  const [modalActive, setModalActive] = useState(false);
   const [favorite, setFavorite] = useState(false);
 
   const clearForm = () => {
@@ -88,25 +83,6 @@ export default function Almanac() {
     dispatch(toggleFavorite(card));
   };
 
-  const searchCards = (card) => {
-    const lowerCaseSearch = searchTerm.toLowerCase();
-    if (card[dropdown].toLowerCase().includes(lowerCaseSearch)) {
-      return card;
-    }
-  };
-
-  const handleSearch = () => {
-    if (searchTerm === "") {
-      setValidSearch(false);
-      return;
-    }
-
-    if (searchTerm !== "") {
-      setValidSearch(true);
-      setFilteredCards(cards.filter(searchCards));
-    }
-  };
-
   const handleEdit = (card) => {
     const updatedCard = {
       name: name,
@@ -135,7 +111,6 @@ export default function Almanac() {
       setValidType(false);
     }
 
-    // this code didnt do anything. now it shortcuts to exit
     if (!editErrorCheck.validName || !editErrorCheck.validType) {
       return;
     }
@@ -144,11 +119,11 @@ export default function Almanac() {
     clearForm();
     setValidName(true);
     setValidType(true);
-    setModalState(false);
+    setModalActive(false);
   };
 
   const handleEditCard = (card) => {
-    setModalState(true);
+    setModalActive(true);
     setName(card.name);
     setType(card.type);
     setSubType(card.subType);
@@ -160,117 +135,31 @@ export default function Almanac() {
     setFavorite(card.favorite);
   };
 
-  const handleClearSearch = () => {
-    setSearchTerm("");
-    setFilteredCards([]);
-  };
-
   const handleCancel = () => {
     clearForm();
-    setModalState(false);
+    setModalActive(false);
   };
 
   return (
     <Wrapper>
       <div className="main-div">
-        <h1 className="almanac-intro">Welcome to your own Spirits Almanac!</h1>
-        <p className="almanac-intro">
-          Click below to begin adding pages to your almanac or use our search
+        <div className="almanac-intro">
+        <h1 >Welcome to your own Spirits Almanac!</h1>
+        <div>
+          Click below to begin adding pages to your almanac or use our <Link to="/advancedsearch">
+            Find-a-Spirit
+          </Link> search
           tool to look through your saved spirits!
-        </p>
-
-        {/* Search stuff */}
-        {/* XXXXXXXX since you have advanced search I'd remove search on the main almanac page */}
-        <div className="search-section">
-          <div className="search-bar">
-            <select onChange={(event) => setDropdown(event.target.value)}>
-              <option value="name">Name</option>
-              <option value="type">Type</option>
-              <option value="subType">Sub Type</option>
-              <option value="distillery">Distillery</option>
-            </select>
-            <input
-              className={validSearch ? "valid-input" : "invalid-input"}
-              type="text"
-              placeholder="Search"
-              value={searchTerm}
-              onChange={(event) => {
-                setSearchTerm(event.target.value);
-                setValidSearch(true);
-              }}
-            />
-            <button
-              className="button"
-              type="button"
-              onClick={(e) => handleSearch(e)}
-            >
-              Search
-            </button>
-            <button
-              className="button"
-              type="button"
-              onClick={(e) => handleClearSearch(e)}
-            >
-              Clear
-            </button>
-          </div>
-          {/* XXXXX if you remove search stuff from this page change this below to "find a Spirit" */}
-          <Link className="advanced-search" to="/advancedsearch">
-            Advanced Search
-          </Link>
         </div>
-        <div className="search-results">
-          <div className="results-section">
-            {filteredCards.map((card) => {
-              return (
-                <div className="almanac-item" key={card.id}>
-                  <div className="almanac-item-layout">
-                    <h2 className="card-name">{card.name}</h2>
-                    <p>{`Spirit Type: ${card.type}`}</p>
-                    <p>{`Spirit Subtype: ${card.subType}`}</p>
-                    <p>{`Spirit Distillery: ${card.distillery}`}</p>
-                    <p>{`Spirit Proof: ${card.proof}`}</p>
-                    <p>{`Tasting Notes: ${card.notes}`}</p>
-                    <p>{`Rating: ${card.rating}`}</p>
-                  </div>
-                  <div>
-                    <button
-                      className="favorite-button"
-                      type="button"
-                      onClick={() => handleFavorite(card)}
-                    >
-                      {card.favorite ? <>&#9733;</> : <>&#9734;</>}
-                    </button>
-                    <button
-                      className="card-button"
-                      type="button"
-                      onClick={() => handleRemove(card)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="card-button"
-                      type="button"
-                      onClick={() => handleEditCard(card)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
-        {/* End Search */}
 
         {/* Spirit Management */}
         {/* Edit Spirits */}
-        {modalState && (
+        {modalActive && (
           <div className="editing-modal">
             <div className="spirit-modal">
-              <h3>Edit Your Spirit</h3>
-              {/* XXXXXX this modal needs organization. suggest making it a column also each of the inputs needs padding */}
-              <form className="manage-spirits">
+              <h3 className="edit-section-title">Edit Your Spirit</h3>
+              <form className="edit-spirits">
                 <div className="inputs">
                   <input
                     className={validName ? "valid-input" : "invalid-input"}
@@ -353,49 +242,49 @@ export default function Almanac() {
         {/* Add a spirit */}
 
         <div className="almanac-manager">
-          <h3>Add a Spirit</h3>
+          <h3 className="section-title">Add a Spirit</h3>
           <form className="manage-spirits">
             <div className="inputs">
               <input
                 className={validName ? "valid-input" : "invalid-input"}
                 type="text"
                 placeholder="Spirit Name"
-                value={modalState ? "" : name}
+                value={modalActive ? "" : name}
                 onChange={(event) => setName(event.target.value)}
               />
               <input
                 className={validType ? "valid-input" : "invalid-input"}
                 type="text"
                 placeholder="Spirit Type"
-                value={modalState ? "" : type}
+                value={modalActive ? "" : type}
                 onChange={(event) => setType(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Subtype"
-                value={modalState ? "" : subType}
+                value={modalActive ? "" : subType}
                 onChange={(event) => setSubType(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Distillery"
-                value={modalState ? "" : distillery}
+                value={modalActive ? "" : distillery}
                 onChange={(event) => setDistillery(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Proof"
-                value={modalState ? "" : proof}
+                value={modalActive ? "" : proof}
                 onChange={(e) => setProof(e.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Tasting Notes"
-                value={modalState ? "" : notes}
+                value={modalActive ? "" : notes}
                 onChange={(event) => setNotes(event.target.value)}
               />
               <div>
@@ -408,7 +297,7 @@ export default function Almanac() {
                 />
               </div>
               <select
-                value={modalState ? "" : rating}
+                value={modalActive ? "" : rating}
                 onChange={(event) => setRating(event.target.value)}
                 className="valid-input"
               >

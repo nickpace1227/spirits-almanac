@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
 import { Wrapper } from "./styles.js";
@@ -19,6 +20,7 @@ export default function AdvancedSearch() {
   const [spiritId, setSpiritId] = useState("");
   const [modalState, setModalState] = useState(false);
   const [validCard, setValidCard] = useState(true);
+  const navigate = useNavigate();
 
   const clearForm = () => {
     setType("");
@@ -160,16 +162,14 @@ export default function AdvancedSearch() {
     resultArray = [...newResult];
   }
 
-  // XXXXXXX you need a way to get back to your regular almanac page, like a
+  const handleRedirect = () => {
+    navigate("/almanac")
+  }
 
   return (
     <Wrapper>
       <div className="main-div">
         <h1 className="advanced-search-intro">Search for a Spirit</h1>
-        {/* this is unneeded could just delete this header */}
-        <h3 className="advanced-search-intro">
-          Use the options below to manage your almanac.
-        </h3>
 
         {/* Begin Spirits Management */}
 
@@ -177,8 +177,8 @@ export default function AdvancedSearch() {
         {modalState && (
           <div className="editing-modal">
             <div className="spirit-modal">
-              <h2>Edit Your Spirit</h2>
-              <form>
+              <h2 className="edit-section-title">Edit Your Spirit</h2>
+              <form className="edit-spirits">
                 <div className="inputs">
                   <input
                     className={validName ? "valid-input" : "invalid-input"}
@@ -240,7 +240,6 @@ export default function AdvancedSearch() {
                     <option value={10}>10</option>
                   </select>
                 </div>
-              </form>
               <div>
                 <button className="button" type="button" onClick={handleEdit}>
                   Save
@@ -249,6 +248,7 @@ export default function AdvancedSearch() {
                   Cancel
                 </button>
               </div>
+              </form>
             </div>
           </div>
         )}
@@ -334,13 +334,14 @@ export default function AdvancedSearch() {
               Clear
             </button>
           </div>
+          <Link className="almanac-return" to="/Almanac">Return to Almanac</Link>
         </div>
         {/* End Advanced Search */}
 
         {/* End Spirits Management */}
 
         {/* Search Results    */}
-        <h1 className="search-results">Search Results:</h1>
+        <h1 className="search-results">Search Results</h1>
         <div className="user-search">
           {resultArray.map((card) => {
             return (
