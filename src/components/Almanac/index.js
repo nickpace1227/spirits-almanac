@@ -141,17 +141,15 @@ export default function Almanac() {
   };
 
   return (
-    <Wrapper>
-      <body className={modalActive ? "active-modal" : ""}>
+    <Wrapper className={modalActive ? "active-modal" : ""}>
       <div className="main-div">
         <div className="almanac-intro">
-        <h1 >Welcome to your own Spirits Almanac!</h1>
-        <div className="almanac-description">
-          Click below to begin adding pages to your almanac or use our <Link to="/advancedsearch">
-            Find-a-Spirit
-          </Link> search
-          tool to look through your saved spirits!
-        </div>
+          <h1>Welcome to your own Spirits Almanac!</h1>
+          <div className="almanac-description">
+            Click below to begin adding pages to your almanac or use our{" "}
+            <Link to="/advancedsearch">Find-a-Spirit</Link> search tool to look
+            through your saved spirits!
+          </div>
         </div>
 
         {/* Spirit Management */}
@@ -329,7 +327,7 @@ export default function Almanac() {
 
         {/* Begin Almanac */}
         <h1 className="almanac-title">Your Almanac</h1>
-        <div className="user-almanac">
+        <div className={"user-almanac"}>
           {cards.map((card) => {
             return (
               <div className="almanac-item" key={card.id}>
@@ -370,7 +368,6 @@ export default function Almanac() {
           })}
         </div>
       </div>
-      </body>
     </Wrapper>
   );
 }
