@@ -15,9 +15,16 @@ export const Wrapper = styled.div`
   }
 
   .almanac-intro {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 900px;
     margin-bottom: 20px;
+  }
+
+  .almanac-description {
+    width: 650px;
+    text-align: center;
   }
 
   .almanac-manager {
@@ -120,7 +127,6 @@ export const Wrapper = styled.div`
     width: 100vw;
     background-color: rgb(0, 0, 0, 0.7);
     padding: 10px;
-    overflow: hidden;
     z-index: 100;
   }
 

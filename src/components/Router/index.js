@@ -15,6 +15,7 @@ const loggedIn = JSON.parse(sessionStorage.getItem("loggedIn"));
 
   return (
     <BrowserRouter>
+    <body className="active-modal">
       <GlobalStyles>
         <Header />
         <Routes>
@@ -26,6 +27,7 @@ const loggedIn = JSON.parse(sessionStorage.getItem("loggedIn"));
           <Route path="/Contact" exact element={<Contact />} />
         </Routes>
       </GlobalStyles>
+      </body>
     </BrowserRouter>
   );
 }

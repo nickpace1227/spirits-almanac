@@ -142,10 +142,11 @@ export default function Almanac() {
 
   return (
     <Wrapper>
+      <body className={modalActive ? "active-modal" : ""}>
       <div className="main-div">
         <div className="almanac-intro">
         <h1 >Welcome to your own Spirits Almanac!</h1>
-        <div>
+        <div className="almanac-description">
           Click below to begin adding pages to your almanac or use our <Link to="/advancedsearch">
             Find-a-Spirit
           </Link> search
@@ -369,6 +370,7 @@ export default function Almanac() {
           })}
         </div>
       </div>
+      </body>
     </Wrapper>
   );
 }
