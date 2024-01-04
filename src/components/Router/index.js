@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GlobalStyles } from "../Styles/GlobalStyles";
 import Header from "../Header";
@@ -10,6 +10,8 @@ import Contact from "../Contact";
 import CreateUser from "../CreateUser";
 
 export default function SpiritsAlmanac() {
+const loggedIn = JSON.parse(sessionStorage.getItem("loggedIn"));
+;
 
   return (
     <BrowserRouter>
@@ -18,7 +20,7 @@ export default function SpiritsAlmanac() {
         <Routes>
           <Route path="/CreateUser" exact element={<CreateUser />} />
           <Route path="/" exact element={<LoginPage />} />
-          <Route path="/Almanac" element={<Almanac />} />
+          <Route path="/Almanac" element={loggedIn ? <Almanac /> : <LoginPage />} />
           <Route path="/AdvancedSearch" exact element={<AdvancedSearch />} />
           <Route path="/Home" exact element={<Home />} />
           <Route path="/Contact" exact element={<Contact />} />
