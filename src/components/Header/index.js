@@ -1,8 +1,22 @@
-import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Wrapper } from "./styles.js";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const isUserLoggedIn = JSON.parse(sessionStorage.getItem("loggedIn"));
+
+  if (!isUserLoggedIn) {
+    if (
+      window.location.pathname !== "/" &&
+      window.location.pathname !== "/Home" &&
+      window.location.pathname !== "/Contact" &&
+      window.location.pathname !== "/CreateUser"
+    ) {
+      navigate("/");
+    }
+  }
+
   return (
     <Wrapper>
       <div className="header-content">
