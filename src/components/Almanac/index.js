@@ -9,6 +9,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import { Wrapper } from "./styles.js";
+import EditingModal from "../EditingModal";
 
 export default function Almanac() {
   const dispatch = useDispatch();
@@ -75,52 +76,18 @@ export default function Almanac() {
     setValidType(true);
   };
 
-  const handleRemove = (card) => {
-    dispatch(removeCard(card));
-  };
-
-  const handleFavorite = (card) => {
-    dispatch(toggleFavorite(card));
-  };
-
-  const handleEdit = (card) => {
-    const updatedCard = {
-      name: name,
-      type: type,
-      subType: subType,
-      distillery: distillery,
-      proof: proof,
-      notes: notes,
-      favorite: card.favorite,
-      id: spiritId,
-      rating: rating,
-    };
-
-    const editErrorCheck = {
-      validName,
-      validType,
-    };
-
-    if (name === "") {
-      editErrorCheck.validName = false;
-      setValidName(false);
-    }
-
-    if (type === "") {
-      editErrorCheck.validType = false;
-      setValidType(false);
-    }
-
-    if (!editErrorCheck.validName || !editErrorCheck.validType) {
-      return;
-    }
-
-    dispatch(editCard(updatedCard));
-    clearForm();
-    setValidName(true);
-    setValidType(true);
-    setModalActive(false);
-  };
+  const handleEdit = (updatedCard) => {
+  setName(updatedCard.name);
+  setType(updatedCard.name);
+  setSubType(updatedCard.name);
+  setDistillery(updatedCard.name);
+  setProof(updatedCard.name);
+  setNotes(updatedCard.name);
+  setRating(updatedCard.name);
+  setModalActive(updatedCard.modalActive);
+  dispatch(editCard(updatedCard));
+  clearForm();
+}
 
   const handleEditCard = (card) => {
     setModalActive(true);
@@ -133,6 +100,14 @@ export default function Almanac() {
     setRating(card.rating);
     setSpiritId(card.id);
     setFavorite(card.favorite);
+  };
+
+  const handleRemove = (card) => {
+    dispatch(removeCard(card));
+  };
+
+  const handleFavorite = (card) => {
+    dispatch(toggleFavorite(card));
   };
 
   const handleCancel = () => {
@@ -154,88 +129,19 @@ export default function Almanac() {
 
         {/* Spirit Management */}
         {/* Edit Spirits */}
-        {modalActive && (
-          <div className="editing-modal">
-            <div className="spirit-modal">
-              <h3 className="edit-section-title">Edit Your Spirit</h3>
-              <form className="edit-spirits">
-                <div className="inputs">
-                  <input
-                    className={validName ? "valid-input" : "invalid-input"}
-                    type="text"
-                    placeholder="Spirit Name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                  />
-                  <input
-                    className={validType ? "valid-input" : "invalid-input"}
-                    type="text"
-                    placeholder="Spirit Type"
-                    value={type}
-                    onChange={(event) => setType(event.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Spirit Subtype"
-                    value={subType}
-                    onChange={(event) => setSubType(event.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Spirit Distillery"
-                    value={distillery}
-                    onChange={(event) => setDistillery(event.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Spirit Proof"
-                    value={proof}
-                    onChange={(e) => setProof(e.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Tasting Notes"
-                    value={notes}
-                    onChange={(event) => setNotes(event.target.value)}
-                  />
-                  <select
-                    value={rating}
-                    onChange={(event) => setRating(event.target.value)}
-                    className="valid-input"
-                  >
-                    <option value="">Select a rating</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                    <option value={7}>7</option>
-                    <option value={8}>8</option>
-                    <option value={9}>9</option>
-                    <option value={10}>10</option>
-                  </select>
-                </div>
-                <div>
-                  <button className="button" type="button" onClick={handleEdit}>
-                    Save
-                  </button>
-                  <button
-                    className="button"
-                    type="button"
-                    onClick={handleCancel}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+
+        {modalActive && 
+        <EditingModal 
+        editingCallback={handleEdit}
+        name={name}
+        type={type}
+        subType={subType}
+        distillery={distillery}
+        proof={proof}
+        notes={notes}
+        rating={rating} 
+        />}
+
         {/* End Edit */}
 
         {/* Add a spirit */}

@@ -4,12 +4,6 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  &.active-modal {
-    position: fixed;
-    top: 172px;
-    width: 100%;
-  }
-
   .main-div {
     width: 900px;
     background-color: #efe1d3;
