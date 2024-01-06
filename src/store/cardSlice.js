@@ -5,15 +5,15 @@ export const cardSlice = createSlice({
   initialState: {
     cards: [
       {
-      name: "Lagavulin 16",
-      type: "whiskey",
-      subType: "islay",
-      distillery: "Lagavulin",
-      proof: "43%",
-      notes: "things and stuff",
-      id: 1,
-      favorite: true,
-      rating: "10",
+        name: "Lagavulin 16",
+        type: "whiskey",
+        subType: "islay",
+        distillery: "Lagavulin",
+        proof: "43%",
+        notes: "things and stuff",
+        spiritId: 1,
+        favorite: true,
+        rating: "10",
       },
       {
         name: "Spirit Labs Old Tom Gin",
@@ -22,7 +22,7 @@ export const cardSlice = createSlice({
         distillery: "Spirit Labs",
         proof: "40%",
         notes: "Lots of botanicals",
-        id: 2,
+        spiritId: 2,
         favorite: true,
         rating: "8",
       },
@@ -33,7 +33,7 @@ export const cardSlice = createSlice({
         distillery: "Balcones",
         proof: "57%",
         notes: "like licking a burnt out campfire",
-        id: 3,
+        spiritId: 3,
         favorite: false,
         rating: "9",
       },
@@ -44,7 +44,7 @@ export const cardSlice = createSlice({
         distillery: "Maker's Mark",
         proof: "57%",
         notes: "cherry, oak, and brown sugar",
-        id: 4,
+        spiritId: 4,
         favorite: true,
         rating: "10",
       }
@@ -55,11 +55,11 @@ export const cardSlice = createSlice({
       state.cards = [...state.cards, action.payload];
     },
     removeCard: (state, action) => {
-      state.cards = state.cards.filter((card) => {return card.id !== action.payload.id})
+      state.cards = state.cards.filter((card) => {return card.spiritId !== action.payload.spiritId})
     },
     toggleFavorite: (state, action) => {
       state.cards = state.cards.map((card) => {
-        if (card.id === action.payload.id) {
+        if (card.spiritId === action.payload.spiritId) {
           return {
             ...card,
             favorite: !card.favorite,
@@ -70,7 +70,7 @@ export const cardSlice = createSlice({
     },
     editCard: (state, action) => {
       state.cards = state.cards.map((card) => {
-        if (card.id === action.payload.id) {
+        if (card.spiritId === action.payload.spiritId) {
           return {
             ...card,
             name: action.payload.name,

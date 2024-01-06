@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 
-export default function EditingModal(props, {editingCallback}) {
-    const [name, setName] = useState("");
+export default function EditingModal(props) {
+    const [name, setName] = useState(props.name);
     const [validName, setValidName] = useState(true);
-    const [type, setType] = useState("");
+    const [type, setType] = useState(props.type);
     const [validType, setValidType] = useState(true);
-    const [subType, setSubType] = useState("");
-    const [distillery, setDistillery] = useState("");
-    const [proof, setProof] = useState("");
-    const [notes, setNotes] = useState("");
-    const [rating, setRating] = useState("");
-    const [modalActive, setModalActive] = useState(false);
+    const [subType, setSubType] = useState(props.subType);
+    const [distillery, setDistillery] = useState(props.distillery);
+    const [proof, setProof] = useState(props.proof);
+    const [notes, setNotes] = useState(props.notes);
+    const [rating, setRating] = useState(props.rating);
 
         const updatedCard = {
-          name: "butt",
+          name: name,
           type: type,
           subType: subType,
           distillery: distillery,
           proof: proof,
           notes: notes,
+          favorite: props.favorite,
+          spiritId: props.spiritId,
           rating: rating,
-          validName: validName,
-          validType: validType,
-          modalActive: modalActive,
         };
 
     const editErrorCheck = () => {
@@ -46,15 +44,8 @@ export default function EditingModal(props, {editingCallback}) {
           }
 
           if (editErrorCheck.validName && editErrorCheck.validType) {
-            setValidName(true);
-            setValidType(true);
-            setModalActive(false);
+            props.onEdit(updatedCard);
           }
-    }
-
-    const handleCancel = () => {
-        setModalActive(false)
-        editingCallback(modalActive)
     }
 
 
@@ -68,7 +59,7 @@ export default function EditingModal(props, {editingCallback}) {
                     className={validName ? "valid-input" : "invalid-input"}
                     type="text"
                     placeholder="Spirit Name"
-                    value={props.name}
+                    value={name}
                     onChange={(event) => {
                         setValidName(true);
                         setName(event.target.value)}}
@@ -77,7 +68,7 @@ export default function EditingModal(props, {editingCallback}) {
                     className={validType ? "valid-input" : "invalid-input"}
                     type="text"
                     placeholder="Spirit Type"
-                    value={props.type}
+                    value={type}
                     onChange={(event) => {
                         setValidType(true);
                         setType(event.target.value)}}
@@ -86,32 +77,32 @@ export default function EditingModal(props, {editingCallback}) {
                     className="valid-input"
                     type="text"
                     placeholder="Spirit Subtype"
-                    value={props.subType}
+                    value={subType}
                     onChange={(event) => setSubType(event.target.value)}
                   />
                   <input
                     className="valid-input"
                     type="text"
                     placeholder="Spirit Distillery"
-                    value={props.distillery}
+                    value={distillery}
                     onChange={(event) => setDistillery(event.target.value)}
                   />
                   <input
                     className="valid-input"
                     type="text"
                     placeholder="Spirit Proof"
-                    value={props.proof}
+                    value={proof}
                     onChange={(e) => setProof(e.target.value)}
                   />
                   <input
                     className="valid-input"
                     type="text"
                     placeholder="Tasting Notes"
-                    value={props.notes}
+                    value={notes}
                     onChange={(event) => setNotes(event.target.value)}
                   />
                   <select
-                    value={props.rating}
+                    value={rating}
                     onChange={(event) => setRating(event.target.value)}
                     className="valid-input"
                   >
@@ -129,14 +120,13 @@ export default function EditingModal(props, {editingCallback}) {
                   </select>
                 </div>
                 <div>
-                  <button className="button" type="button" onClick={() => editingCallback(updatedCard)}>
+                  <button className="button" type="button" onClick={editErrorCheck}>
                     Save
                   </button>
                   <button
                     className="button"
                     type="button"
-                    onClick={handleCancel}
-                  >
+                    onClick={props.onCancel}>
                     Cancel
                   </button>
                 </div>

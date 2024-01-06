@@ -47,7 +47,7 @@ export default function Almanac() {
       proof: proof,
       notes: notes,
       favorite: favorite,
-      id: uuidv4(),
+      spiritId: uuidv4(),
       rating: rating,
     };
 
@@ -76,19 +76,6 @@ export default function Almanac() {
     setValidType(true);
   };
 
-  const handleEdit = (updatedCard) => {
-  setName(updatedCard.name);
-  setType(updatedCard.name);
-  setSubType(updatedCard.name);
-  setDistillery(updatedCard.name);
-  setProof(updatedCard.name);
-  setNotes(updatedCard.name);
-  setRating(updatedCard.name);
-  setModalActive(updatedCard.modalActive);
-  dispatch(editCard(updatedCard));
-  clearForm();
-}
-
   const handleEditCard = (card) => {
     setModalActive(true);
     setName(card.name);
@@ -98,9 +85,26 @@ export default function Almanac() {
     setProof(card.proof);
     setNotes(card.notes);
     setRating(card.rating);
-    setSpiritId(card.id);
+    setSpiritId(card.spiritId);
     setFavorite(card.favorite);
   };
+
+  const handleEdit = (updatedCard) => {
+    const editedCard = {
+      name: updatedCard.name,
+      type: updatedCard.type,
+      subType: updatedCard.subType,
+      distillery: updatedCard.distillery,
+      proof: updatedCard.proof,
+      notes: updatedCard.notes,
+      favorite: updatedCard.favorite,
+      spiritId: updatedCard.spiritId,
+      rating: updatedCard.rating,
+    }
+    dispatch(editCard(editedCard));
+    setModalActive(false);
+    clearForm();
+  }
 
   const handleRemove = (card) => {
     dispatch(removeCard(card));
@@ -128,18 +132,22 @@ export default function Almanac() {
         </div>
 
         {/* Spirit Management */}
+        
         {/* Edit Spirits */}
 
-        {modalActive && 
+        {modalActive &&
         <EditingModal 
-        editingCallback={handleEdit}
+        onEdit={handleEdit}
+        onCancel={handleCancel}
         name={name}
         type={type}
         subType={subType}
         distillery={distillery}
         proof={proof}
         notes={notes}
-        rating={rating} 
+        favorite={favorite}
+        spiritId={spiritId}
+        rating={rating}
         />}
 
         {/* End Edit */}
@@ -236,7 +244,7 @@ export default function Almanac() {
         <div className={"user-almanac"}>
           {cards.map((card) => {
             return (
-              <div className="almanac-item" key={card.id}>
+              <div className="almanac-item" key={card.spiritId}>
                 <div className="almanac-item-layout">
                   <h2 className="card-name">{card.name}</h2>
                   <p>{`Spirit Type: ${card.type}`}</p>

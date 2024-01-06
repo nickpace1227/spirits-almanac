@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
 import { Wrapper } from "./styles.js";
+import EditingModal from "../EditingModal";
 
 export default function AdvancedSearch() {
   const dispatch = useDispatch();
@@ -18,9 +19,9 @@ export default function AdvancedSearch() {
   const [favorite, setFavorite] = useState(false);
   const cards = useSelector((store) => store.inventory.cards);
   const [spiritId, setSpiritId] = useState("");
-  const [modalState, setModalState] = useState(false);
-  const [validCard, setValidCard] = useState(true);
+  const [modalActive, setModalActive] = useState(false);
   const navigate = useNavigate();
+  
 
   const clearForm = () => {
     setType("");
@@ -41,7 +42,7 @@ export default function AdvancedSearch() {
   };
 
   const handleEditCard = (card) => {
-    setModalState(true);
+    setModalActive(true);
     setName(card.name);
     setType(card.type);
     setSubType(card.subType);
@@ -49,68 +50,33 @@ export default function AdvancedSearch() {
     setProof(card.proof);
     setNotes(card.notes);
     setRating(card.rating);
-    setSpiritId(card.id);
+    setSpiritId(card.spiritId);
   };
 
-  const handleEdit = (card) => {
-    const updatedCard = {
-      name: name,
-      type: type,
-      subType: subType,
-      distillery: distillery,
-      proof: proof,
-      notes: notes,
-      favorite: card.favorite,
-      id: spiritId,
-      rating: rating,
-    };
-
-    const editErrorCheck = {
-      errorCheckName: validName,
-      errorCheckType: validType,
-      errorCheckCard: validCard,
-    };
-
-    if (name === "") {
-      editErrorCheck.errorCheckName = false;
-      editErrorCheck.errorCheckCard = false;
-      setValidName(false);
+  const handleEdit = (updatedCard) => {
+    const editedCard = {
+      name: updatedCard.name,
+      type: updatedCard.type,
+      subType: updatedCard.subType,
+      distillery: updatedCard.distillery,
+      proof: updatedCard.proof,
+      notes: updatedCard.notes,
+      favorite: updatedCard.favorite,
+      spiritId: updatedCard.spiritId,
+      rating: updatedCard.rating,
     }
-
-    if (type === "") {
-      editErrorCheck.errorCheckType = false;
-      editErrorCheck.errorCheckCard = false;
-      setValidType(false);
-    }
-
-    if (
-      !editErrorCheck.errorCheckName ||
-      !editErrorCheck.errorCheckName ||
-      !editErrorCheck.errorCheckCard
-    ) {
-      setModalState(true);
-    }
-
-    if (name !== "" && type !== "") {
-      editErrorCheck.errorCheckCard = true;
-      setValidCard(true);
-    }
-
-    if (editErrorCheck.errorCheckCard) {
-      dispatch(editCard(updatedCard));
-      clearForm();
-      setValidName(true);
-      setValidType(true);
-      setModalState(false);
-    }
+    dispatch(editCard(editedCard));
+    setModalActive(false);
+    clearForm();
   };
 
   const handleCancel = () => {
     clearForm();
-    setModalState(false);
+    setModalActive(false);
   };
 
-  let resultArray = cards;
+
+    let resultArray = cards;
 
   if (name !== "") {
     const lowerCaseName = name.toLowerCase();
@@ -162,10 +128,6 @@ export default function AdvancedSearch() {
     resultArray = [...newResult];
   }
 
-  const handleRedirect = () => {
-    navigate("/almanac")
-  }
-
   return (
     <Wrapper>
       <div className="main-div">
@@ -174,84 +136,21 @@ export default function AdvancedSearch() {
         {/* Begin Spirits Management */}
 
         {/* Begin Edit Card */}
-        {modalState && (
-          <div className="editing-modal">
-            <div className="spirit-modal">
-              <h2 className="edit-section-title">Edit Your Spirit</h2>
-              <form className="edit-spirits">
-                <div className="inputs">
-                  <input
-                    className={validName ? "valid-input" : "invalid-input"}
-                    type="text"
-                    placeholder="Spirit Name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                  />
-                  <input
-                    className={validType ? "valid-input" : "invalid-input"}
-                    type="text"
-                    placeholder="Spirit Type"
-                    value={type}
-                    onChange={(event) => setType(event.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Spirit Subtype"
-                    value={subType}
-                    onChange={(event) => setSubType(event.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Spirit Distillery"
-                    value={distillery}
-                    onChange={(event) => setDistillery(event.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Spirit Proof"
-                    value={proof}
-                    onChange={(e) => setProof(e.target.value)}
-                  />
-                  <input
-                    className="valid-input"
-                    type="text"
-                    placeholder="Tasting Notes"
-                    value={notes}
-                    onChange={(event) => setNotes(event.target.value)}
-                  />
-                  <select
-                    value={rating}
-                    onChange={(event) => setRating(event.target.value)}
-                    className="valid-input"
-                  >
-                    <option value="">Select a rating</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                    <option value={7}>7</option>
-                    <option value={8}>8</option>
-                    <option value={9}>9</option>
-                    <option value={10}>10</option>
-                  </select>
-                </div>
-              <div>
-                <button className="button" type="button" onClick={handleEdit}>
-                  Save
-                </button>
-                <button className="button" type="button" onClick={handleCancel}>
-                  Cancel
-                </button>
-              </div>
-              </form>
-            </div>
-          </div>
-        )}
+        {modalActive && 
+          <EditingModal 
+            onEdit={handleEdit}
+            onCancel={handleCancel}
+            name={name}
+            type={type}
+            subType={subType}
+            distillery={distillery}
+            proof={proof}
+            notes={notes}
+            favorite={favorite}
+            spiritId={spiritId}
+            rating={rating}
+          />  
+        }
 
         {/* End Edit Card */}
 
@@ -264,42 +163,42 @@ export default function AdvancedSearch() {
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Name"
-                value={modalState ? "" : name}
+                value={modalActive ? "" : name}
                 onChange={(event) => setName(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Type"
-                value={modalState ? "" : type}
+                value={modalActive ? "" : type}
                 onChange={(event) => setType(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Subtype"
-                value={modalState ? "" : subType}
+                value={modalActive ? "" : subType}
                 onChange={(event) => setSubType(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Distillery"
-                value={modalState ? "" : distillery}
+                value={modalActive ? "" : distillery}
                 onChange={(event) => setDistillery(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Spirit Proof"
-                value={modalState ? "" : proof}
+                value={modalActive ? "" : proof}
                 onChange={(event) => setProof(event.target.value)}
               />
               <input
                 className="valid-input"
                 type="text"
                 placeholder="Tasting Notes"
-                value={modalState ? "" : notes}
+                value={modalActive ? "" : notes}
                 onChange={(event) => setNotes(event.target.value)}
               />
               <div>
@@ -311,7 +210,7 @@ export default function AdvancedSearch() {
                 />
               </div>
               <select
-                value={modalState ? "" : rating}
+                value={modalActive ? "" : rating}
                 onChange={(event) => setRating(event.target.value)}
                 className="valid-input"
               >
@@ -330,7 +229,10 @@ export default function AdvancedSearch() {
             </div>
           </form>
           <div>
-            <button className="button" type="button" onClick={clearForm}>
+            <button 
+            className="button" 
+            type="button" 
+            onClick={clearForm}>
               Clear
             </button>
           </div>
@@ -341,11 +243,12 @@ export default function AdvancedSearch() {
         {/* End Spirits Management */}
 
         {/* Search Results    */}
-        <h1 className="search-results">Search Results</h1>
+
+    <h1 className="search-results">Search Results</h1>
         <div className="user-search">
           {resultArray.map((card) => {
             return (
-              <div key={card.id} className="search-item">
+              <div key={card.spiritId} className="search-item">
                 <div className="search-item-layout">
                   <h2 className="card-name">{card.name}</h2>
                   <p>{`Spirit Type: ${card.type}`}</p>
@@ -382,7 +285,7 @@ export default function AdvancedSearch() {
             );
           })}
         </div>
-      </div>
-    </Wrapper>
+        </div>
+      </Wrapper>
   );
 }
