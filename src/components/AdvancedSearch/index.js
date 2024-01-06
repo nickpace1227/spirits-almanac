@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeCard, toggleFavorite, editCard } from "../../store/cardSlice";
 import { Wrapper } from "./styles.js";
@@ -8,9 +8,7 @@ import EditingModal from "../EditingModal";
 export default function AdvancedSearch() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const [validName, setValidName] = useState(true);
   const [type, setType] = useState("");
-  const [validType, setValidType] = useState(true);
   const [subType, setSubType] = useState("");
   const [distillery, setDistillery] = useState("");
   const [proof, setProof] = useState("");
@@ -20,7 +18,6 @@ export default function AdvancedSearch() {
   const cards = useSelector((store) => store.inventory.cards);
   const [spiritId, setSpiritId] = useState("");
   const [modalActive, setModalActive] = useState(false);
-  const navigate = useNavigate();
   
 
   const clearForm = () => {
