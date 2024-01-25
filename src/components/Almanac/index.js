@@ -100,11 +100,11 @@ export default function Almanac() {
       favorite: updatedCard.favorite,
       spiritId: updatedCard.spiritId,
       rating: updatedCard.rating,
-    }
+    };
     dispatch(editCard(editedCard));
     setModalActive(false);
     clearForm();
-  }
+  };
 
   const handleRemove = (card) => {
     dispatch(removeCard(card));
@@ -132,23 +132,24 @@ export default function Almanac() {
         </div>
 
         {/* Spirit Management */}
-        
+
         {/* Edit Spirits */}
 
-        {modalActive &&
-        <EditingModal 
-        onEdit={handleEdit}
-        onCancel={handleCancel}
-        name={name}
-        type={type}
-        subType={subType}
-        distillery={distillery}
-        proof={proof}
-        notes={notes}
-        favorite={favorite}
-        spiritId={spiritId}
-        rating={rating}
-        />}
+        {modalActive && (
+          <EditingModal
+            onEdit={handleEdit}
+            onCancel={handleCancel}
+            name={name}
+            type={type}
+            subType={subType}
+            distillery={distillery}
+            proof={proof}
+            notes={notes}
+            favorite={favorite}
+            spiritId={spiritId}
+            rating={rating}
+          />
+        )}
 
         {/* End Edit */}
 
