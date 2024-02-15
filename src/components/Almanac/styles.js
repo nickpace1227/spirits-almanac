@@ -143,11 +143,15 @@ export const Wrapper = styled.div`
 
   .section-title {
     align-text: center;
-    margin: 5px;
+    margin: 4px;
   }
 
   .edit-section-title {
     align-text: center;
-    margin: 20px 5px;
+    margin: 24px 4px;
+  }
+
+  .empty-almanac {
+    margin: 8px;
   }
 `;

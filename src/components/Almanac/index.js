@@ -71,6 +71,7 @@ export default function Almanac() {
     }
 
     dispatch(addCard(newCard));
+    console.log(cards);
     clearForm();
     setValidName(true);
     setValidType(true);
@@ -243,44 +244,50 @@ export default function Almanac() {
         {/* Begin Almanac */}
         <h1 className="almanac-title">Your Almanac</h1>
         <div className={"user-almanac"}>
-          {cards.map((card) => {
-            return (
-              <div className="almanac-item" key={card.spiritId}>
-                <div className="almanac-item-layout">
-                  <h2 className="card-name">{card.name}</h2>
-                  <p>{`Spirit Type: ${card.type}`}</p>
-                  <p>{`Spirit Subtype: ${card.subType}`}</p>
-                  <p>{`Spirit Distillery: ${card.distillery}`}</p>
-                  <p>{`Spirit Proof: ${card.proof}`}</p>
-                  <p>{`Tasting Notes: ${card.notes}`}</p>
-                  <p>{`Rating: ${card.rating}`}</p>
+          {cards.length === 0 ? (
+            <div className="empty-almanac">
+              Begin adding to your almanac today!
+            </div>
+          ) : (
+            cards.map((card) => {
+              return (
+                <div className="almanac-item" key={card.spiritId}>
+                  <div className="almanac-item-layout">
+                    <h2 className="card-name">{card.name}</h2>
+                    <p>{`Spirit Type: ${card.type}`}</p>
+                    <p>{`Spirit Subtype: ${card.subType}`}</p>
+                    <p>{`Spirit Distillery: ${card.distillery}`}</p>
+                    <p>{`Spirit Proof: ${card.proof}`}</p>
+                    <p>{`Tasting Notes: ${card.notes}`}</p>
+                    <p>{`Rating: ${card.rating}`}</p>
+                  </div>
+                  <div>
+                    <button
+                      className="favorite-button"
+                      type="button"
+                      onClick={() => handleFavorite(card)}
+                    >
+                      {card.favorite ? <>&#9733;</> : <>&#9734;</>}
+                    </button>
+                    <button
+                      className="card-button"
+                      type="button"
+                      onClick={() => handleRemove(card)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="card-button"
+                      type="button"
+                      onClick={(event) => handleEditCard(card, event)}
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <button
-                    className="favorite-button"
-                    type="button"
-                    onClick={() => handleFavorite(card)}
-                  >
-                    {card.favorite ? <>&#9733;</> : <>&#9734;</>}
-                  </button>
-                  <button
-                    className="card-button"
-                    type="button"
-                    onClick={() => handleRemove(card)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="card-button"
-                    type="button"
-                    onClick={(event) => handleEditCard(card, event)}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </Wrapper>
