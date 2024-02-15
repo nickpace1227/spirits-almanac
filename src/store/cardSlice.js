@@ -8,13 +8,13 @@ export const cardSlice = createSlice({
   reducers: {
     addCard: (state, action) => {
       state.cards = [...state.cards, action.payload];
-      localStorage.setItem("localAlmanac", JSON.stringify({ ...state.cards }));
+      localStorage.setItem("localAlmanac", JSON.stringify([...state.cards]));
     },
     removeCard: (state, action) => {
       state.cards = state.cards.filter((card) => {
         return card.spiritId !== action.payload.spiritId;
       });
-      localStorage.setItem("localAlmanac", JSON.stringify({ ...state.cards }));
+      localStorage.setItem("localAlmanac", JSON.stringify([...state.cards]));
     },
     toggleFavorite: (state, action) => {
       state.cards = state.cards.map((card) => {
@@ -26,7 +26,7 @@ export const cardSlice = createSlice({
         }
         return card;
       });
-      localStorage.setItem("localAlmanac", JSON.stringify({ ...state.cards }));
+      localStorage.setItem("localAlmanac", JSON.stringify([...state.cards]));
     },
     editCard: (state, action) => {
       state.cards = state.cards.map((card) => {
@@ -46,7 +46,7 @@ export const cardSlice = createSlice({
 
         return card;
       });
-      localStorage.setItem("localAlmanac", JSON.stringify({ ...state.cards }));
+      localStorage.setItem("localAlmanac", JSON.stringify([...state.cards]));
     },
   },
 });

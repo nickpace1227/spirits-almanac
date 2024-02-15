@@ -17,10 +17,9 @@ export default function SpiritsAlmanac() {
   const localData = JSON.parse(localStorage.getItem("localAlmanac"));
 
   if (!hasLoaded) {
-    console.log(localData);
-    // localData.map((card) => {
-    //   dispatch(addCard(card));
-    // });
+    localData.map((card) => {
+      dispatch(addCard(card));
+    });
     setHasLoaded(true);
   }
 
